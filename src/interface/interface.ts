@@ -5,7 +5,7 @@ interface IUser {
   email: string;
   address: string;
   city: string;
-  telefono: string;
+  phone: string;
   statusMembrecia?: string;
   fotosPerfil?: string;
   role?: string;
@@ -23,7 +23,7 @@ interface IRegisterUser {
   city: string;
   role?: string;
   password: string;
-  telefono: string;
+  phone: string;
   fotoPerfil?: string;
   statusMembrecia?: string;
   credential: ICreateCredential;
@@ -68,7 +68,7 @@ interface IRutina {
   name: string;
   description: string;
   precio: number;
-  imagen: string;
+  imagen?: string;
   categoria: string;
   ejercicios: IRutinaEjercicio[];
   borradologico: boolean;
@@ -119,6 +119,23 @@ interface IActividadList {
   actividades: IActividad[];
 }
 
+// Login and Register
+
+interface IErrorsLogin {
+  email?: string;
+  password?: string;
+}
+
+interface IErrorsRegister {
+  name?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  password?: string;
+  repeat_password?: string;
+  phone?: string;
+}
+
 export type {
   IUser,
   ILogin,
@@ -133,4 +150,6 @@ export type {
   IRegisterUser,
   ICreateCredential,
   IActividadList,
+  IErrorsLogin,
+  IErrorsRegister,
 };

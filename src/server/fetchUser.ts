@@ -1,5 +1,4 @@
 import { IUser, ILogin } from "@/interface/interface";
-
 const API = "http:api";
 
 export const postSigup = async (user: Omit<IUser, "id">) => {
@@ -57,5 +56,3 @@ export const getUserActividades = async (token: string) => {
   const data = await response.json();
   return data;
 };
-
-// Hola Agustin esto no funciona !

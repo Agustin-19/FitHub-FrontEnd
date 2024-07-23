@@ -1,3 +1,4 @@
+import CoachList from '../../components/CoachList/index';
 
 
 export default function Admin() {
@@ -6,7 +7,7 @@ export default function Admin() {
             <h1>Admin</h1>
             <p> Debe controlar las actividades, rutinas, entrenadores, usuarios</p>
         {/* users */}
-        {/* couchs */}
+        <CoachList/>
         {/* activities */}
         {/* routines */}
         </div>
