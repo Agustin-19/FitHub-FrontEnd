@@ -1,5 +1,10 @@
 import { IUser, ILogin } from "@/interface/interface";
 
+<<<<<<< Updated upstream
+=======
+const API = "http:api";
+
+>>>>>>> Stashed changes
 export const postSigup = async (user: Omit<IUser, "id">) => {
   const response = await fetch("/users/register", {
     method: "POST",
@@ -55,5 +60,3 @@ export const getUserActividades = async (token: string) => {
   const data = await response.json();
   return data;
 };
-
-Hola Agustin esto no funciona !
