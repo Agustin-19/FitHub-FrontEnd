@@ -1,6 +1,6 @@
 import { IUser, ILogin } from "@/interface/interface";
 
-const API = 'http:api'
+const API = "http:api";
 
 export const postSigup = async (user: Omit<IUser, "id">) => {
   const response = await fetch(`${API}/users/register`, {
@@ -57,5 +57,3 @@ export const getUserActividades = async (token: string) => {
   const data = await response.json();
   return data;
 };
-
-Hola Agustin esto no funciona !
