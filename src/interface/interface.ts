@@ -1,18 +1,18 @@
 // Users:
 
 interface IUser {
-  id: number;
   name: string;
   email: string;
-  password: string;
-  phone: string;
-  role?: string;
-  city: string;
   address: string;
-  rutinas?: number[];
-  actividades?: number[];
+  city: string;
+  phone: string;
   statusMembrecia?: string;
   fotosPerfil?: string;
+  role?: string;
+  password: string;
+  rutinas?: number[];
+  actividades?: number[];
+  id: number;
   borradologico: boolean;
 }
 
@@ -23,7 +23,7 @@ interface IRegisterUser {
   city: string;
   role?: string;
   password: string;
-  telefono: string;
+  phone: string;
   fotoPerfil?: string;
   statusMembrecia?: string;
   credential: ICreateCredential;
@@ -119,6 +119,23 @@ interface IActividadList {
   actividades: IActividad[];
 }
 
+// Login and Register
+
+interface IErrorsLogin {
+  email?: string;
+  password?: string;
+}
+
+interface IErrorsRegister {
+  name?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  password?: string;
+  repeat_password?: string;
+  phone?: string;
+}
+
 export type {
   IUser,
   ILogin,
@@ -133,4 +150,6 @@ export type {
   IRegisterUser,
   ICreateCredential,
   IActividadList,
+  IErrorsLogin,
+  IErrorsRegister,
 };
