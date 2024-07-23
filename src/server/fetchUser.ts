@@ -1,10 +1,7 @@
 import { IUser, ILogin } from "@/interface/interface";
 
-<<<<<<< Updated upstream
-=======
 const API = "http:api";
 
->>>>>>> Stashed changes
 export const postSigup = async (user: Omit<IUser, "id">) => {
   const response = await fetch("/users/register", {
     method: "POST",
