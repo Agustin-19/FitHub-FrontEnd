@@ -9,17 +9,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        customBackground: "#1A1D1A",
       },
     },
   },
-  plugins: [
-    require("daisyui"),
-    require("tw-elements/plugin.cjs")
-  ],
+  plugins: [require("daisyui"), require("tw-elements/plugin.cjs")],
   daisyui: {
     styled: true,
     themes: true,
@@ -29,6 +24,6 @@ const config: Config = {
     rtl: false,
     prefix: "daisy-",
     darkTheme: "light",
-  }
+  },
 };
 export default config;
