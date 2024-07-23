@@ -1,18 +1,18 @@
 // Users:
 
 interface IUser {
+  id: number;
   name: string;
   email: string;
-  address: string;
-  city: string;
-  telefono: string;
-  statusMembrecia?: string;
-  fotosPerfil?: string;
-  role?: string;
   password: string;
+  phone: string;
+  role?: string;
+  city: string;
+  address: string;
   rutinas?: number[];
   actividades?: number[];
-  id: number;
+  statusMembrecia?: string;
+  fotosPerfil?: string;
   borradologico: boolean;
 }
 
@@ -68,7 +68,7 @@ interface IRutina {
   name: string;
   description: string;
   precio: number;
-  imagen: string;
+  imagen?: string;
   categoria: string;
   ejercicios: IRutinaEjercicio[];
   borradologico: boolean;
