@@ -68,7 +68,7 @@ interface IRutina {
   name: string;
   description: string;
   precio: number;
-  imagen: string;
+  imagen?: string;
   categoria: string;
   ejercicios: IRutinaEjercicio[];
   borradologico: boolean;

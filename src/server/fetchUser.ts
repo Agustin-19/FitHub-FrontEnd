@@ -1,4 +1,5 @@
 import { IUser, ILogin } from "@/interface/interface";
+const API = "http:api";
 
 const API = "http:api";
 
