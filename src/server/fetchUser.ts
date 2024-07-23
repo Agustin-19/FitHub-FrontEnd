@@ -58,4 +58,4 @@ export const getUserActividades = async (token: string) => {
   return data;
 };
 
-Hola Agustin esto no funciona !
+
