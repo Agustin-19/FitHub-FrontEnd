@@ -1,7 +1,9 @@
 import { IUser, ILogin } from "@/interface/interface";
 
+const API = 'http:api'
+
 export const postSigup = async (user: Omit<IUser, "id">) => {
-  const response = await fetch("/users/register", {
+  const response = await fetch(`${API}/users/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +16,7 @@ export const postSigup = async (user: Omit<IUser, "id">) => {
 
 export const postSignin = async (credentials: ILogin) => {
   try {
-    const response = await fetch("/users/login", {
+    const response = await fetch(`${API}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +37,7 @@ export const postSignin = async (credentials: ILogin) => {
 };
 
 export const getUserRutinas = async (token: string) => {
-  const response = await fetch("/users/rutinas", {
+  const response = await fetch(`${API}/users/rutinas`, {
     method: "GET",
     headers: {
       Authorization: `${token}`,
@@ -46,7 +48,7 @@ export const getUserRutinas = async (token: string) => {
 };
 
 export const getUserActividades = async (token: string) => {
-  const response = await fetch("/users/actividades", {
+  const response = await fetch(`${API}/users/actividades`, {
     method: "GET",
     headers: {
       Authorization: `${token}`,
