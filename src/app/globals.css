@@ -29,8 +29,9 @@ body {
 
 }
 
-a {
+.links {
   text-decoration: none;
+  color: #447988;
 }
 
 ul {

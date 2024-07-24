@@ -52,7 +52,7 @@ export function Navbar() {
             >
               {/* Left links */}
               <ul
-                className="list-style-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
+                className=" me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row"
                 data-twe-navbar-nav-ref
               >
                 {/* Home link */}
@@ -61,6 +61,7 @@ export function Navbar() {
                   data-twe-nav-item-ref
                 >
                   <Link
+
                     href="/home"
                     className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"
                     aria-current="page"
@@ -76,19 +77,6 @@ export function Navbar() {
                 >
                   <Link
                     href="/about"
-                    className="p-0 text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"
-                    data-twe-nav-link-ref
-                  >
-                    Nosotros
-                  </Link>
-                </li>
-
-                <li
-                  className="mb-4 ps-2 lg:mb-0 lg:pe-1 lg:ps-0"
-                  data-twe-nav-item-ref
-                >
-                  <Link
-                    href="#"
                     className="p-0 text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"
                     data-twe-nav-link-ref
                   >
