@@ -14,6 +14,7 @@ import {
   IUser,
   ILogin,
 } from "../interface/interface";
+import { users } from "../../public/data/user.data";
 
 export const UserContext = createContext<IUserConext>({
   user: null,
@@ -46,22 +47,51 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signIn = async (credentials: ILogin) => {
-    try {
-      const data = await postSignin(credentials);
-      if (!data.token) {
-        throw new Error("Token Invalido");
+    if (process.env.NODE_ENV === "development") {
+      console.log("Development environment detected");
+      console.log("Received credentials:", credentials);
+      const user = users.find(
+        (user) =>
+          user.email === credentials.email &&
+          user.password === credentials.password
+      );
+      if (user) {
+        console.log("User found:", user);
+        const userLoginData: Partial<IloginUserRegister> = {
+          login: true,
+          token: "fake-token",
+          user: user,
+        };
+        setUser(userLoginData);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("user", JSON.stringify(userLoginData));
+          localStorage.setItem("token", "fake-token");
+        }
+        setIsLogged(true);
+        return true;
+      } else {
+        console.log("No user found with the provided credentials");
+        return false;
       }
+    } else {
+      try {
+        console.log("Production environment detected");
+        const data = await postSignin(credentials);
+        if (!data.token) {
+          throw new Error("Invalid Token");
+        }
 
-      setUser(data);
-      typeof window !== "undefined" &&
-        localStorage.setItem("user", JSON.stringify(data));
-      typeof window !== "undefined" &&
-        localStorage.setItem("token", data.token);
-      setIsLogged(true);
-      return true;
-    } catch (error) {
-      console.log("SignIn in Failed", error);
-      return false;
+        setUser(data);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("user", JSON.stringify(data));
+          localStorage.setItem("token", data.token);
+        }
+        setIsLogged(true);
+        return true;
+      } catch (error) {
+        console.log("SignIn failed", error);
+        return false;
+      }
     }
   };
 
@@ -88,8 +118,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logOut = () => {
-    typeof window !== "undefined" && localStorage.removeItem("user");
-    typeof window !== "undefined" && localStorage.removeItem("token");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+    }
     setUser(null);
     setIsLogged(false);
   };
