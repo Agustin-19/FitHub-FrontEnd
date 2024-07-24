@@ -5,28 +5,33 @@ import { rutinas } from "../../../public/data/rutines.data";
 
 const RutinaList: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {rutinas.map((rutina) => (
-        <div key={rutina.id} className="border rounded-lg p-4 shadow-lg">
-          <div className="relative object-contain w-40 h-40 rounded-t-lg">
+        <div
+          key={rutina.id}
+          className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
+        >
+          <div className="relative w-full h-64">
             <Image
               src={rutina.imagen}
               alt={rutina.name}
               fill={true}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               priority={true}
-              className="rounded-t-lg"
+              className="object-cover w-full h-full"
             />
           </div>
-          <h2 className="text-xl font-bold mt-2">{rutina.name}</h2>
-          <p className="text-gray-400">{rutina.description}</p>
-          <p className="text-gray-500 font-semibold mt-2">${rutina.precio}</p>
-          <Link
-            href={`/routines/${rutina.id}`}
-            className="mt-4 inline-block boton"
-          >
-            Ver Detalles
-          </Link>
+          <div className="p-4">
+            <h2 className="text-2xl font-bold mb-2">{rutina.name}</h2>
+            <p className="text-gray-600 mb-2">{rutina.description}</p>
+            <p className="text-gray-700 font-semibold mb-4">${rutina.precio}</p>
+            <Link
+              href={`/routines/${rutina.id}`}
+              className="mt-4 inline-block px-4 py-2 bg-[#FF3E1A] text-white rounded-lg hover:bg-[#FF3E1A] transition-colors"
+            >
+              Ver Detalles
+            </Link>
+          </div>
         </div>
       ))}
     </div>
