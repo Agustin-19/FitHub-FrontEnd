@@ -22,7 +22,10 @@ const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
   const rating = user.rating ?? 0; // Si la calificación es undefined, usar 0
 
   return (
-    <div className="border border-gray-300 p-4 m-2 rounded-lg shadow-lg bg-[#1A1D1A] text-[#97D6DF] w-60 transition-transform duration-300 hover:bg-[#FF3E1A] hover:text-[#1A1D1A] hover:scale-105">
+    <div
+      className="border border-gray-300 p-4 m-2 rounded-lg shadow-lg bg-[#1A1D1A] text-[#97D6DF] w-60"
+      data-aos="fade-up" // Añade la animación de AOS
+    >
       <div className="flex items-center">
         {/* Imagen de perfil */}
         {user.fotosPerfil ? (
@@ -65,7 +68,7 @@ const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
               ))}
             </span>
             <span className="ml-2 text-[#97D6DF] text-sm">
-              {user.rating !== undefined ? `${user.rating}/5` : "No rating"}
+              {rating !== undefined ? `${rating}/5` : "No rating"}
             </span>
           </div>
         </div>
