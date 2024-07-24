@@ -1,17 +1,16 @@
 "use client";
 
-import React from "react";
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { validateLogin } from "@/helpers/validations.login";
 import { useRouter } from "next/navigation";
-import { IErrorsLogin } from "@/interface/interface";
+import { IErrorsLogin, ILogin } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
 
 export function LoginComponet({ token, setToken }: any) {
   const { signIn } = useContext(UserContext);
   const router = useRouter();
 
-  const [userDate, setUserDate] = useState({
+  const [userDate, setUserDate] = useState<ILogin>({
     email: "",
     password: "",
   });
@@ -25,7 +24,7 @@ export function LoginComponet({ token, setToken }: any) {
     return userDate.email !== "" && userDate.password !== "";
   };
 
-  const handleImputChange = (event: any) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     const newUserDate = { ...userDate, [name]: value };
 
@@ -35,11 +34,13 @@ export function LoginComponet({ token, setToken }: any) {
 
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("Submitted credentials:", userDate);
     const success = await signIn(userDate);
     if (success) {
+      console.log("Login successful");
       router.push("/home");
     } else {
-      console.log("Ingreso invalido");
+      console.log("Invalid login");
     }
   };
 
@@ -53,7 +54,7 @@ export function LoginComponet({ token, setToken }: any) {
             id="email"
             placeholder="Ingrese su correo"
             required
-            onChange={handleImputChange}
+            onChange={handleInputChange}
             className="daisy-input daisy-input-bordered w-full max-w-xs text-black"
           />
           {errors.email && (
@@ -69,7 +70,7 @@ export function LoginComponet({ token, setToken }: any) {
             name="password"
             id="password"
             required
-            onChange={handleImputChange}
+            onChange={handleInputChange}
             className="daisy-input daisy-input-bordered w-full max-w-xs text-black"
             placeholder="Ingrese su contraseña"
           />
