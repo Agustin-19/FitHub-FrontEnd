@@ -1,0 +1,6 @@
+.stroke-text {
+    -webkit-text-stroke: 1px #97D6DF;
+    /* Color del contorno */
+    color: transparent;
+    text-transform: uppercase;
+}

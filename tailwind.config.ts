@@ -12,6 +12,15 @@ const config: Config = {
       colors: {
         customBackground: "#1A1D1A",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 2s ease-in-out",
+      },
     },
   },
   plugins: [require("daisyui"), require("tw-elements/plugin.cjs")],
@@ -26,4 +35,5 @@ const config: Config = {
     darkTheme: "light",
   },
 };
+
 export default config;
