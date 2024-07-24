@@ -45,7 +45,7 @@ export function LoginComponet({ token, setToken }: any) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center">
       <form className="max-w-2xl mx-auto " onSubmit={handleSubmit}>
         <div className="relative z-0 w-full mb-5 group">
           <input
