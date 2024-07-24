@@ -19,15 +19,28 @@ interface CoachCardProps {
 
 const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
     return (
-        <div style={{ border: '1px solid #ccc', padding: '10px', margin: '10px', borderRadius: '5px' }}>
-            <h2>{user.name}</h2>
-            <p>Email: {user.email}</p>
-            <p>Address: {user.address}</p>
-            <p>City: {user.city}</p>
-            <p>Telefono: {user.telefono}</p>
-            {user.fotosPerfil &&
-            <Image src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIjwYVsnkZdFeK5EdIOoTELkvxUJ48OzuVPQ&s'} style={{ width: '100px', height: '100px' }} alt="" className="w-full object-cover h-[510px]" />}
-            {/* {user.role && <p>Role: {user.role}</p>} */}
+
+        <div className="daisy-card m-5 daisy-card-side rounded-xl  shadow-xl shadow-[--titulos] text-[--titulos]">
+            <figure>
+                {user.fotosPerfil &&
+                    <div className='relative object-contain w-40 h-40 rounded-t-lg'>
+                        <Image
+                            src={user.fotosPerfil}
+                            alt={user.name}
+                            fill={true}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            priority={true}
+                            className="rounded-t-lg"
+                        />
+                    </div>}
+            </figure>
+            <div className="daisy-card-body ">
+                <h2 className="daisy-card-title">{user.name}</h2>
+                <p>Email: {user.email}</p>
+                <p>Address: {user.address}</p>
+                <p>City: {user.city}</p>
+                <p>Telefono: {user.telefono}</p>
+            </div>
         </div>
     );
 };

@@ -79,6 +79,7 @@ interface IRutinaEjercicio {
   name: string;
   description: string;
   imagen: string;
+  videoUrl: string
   series: number;
   repeticiones: number;
   tiempoActividad: number;
