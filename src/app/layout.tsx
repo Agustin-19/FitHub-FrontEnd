@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
+import { UserProvider } from "@/context/userContext";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <UserProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </UserProvider>
       </body>
     </html>
   );
