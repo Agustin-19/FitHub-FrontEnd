@@ -1,3 +1,4 @@
+import { withNextVideo } from "next-video/process";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
@@ -7,7 +8,10 @@ const nextConfig = {
                 hostname: '**',
             }
         ]
+    },
+    video: {
+        formats: ['mp4', 'webm', 'ogg']
     }
 };
 
-export default nextConfig;
+export default withNextVideo(nextConfig);

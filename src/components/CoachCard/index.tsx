@@ -19,6 +19,7 @@ interface CoachCardProps {
 }
 
 const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
+
   const rating = user.rating ?? 0; // Si la calificación es undefined, usar 0
 
   return (
