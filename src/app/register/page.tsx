@@ -1,13 +1,15 @@
 import { RegisterComponet } from "../../components/Register";
+import HumanScan from "../../components/HumanScan";
 
 export default function Register() {
   return (
-    <div className=" text-black bg-gray-100">
-      <h1 className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2  text-2xl p-5 text-center">
-        ¿ Quieres unirte a FitHub ?
-      </h1>
-
-      <RegisterComponet />
+    <div className="flex">
+      <div className="flex-1 flex justify-center items-center">
+        <HumanScan />
+      </div>
+      <div className="flex-1 flex justify-center items-center border-l-4 border-[#FF3E1A]">
+        <RegisterComponet />
+      </div>
     </div>
   );
 }

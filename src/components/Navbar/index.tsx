@@ -75,7 +75,7 @@ export function Navbar() {
                   data-twe-nav-item-ref
                 >
                   <Link
-                    href="#"
+                    href="/#programs"
                     className="p-0 text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"
                     data-twe-nav-link-ref
                   >
@@ -87,7 +87,7 @@ export function Navbar() {
                   data-twe-nav-item-ref
                 >
                   <Link
-                    href="#coaches"
+                    href="/#coaches"
                     className="p-0 text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"
                     data-twe-nav-link-ref
                   >
