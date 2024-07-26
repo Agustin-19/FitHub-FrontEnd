@@ -1,15 +1,7 @@
 import { LoginComponet } from "../../components/Login";
 import HumanScan from "../../components/HumanScan";
-import { UserContext } from "@/context/userContext";
-import { useRouter } from "next/navigation";
-import { useContext } from "react";
-export default function Login() {
-  const router = useRouter();
-  const { isLogged } = useContext(UserContext);
 
-  if (isLogged) {
-    router.push("/login");
-  }
+export default function Login() {
   return (
     <div className="flex ">
       <div className="flex-1 flex justify-center items-center">

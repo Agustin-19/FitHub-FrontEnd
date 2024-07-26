@@ -7,11 +7,7 @@ import { UserContext } from "@/context/userContext";
 import { UserIcon } from "@heroicons/react/24/outline";
 
 export function Navbar() {
-  const { isLogged, setIsLogged } = useContext(UserContext);
-
-  const toggleLoginState = () => {
-    setIsLogged(!isLogged);
-  };
+  const { isLogged, logOut } = useContext(UserContext);
 
   return (
     <div className="relative flex w-full flex-nowrap items-center justify-between bg-[#1A1D1A] py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
@@ -42,10 +38,7 @@ export function Navbar() {
                 <UserIcon className="w-6 h-6 text-white" />
               </Link>
             </div>
-            <button
-              onClick={toggleLoginState}
-              className="text-sm text-[#FF3E1A]"
-            >
+            <button onClick={logOut} className="text-sm text-[#FF3E1A]">
               Cerrar Sesión
             </button>
           </div>
@@ -166,12 +159,7 @@ export function Navbar() {
                 </div>
               </div>
             </div>
-            <button
-              onClick={toggleLoginState}
-              className="text-sm text-[#FF3E1A]"
-            >
-              Iniciar Sesión
-            </button>
+            <button className="text-sm text-[#FF3E1A]">Iniciar Sesión</button>
           </>
         )}
       </div>

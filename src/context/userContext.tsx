@@ -15,6 +15,7 @@ import {
   ILogin,
 } from "../interface/interface";
 import { users } from "../../public/data/user.data";
+import { useRouter } from "next/navigation";
 
 export const UserContext = createContext<IUserConext>({
   user: null,
@@ -31,6 +32,7 @@ export const UserContext = createContext<IUserConext>({
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
   const [user, setUser] = useState<Partial<IloginUserRegister> | null>(null);
   const [isLogged, setIsLogged] = useState(false);
   const [rutinas, setRutinas] = useState<ICreateRutinaDpto[]>([]);
@@ -124,6 +126,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
     setUser(null);
     setIsLogged(false);
+    router.push("/");
   };
 
   useEffect(() => {
