@@ -1,9 +1,25 @@
-
+import { Carousel } from "@/components/Carousel";
+import SummaryStats from "@/components/SummaryStats";
+import Programs from "@/components/Programs";
+import CoachList from "@/components/CoachList";
 
 export default function LandingPage() {
-    return (
-        <div className="content mt-5 flex flex-col items-center justify-center h-screen text-black bg-gray-100">
-            <h1>Pages Inicial</h1>
-        </div>
-    );
+  return (
+    <div>
+      <div>
+        <section className="mb-8 ">
+          <Carousel />
+        </section>
+      </div>
+      <section className="mb-10">
+        <SummaryStats />
+      </section>
+      <section id="programs" className="mb-10">
+        <Programs />
+      </section>
+      <section id="coaches" className="mb-10">
+        <CoachList />
+      </section>
+    </div>
+  );
 }

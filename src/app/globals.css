@@ -1,35 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --fondo: #1A1D1A;
+  --botones: #FF3E1A;
+  --titulos: #97D6DF;
+  --subTitulos: #447988;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #1A1D1A;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  margin:  20rem;
-  padding: 4rem;
+  font-family: "Inter", sans-serif;
+  color: #447988;
+
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.links {
+  text-decoration: none;
+  color: #447988;
+}
+
+ul {
+  list-style: none;
+}
+
+.boton {
+  @apply rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19];
 }

@@ -1,9 +1,19 @@
+"use client";
+import HomeUser from "@/components/Home";
 
-
+import { useContext } from "react";
+import { UserContext } from "@/context/userContext";
+import { useRouter } from "next/navigation";
 export default function Home() {
-    return (
-        <div className=" text-black bg-gray-100">
-            <h1>Home</h1>
-        </div>
-    );
+  const router = useRouter();
+  const { isLogged } = useContext(UserContext);
+
+  if (!isLogged) {
+    router.push("/login");
+  }
+  return (
+    <div>
+      <HomeUser />
+    </div>
+  );
 }
