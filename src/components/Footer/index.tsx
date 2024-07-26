@@ -44,7 +44,7 @@ export function Footer() {
             <h2 className="text-3xl text-[#FF3E1A]">Más información</h2>
             <ul>
               <li>
-                <Link href="/" className="hover:text-[#FF3E1A]">
+                <Link href="/registerCoach" className="hover:text-[#FF3E1A]">
                   ¿Quieres ser entrenador?
                 </Link>
               </li>
