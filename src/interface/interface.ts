@@ -7,10 +7,10 @@ interface IUser {
   city: string;
   phone: string;
   statusMembrecia?: string;
-  fotosPerfil?: string[];
+  fotosPerfil?: string;
   role?: string;
   password: string;
-  rutinas?: number[];
+  rutinas?: IRutina[];
   actividades?: number[];
   id: number;
   borradologico: boolean;
@@ -57,7 +57,7 @@ interface IUserConext {
   getRutinas: () => void;
   getActividades: () => void;
   setIsLogged: (isLogged: boolean) => void;
-  rutinas: ICreateRutinaDpto[];
+  rutinas: IRutina[];
   actividades: ICreateActividadDpto[];
 }
 

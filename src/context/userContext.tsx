@@ -13,6 +13,7 @@ import {
   ICreateActividadDpto,
   IUser,
   ILogin,
+  IRutina,
 } from "../interface/interface";
 import { users } from "../../public/data/user.data";
 import { useRouter } from "next/navigation";
@@ -35,7 +36,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [user, setUser] = useState<Partial<IloginUserRegister> | null>(null);
   const [isLogged, setIsLogged] = useState(false);
-  const [rutinas, setRutinas] = useState<ICreateRutinaDpto[]>([]);
+  const [rutinas, setRutinas] = useState<IRutina[]>([]);
   const [actividades, setActividades] = useState<ICreateActividadDpto[]>([]);
 
   const signUp = async (user: Omit<IUser, "id">) => {
