@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import CoachDashboard from "@/components/CoachDashboard";
@@ -10,19 +10,38 @@ export default function Dashboard() {
   const router = useRouter();
   const { isLogged, user } = useContext(UserContext) as {
     isLogged: boolean;
-    user: { role: string } | null;
+    user: {
+      login: boolean;
+      token: string;
+      user: { role: string } | null;
+    } | null;
   };
 
+  useEffect(() => {
+    if (!isLogged) {
+      router.push("/login");
+    }
+  }, [isLogged, router]);
+
   if (!isLogged) {
-    router.push("/login");
+    return null;
   }
+
+  const role = user?.user?.role;
+
+  console.log("User role from context:", role);
 
   return (
     <div className="text-black bg-gray-100">
       <h1>Bienvenido al Dashboard</h1>
-      <CoachDashboard />
-      <UserDashboard />
-      <p>Rol no reconocido.</p>
+
+      {role === "user" ? (
+        <UserDashboard />
+      ) : role === "coach" ? (
+        <CoachDashboard />
+      ) : (
+        <p>Rol no reconocido.</p>
+      )}
     </div>
   );
 }
