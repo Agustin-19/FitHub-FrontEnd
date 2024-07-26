@@ -1,5 +1,7 @@
-import RoutinesList from "../RoutinesList";
+import { rutinas } from "../../../public/data/rutines.data"; // Importa las rutinas
+import RutinaList from "../RoutinesList";
 import "./programs.module.css";
+
 export default function Programas() {
   return (
     <div className="bg-[#1A1D1A] p-8">
@@ -19,7 +21,7 @@ export default function Programas() {
           </span>
         </div>
       </div>
-      <RoutinesList />
+      <RutinaList rutinas={rutinas} />
     </div>
   );
 }

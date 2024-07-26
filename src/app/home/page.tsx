@@ -1,13 +1,9 @@
-'use client'
-
-import RutinaList from "@/components/RoutinesList/index";
-
+import HomeUser from "@/components/Home";
 
 export default function Home() {
-    return (
-        <div className=" text-black bg-gray-100">
-            <h1>Home</h1>
-            <RutinaList/>
-        </div>
-    );
+  return (
+    <div>
+      <HomeUser />
+    </div>
+  );
 }

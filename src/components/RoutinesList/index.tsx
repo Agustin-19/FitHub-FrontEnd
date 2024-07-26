@@ -1,9 +1,21 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { rutinas } from "../../../public/data/rutines.data";
 
-const RutinaList: React.FC = () => {
+interface IRutina {
+  // Define the properties of IRutina here
+  id: number;
+  name: string;
+  imagen: string;
+  description: string;
+  precio: number;
+}
+
+interface RutinaListProps {
+  rutinas: IRutina[];
+}
+
+const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {rutinas.map((rutina) => (

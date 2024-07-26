@@ -7,7 +7,7 @@ interface IUser {
   city: string;
   phone: string;
   statusMembrecia?: string;
-  fotosPerfil?: string;
+  fotosPerfil?: string[];
   role?: string;
   password: string;
   rutinas?: number[];
@@ -79,7 +79,7 @@ interface IRutinaEjercicio {
   name: string;
   description: string;
   imagen: string;
-  videoUrl: string
+  videoUrl: string;
   series: number;
   repeticiones: number;
   tiempoActividad: number;
@@ -96,6 +96,16 @@ interface IRutinaList {
   rutinas: IRutina[];
 }
 
+interface IFilters {
+  fuerza: boolean;
+  cardio: boolean;
+  flexibilidad: boolean;
+}
+
+interface IRutinaListProps {
+  rutinas: IRutina[];
+  filters: IFilters;
+}
 // Actividades
 
 interface IActividad {
@@ -153,4 +163,6 @@ export type {
   IActividadList,
   IErrorsLogin,
   IErrorsRegister,
+  IRutinaListProps,
+  IFilters,
 };
