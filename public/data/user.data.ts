@@ -8,6 +8,7 @@ export const users: IUser[] = [
     address: "Calle Falsa 123",
     city: "Buenos Aires",
     phone: "1234567890",
+
     role: "user",
     password: "12345678",
     borradologico: false,
@@ -19,6 +20,7 @@ export const users: IUser[] = [
     address: "123 Main Street",
     city: "Ciudad de México",
     phone: "555-123-4567",
+    fotosPerfil: 'https://cdn.conmebol.com/wp-content/uploads/2023/10/000_322A2WL-1024x683.jpg',
     role: "coach",
     password: "12345678",
     borradologico: false,

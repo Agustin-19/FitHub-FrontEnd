@@ -1,5 +1,5 @@
 import { IUser, ILogin } from "@/interface/interface";
-const API = "http:api";
+const API = "http://localhost:3000";
 
 export const postSigup = async (user: Omit<IUser, "id">) => {
   const response = await fetch(`${API}/users/register`, {
