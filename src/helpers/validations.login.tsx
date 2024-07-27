@@ -1,4 +1,8 @@
-import { IErrorsLogin, IErrorsRegister, IRegisterUser } from "@/interface/interface";
+import {
+  IErrorsLogin,
+  IErrorsRegister,
+  IRegisterUser,
+} from "@/interface/interface";
 
 const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
   const errors: IErrorsLogin = {};
@@ -20,20 +24,21 @@ const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
 };
 
 const validateRegister = (
-  values: IRegisterUser,
+  values: IErrorsRegister,
   fieldsToValidate: string[]
 ) => {
-  const errors: IRegisterUser = {
+  const errors: IErrorsRegister = {
     name: "",
     email: "",
-    dni: 0,
+    dni: "",
     address: "",
     city: "",
     country: "",
     password: "",
     passwordConfirm: "",
-    phone: 0,
-  }
+    phone: "",
+    delete: false,
+  };
 
   if (fieldsToValidate.includes("name") && !values.name) {
     errors.name = "*";
@@ -47,9 +52,8 @@ const validateRegister = (
   }
 
   if (fieldsToValidate.includes("dni") && !values.dni) {
-    errors.dni = 0;
+    errors.dni = "*";
   }
-
 
   if (fieldsToValidate.includes("address") && !values.address) {
     errors.address = "*";
@@ -59,8 +63,8 @@ const validateRegister = (
     errors.city = "*";
   }
 
-  if (fieldsToValidate.includes('country') && !values.country) {
-    errors.country = '*';
+  if (fieldsToValidate.includes("country") && !values.country) {
+    errors.country = "*";
   }
 
   if (fieldsToValidate.includes("password") && !values.password) {
@@ -77,9 +81,8 @@ const validateRegister = (
   }
 
   if (fieldsToValidate.includes("phone") && !values.phone) {
-    errors.phone = 0;
+    errors.phone = "*";
   }
-
 
   return errors;
 };
