@@ -14,8 +14,9 @@ import {
   IUser,
   ILogin,
   IRutina,
+  IRegisterUser,
 } from "../interface/interface";
-import { users } from "../../public/data/user.data";
+// import { users } from "../../public/data/user.data";
 import { useRouter } from "next/navigation";
 
 export const UserContext = createContext<IUserConext>({
@@ -39,9 +40,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [rutinas, setRutinas] = useState<IRutina[]>([]);
   const [actividades, setActividades] = useState<ICreateActividadDpto[]>([]);
 
-  const signUp = async (user: Omit<IUser, "id">) => {
+  const signUp = async (user: IRegisterUser) => {
     try {
       const data = await postSigup(user);
+      // const data = await postSigupCoach(user); para entrenadores
       return data;
     } catch (error) {
       console.log(error);
@@ -50,33 +52,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signIn = async (credentials: ILogin) => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("Development environment detected");
-      console.log("Received credentials:", credentials);
-      const user = users.find(
-        (user) =>
-          user.email === credentials.email &&
-          user.password === credentials.password
-      );
-      if (user) {
-        console.log("User found:", user);
-        const userLoginData: Partial<IloginUserRegister> = {
-          login: true,
-          token: "fake-token",
-          user: user,
-        };
-        setUser(userLoginData);
-        if (typeof window !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(userLoginData));
-          localStorage.setItem("token", "fake-token");
-        }
-        setIsLogged(true);
-        return true;
-      } else {
-        console.log("No user found with the provided credentials");
-        return false;
-      }
-    } else {
       try {
         console.log("Production environment detected");
         const data = await postSignin(credentials);
@@ -95,7 +70,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         console.log("SignIn failed", error);
         return false;
       }
-    }
+    
   };
 
   const getActividades = async () => {

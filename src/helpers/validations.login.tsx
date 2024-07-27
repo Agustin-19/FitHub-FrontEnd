@@ -1,4 +1,4 @@
-import { IErrorsLogin, IErrorsRegister } from "@/interface/interface";
+import { IErrorsLogin, IErrorsRegister, IRegisterUser } from "@/interface/interface";
 
 const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
   const errors: IErrorsLogin = {};
@@ -20,10 +20,20 @@ const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
 };
 
 const validateRegister = (
-  values: IErrorsRegister,
+  values: IRegisterUser,
   fieldsToValidate: string[]
 ) => {
-  const errors: IErrorsRegister = {};
+  const errors: IRegisterUser = {
+    name: "",
+    email: "",
+    dni: 0,
+    address: "",
+    city: "",
+    country: "",
+    password: "",
+    passwordConfirm: "",
+    phone: 0,
+  }
 
   if (fieldsToValidate.includes("name") && !values.name) {
     errors.name = "*";
@@ -36,12 +46,21 @@ const validateRegister = (
     errors.email = "* Incorrect email format. Example: 4oLZ9@example.com";
   }
 
+  if (fieldsToValidate.includes("dni") && !values.dni) {
+    errors.dni = 0;
+  }
+
+
   if (fieldsToValidate.includes("address") && !values.address) {
     errors.address = "*";
   }
 
   if (fieldsToValidate.includes("city") && !values.city) {
     errors.city = "*";
+  }
+
+  if (fieldsToValidate.includes('country') && !values.country) {
+    errors.country = '*';
   }
 
   if (fieldsToValidate.includes("password") && !values.password) {
@@ -51,15 +70,16 @@ const validateRegister = (
   }
 
   if (
-    fieldsToValidate.includes("repeat_password") &&
-    values.password !== values.repeat_password
+    fieldsToValidate.includes("passwordConfirm") &&
+    values.password !== values.passwordConfirm
   ) {
-    errors.repeat_password = "The passwords do not match.";
+    errors.passwordConfirm = "The passwords do not match.";
   }
 
   if (fieldsToValidate.includes("phone") && !values.phone) {
-    errors.phone = "*";
+    errors.phone = 0;
   }
+
 
   return errors;
 };

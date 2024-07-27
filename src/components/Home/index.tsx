@@ -58,69 +58,70 @@ export default function Home() {
 
   return (
     <div>
-      <div>
-        <h2>Filtrar por Precio</h2>
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              value="0-20"
-              checked={priceRange.includes("0-20")}
-              onChange={handlePriceRangeChange}
-            />
-            0 - 20
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              value="20-40"
-              checked={priceRange.includes("20-40")}
-              onChange={handlePriceRangeChange}
-            />
-            20 - 40
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              value="40-100"
-              checked={priceRange.includes("40-100")}
-              onChange={handlePriceRangeChange}
-            />
-            40 - 100
-          </label>
+      <h1 className="text-center text-3xl font-bold text-[#97D6DF] mb-4 mt-9">
+        Rutinas Disponibles
+      </h1>
+      <div className="flex">
+        <div className="flex flex-col mr-4">
+          <div className="flex flex-col border-3 mt-7 ml-4 ">
+            <h2 className="text-center text-[#97D6DF]">Filtrar por Precio</h2>
+            <label className="bg-[#447988] p-2 rounded mb-2 text-[#1A1D1A] text-center flex items-center">
+              <input
+                type="checkbox"
+                value="0-20"
+                checked={priceRange.includes("0-20")}
+                onChange={handlePriceRangeChange}
+              />
+              <span className="ml-2 bg-[#447988]">0 - 20</span>
+            </label>
+            <label className="bg-[#447988] p-2 rounded mb-2 text-[#1A1D1A] text-center flex items-center">
+              <input
+                type="checkbox"
+                value="20-40"
+                checked={priceRange.includes("20-40")}
+                onChange={handlePriceRangeChange}
+              />
+              <span className="ml-2 bg-[#447988]">20 - 40</span>
+            </label>
+            <label className="bg-[#447988] p-2 rounded mb-2 text-[#1A1D1A] text-center flex items-center">
+              <input
+                type="checkbox"
+                value="40-100"
+                checked={priceRange.includes("40-100")}
+                onChange={handlePriceRangeChange}
+              />
+              <span className="ml-2 bg-[#447988]">40 - 100</span>
+            </label>
+          </div>
+          <div className="flex flex-col w-[150px] text-center mt-2 ml-4">
+            <h2 className="text-[#97D6DF]">Filtrar por Categoría</h2>
+            <label className="bg-[#447988] p-2 rounded mb-2 text-[#1A1D1A] text-center flex items-center">
+              <input
+                type="checkbox"
+                onChange={() => handleCategoryChange("Fuerza")}
+              />
+              <span className="ml-2 bg-[#447988]">Fuerza</span>
+            </label>
+            <label className="bg-[#447988] p-2 rounded mb-2 text-[#1A1D1A] text-center flex items-center">
+              <input
+                type="checkbox"
+                onChange={() => handleCategoryChange("Cardio")}
+              />
+              <span className="ml-2 bg-[#447988]">Cardio</span>
+            </label>
+            <label className="bg-[#447988] p-2 rounded mb-2 text-[#1A1D1A] text-center flex items-center">
+              <input
+                type="checkbox"
+                onChange={() => handleCategoryChange("Flexibilidad")}
+              />
+              <span className="ml-2 bg-[#447988]">Flexibilidad</span>
+            </label>
+          </div>
         </div>
-        {filterByPrice && (
-          <input
-            type="number"
-            value={maxPrice}
-            onChange={handlePriceChange}
-            min="0"
-          />
-        )}
-        <h2>Filtrar por Categoría</h2>
-        <label>
-          <input
-            type="checkbox"
-            onChange={() => handleCategoryChange("Fuerza")}
-          />
-          Fuerza
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            onChange={() => handleCategoryChange("Cardio")}
-          />
-          Cardio
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            onChange={() => handleCategoryChange("Flexibilidad")}
-          />
-          Flexibilidad
-        </label>
+        <div>
+          <RutinaList rutinas={filteredRutinas} />
+        </div>
       </div>
-      <RutinaList rutinas={filteredRutinas} />
     </div>
   );
 }

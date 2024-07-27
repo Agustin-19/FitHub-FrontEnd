@@ -1,8 +1,54 @@
-import { rutinas } from "../../../public/data/rutines.data"; // Importa las rutinas
+'use client';
+import { useEffect, useState } from "react";
+// import { rutinas } from '../../../public/data/rutines.data'; // Importa las rutinas
 import RutinaList from "../RoutinesList";
 import "./programs.module.css";
+const API = "http://localhost:3001";
 
 export default function Programas() {
+
+  const [rutinas, setRutinas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    // Función para obtener los datos del backend
+    const fetchRutinas = async () => {
+      try {
+        const response = await fetch(`${API}/rutina`);
+        if (!response.ok) {
+          throw new Error("Error al obtener las rutinas");
+        }
+        const rutinas = await response.json();
+        console.log(rutinas);
+        
+        setRutinas(rutinas);
+      } catch (err) {
+        console.log('error');
+        
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchRutinas();
+  }, []); // El array vacío [] asegura que el efecto se ejecute solo una vez al montar el componente
+  
+  if (loading) {
+    return <div className="text-center text-white">Cargando...</div>;
+  }
+  
+  if (error) {
+    return <div className="text-center text-red-500">Error: {error}</div>;
+  }
+  
+  
+  
+
+
+
+
+
   return (
     <div className="bg-[#1A1D1A] p-8">
       <div className="text-center">

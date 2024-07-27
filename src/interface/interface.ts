@@ -3,9 +3,11 @@
 interface IUser {
   name: string;
   email: string;
+  dni: number;
   address: string;
+  phone: number;
+  country: string;
   city: string;
-  phone: string;
   statusMembrecia?: string;
   fotosPerfil?: string;
   role?: string;
@@ -19,14 +21,14 @@ interface IUser {
 interface IRegisterUser {
   name: string;
   email: string;
+  dni: number;
+  password: string;
+  passwordConfirm: string;
+  phone: number;
+  country: string;
   address: string;
   city: string;
-  role?: string;
-  password: string;
-  phone: string;
-  fotoPerfil?: string;
-  statusMembrecia?: string;
-  credential: ICreateCredential;
+  delete: boolean;
 }
 
 interface ICreateCredential {
@@ -40,6 +42,7 @@ interface ILogin {
 }
 
 interface IloginUserRegister {
+  name: string;
   login: boolean;
   token: string;
   user: Partial<IUser> | null;
@@ -52,7 +55,7 @@ interface IUserConext {
   >;
   isLogged: boolean;
   signIn: (credentials: ILogin) => Promise<boolean>;
-  signUp: (user: Omit<IUser, "id">) => Promise<boolean>;
+  signUp: (user: IRegisterUser) => Promise<boolean>;
   logOut: () => void;
   getRutinas: () => void;
   getActividades: () => void;
@@ -140,11 +143,13 @@ interface IErrorsLogin {
 interface IErrorsRegister {
   name?: string;
   email?: string;
+  dni?: number;
   address?: string;
   city?: string;
+  country?: string;
   password?: string;
   repeat_password?: string;
-  phone?: string;
+  phone?: number;
 }
 
 export type {

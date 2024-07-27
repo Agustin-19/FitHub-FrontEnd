@@ -48,7 +48,7 @@ export function RegisterCoachComponent() {
     }
 
     try {
-      const response = await fetch("/api/updateRole", {
+      const response = await fetch("http://localhost:3001/auth/signupentrenador", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -74,27 +74,34 @@ export function RegisterCoachComponent() {
   console.log("User role from context:", role);
 
   return (
-    <div>
-      {role === "user" ? (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-          <h1>Register Coach</h1>
-          <label>
-            Actividad:
-            <input
-              type="text"
-              value={activity}
-              onChange={(e) => setActivity(e.target.value)}
-            />
-          </label>
-          <label>
-            Cargar archivo:
-            <input type="file" onChange={handleFileChange} />
-          </label>
-          <button type="submit">Guardar cambios</button>
-        </form>
-      ) : role === "coach" ? (
-        <h1>Ya se encuentra registrado como entrenador</h1>
-      ) : null}
-    </div>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-2 bg-[#1A1D1A] p-4 rounded-lg"
+    >
+      <h1 className="text-[#FF3E1A] text-2xl">Registrar Entrenador</h1>
+      <label className="text-[#97D6DF]">
+        Actividad:
+        <input
+          type="text"
+          value={activity}
+          onChange={(e) => setActivity(e.target.value)}
+          className="mt-1 p-2 rounded border border-[#447988] bg-transparent text-[#97D6DF]"
+        />
+      </label>
+      <label className="text-[#97D6DF]">
+        Cargar archivo:
+        <input
+          type="file"
+          onChange={handleFileChange}
+          className="mt-1 p-2 rounded border border-[#447988] bg-transparent text-[#97D6DF]"
+        />
+      </label>
+      <button
+        type="submit"
+        className="mt-4 bg-[#FF3E1A] text-white rounded py-2 hover:bg-[#FF5722] transition duration-150"
+      >
+        Guardar cambios
+      </button>
+    </form>
   );
 }
