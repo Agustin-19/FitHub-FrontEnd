@@ -1,0 +1,106 @@
+.dashboard {
+    background-color: #1A1D1A;
+    color: #97D6DF;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+    position: relative;
+}
+
+.avatar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+
+.ring-primary {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    /* Asegúrate de que coincida con el tamaño del avatar */
+    height: 80px;
+    /* Asegúrate de que coincida con el tamaño del avatar */
+    border-radius: 50%;
+    /* Hace que el aro sea redondo */
+    z-index: 1;
+    /* Asegúrate de que esté por encima de la imagen */
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Asegura que la imagen cubra el contenedor */
+}
+
+.no-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #447988;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #97D6DF;
+}
+
+.pencil-icon {
+
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+    /* Centra el ícono dentro del aro */
+}
+
+.dashboard h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.dashboard h3 {
+    font-size: 20px;
+    margin: 0.5rem 0; /* Ajusta este valor según sea necesario */
+}
+
+.dashboard ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dashboard li {
+    background-color: #2A2D2A;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.dashboard li:hover {
+    background-color: #FF3E1A;
+    color: white;
+}

@@ -52,7 +52,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signIn = async (credentials: ILogin) => {
-    
       try {
         console.log("Production environment detected");
         const data = await postSignin(credentials);
