@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import { validateRegister } from "@/helpers/validations.login";
 import { useRouter } from "next/navigation";
-import { IErrorsRegister } from "@/interface/interface";
+import { IErrorsRegister, IRegisterUser } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
 
 export function RegisterComponet({ token, setToken }: any) {
@@ -15,27 +15,27 @@ export function RegisterComponet({ token, setToken }: any) {
   const [userData, setUserDate] = useState({
     name: "",
     email: "",
+    dni: 0,
+    password: "",
+    passwordConfirm: "",
+    phone: 0,
+    country: "",
     address: "",
     city: "",
-    password: "",
-    repeat_password: "",
-    phone: "",
-    statusMembrecia: "",
-    fotosPerfil: "",
-    role: "",
-    rutinas: [],
-    actividades: [],
-    borradologico: false,
+    delete: false,
   });
 
-  const [errors, setErrors] = useState<IErrorsRegister>({
+  const [errors, setErrors] = useState<IRegisterUser>({
     name: "*",
     email: "*",
-    address: "*",
+    dni: 0,
+    phone: 0,
+    country: "*",
     city: "*",
+    address: "*",
     password: "*",
-    repeat_password: "*",
-    phone: "*",
+    passwordConfirm: "*",
+    delete: false,
   });
 
   const todosLosCamposCompletos = () => {
@@ -45,41 +45,63 @@ export function RegisterComponet({ token, setToken }: any) {
       userData.name !== "" &&
       userData.address !== "" &&
       userData.city !== "" &&
-      userData.phone !== ""
+      userData.phone !== 0 &&
+      userData.country !== "" &&
+      userData.dni !== 0
     );
   };
 
   const handleImputChange = (event: any) => {
     const { name, value } = event.target;
-    const newUserDate = { ...userData, [name]: value };
+
+    const newValue = (name === 'dni' || name === 'phone') ? Number(value) : value;
+    const newUserDate = { ...userData, [name]: newValue };
 
     setUserDate(newUserDate);
     setErrors(
       validateRegister(newUserDate, [
         "email",
-        "password",
         "name",
-        "address",
-        "city",
+        "dni",
         "phone",
-        "repeat_password",
+        "country",
+        "city",
+        "address",
+        "password",
+        "passwordConfirm",
       ])
     );
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if (userData.password !== userData.repeat_password) {
+    
+
+    if (userData.password !== userData.passwordConfirm) {
       alert("Las contraseñas no coinciden");
-    } else if (Object.keys(errors).length) {
-      alert("Todos los campos son obligatorios");
+    // } else 
+    // if (Object.keys(errors).length) {
+    //   alert("Todos los campos son obligatorios ");
     } else {
-      const { repeat_password, fotosPerfil, ...userDataToSubmit } = userData;
-      const success = await signUp({
-        ...userDataToSubmit,
-        fotosPerfil: fotosPerfil ? [fotosPerfil] : [],
-        borradologico: false,
-      });
+
+      
+      const userDataToSubmit = {
+        name: userData.name,
+        email: userData.email,
+        dni: Number(userData.dni),
+        phone: Number(userData.phone),
+        country: userData.country,
+        city: userData.city,
+        address: userData.address,
+        password: userData.password,
+        passwordConfirm: userData.passwordConfirm,
+        delete: false,
+      }
+      
+      console.log(userDataToSubmit);
+      
+      const success = await signUp(userDataToSubmit);
+
       if (success) {
         router.push("/login");
       } else {
@@ -153,6 +175,30 @@ export function RegisterComponet({ token, setToken }: any) {
           )}
         </div>
 
+        {/* DNI Input */}
+        <div className="relative mb-6" data-twe-input-wrapper-init>
+          <input
+            type="number"
+            name="dni"
+            id="dni"
+            placeholder="Enter your DNI"
+            required
+            onChange={handleImputChange}
+            className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+          />
+          <label
+            htmlFor="dni"
+            className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988] peer-data-[twe-input-state-active]:-translate-y-[1.15rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]"
+          >
+            DNI
+          </label>
+          {errors.dni && (
+            <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
+              {errors.dni}
+            </p>
+          )}
+        </div>
+
         {/* Entrada de dirección */}
         <div className="relative mb-6" data-twe-input-wrapper-init>
           <input
@@ -177,6 +223,30 @@ export function RegisterComponet({ token, setToken }: any) {
           {errors.address && (
             <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
               {errors.address}
+            </p>
+          )}
+        </div>
+
+        {/* Entrada de país */}
+        <div className="relative mb-6" data-twe-input-wrapper-init>
+          <input
+            type="text"
+            name="country"
+            id="country"
+            placeholder="Ingrese su país"
+            required
+            onChange={handleImputChange}
+            className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+          />
+          <label
+            htmlFor="country"
+            className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988] peer-data-[twe-input-state-active]:-translate-y-[1.15rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]"
+          >
+            País
+          </label>
+          {errors.country && (
+            <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
+              {errors.country}
             </p>
           )}
         </div>
@@ -212,7 +282,7 @@ export function RegisterComponet({ token, setToken }: any) {
         {/* Entrada de celular */}
         <div className="relative mb-6" data-twe-input-wrapper-init>
           <input
-            type="text"
+            type="number"
             name="phone"
             id="phone"
             placeholder="Ingrese su celular"
@@ -271,26 +341,23 @@ export function RegisterComponet({ token, setToken }: any) {
         <div className="relative mb-6" data-twe-input-wrapper-init>
           <input
             type="password"
-            name="repeat_password"
-            id="repeat_password"
+            name="passwordConfirm"
+            id="passwordConfirm"
             placeholder="Repita su contraseña"
             required
             onChange={handleImputChange}
             className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
           />
           <label
-            htmlFor="repeat_password"
-            className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out ${
-              userData.repeat_password
-                ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
-                : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
-            } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
+
+            htmlFor="passwordConfirm"
+            className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988] peer-data-[twe-input-state-active]:-translate-y-[1.15rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]"
           >
             Repita su Contraseña
           </label>
-          {errors.repeat_password && (
+          {errors.passwordConfirm && (
             <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-              {errors.repeat_password}
+              {errors.passwordConfirm}
             </p>
           )}
         </div>

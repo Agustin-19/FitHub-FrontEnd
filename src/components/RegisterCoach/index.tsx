@@ -48,7 +48,7 @@ export function RegisterCoachComponent() {
     }
 
     try {
-      const response = await fetch("/api/updateRole", {
+      const response = await fetch("http://localhost:3001/auth/signupentrenador", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${user?.token}`,
