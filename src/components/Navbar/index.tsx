@@ -1,13 +1,15 @@
 "use client";
-import { useState, useContext } from "react";
+
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../public/assets/navbar/logo.png";
 import { UserContext } from "@/context/userContext";
 import { UserIcon } from "@heroicons/react/24/outline";
+import { IloginUserRegister } from "@/interface/interface";
 
 export function Navbar() {
-  const { isLogged, logOut } = useContext(UserContext);
+  const { isLogged, user, logOut } = useContext(UserContext);
 
   return (
     <div className="relative flex w-full flex-nowrap items-center justify-between bg-[#1A1D1A] py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
@@ -24,6 +26,9 @@ export function Navbar() {
 
         {isLogged ? (
           <div className="flex items-center ms-10 md:me-2">
+            <span className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 text-sm">
+              {(user as IloginUserRegister)?.name || ""}
+            </span>
             <Link
               href="/home"
               className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"

@@ -33,8 +33,6 @@ export default function Dashboard() {
 
   return (
     <div className="text-black bg-gray-100">
-      <h1>Bienvenido al Dashboard</h1>
-
       {role === "user" ? (
         <UserDashboard />
       ) : role === "coach" ? (

@@ -62,7 +62,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const userLoginData: Partial<IloginUserRegister> = {
           login: true,
           token: "fake-token",
-          user: user,
+          user: {
+            ...user,
+          },
         };
         setUser(userLoginData);
         if (typeof window !== "undefined") {
