@@ -15,21 +15,21 @@ export function RegisterComponet({ token, setToken }: any) {
   const [userData, setUserDate] = useState({
     name: "",
     email: "",
-    dni: 0,
+    dni: "",
     password: "",
     passwordConfirm: "",
-    phone: 0,
+    phone: "",
     country: "",
     address: "",
     city: "",
     delete: false,
   });
 
-  const [errors, setErrors] = useState<IRegisterUser>({
+  const [errors, setErrors] = useState<IErrorsRegister>({
     name: "*",
     email: "*",
-    dni: 0,
-    phone: 0,
+    dni: "*",
+    phone: "*",
     country: "*",
     city: "*",
     address: "*",
@@ -45,16 +45,16 @@ export function RegisterComponet({ token, setToken }: any) {
       userData.name !== "" &&
       userData.address !== "" &&
       userData.city !== "" &&
-      userData.phone !== 0 &&
+      userData.phone !== "" &&
       userData.country !== "" &&
-      userData.dni !== 0
+      userData.dni !== ""
     );
   };
 
   const handleImputChange = (event: any) => {
     const { name, value } = event.target;
 
-    const newValue = (name === 'dni' || name === 'phone') ? Number(value) : value;
+    const newValue = name === "dni" || name === "phone" ? Number(value) : value;
     const newUserDate = { ...userData, [name]: newValue };
 
     setUserDate(newUserDate);
@@ -75,16 +75,13 @@ export function RegisterComponet({ token, setToken }: any) {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    
 
     if (userData.password !== userData.passwordConfirm) {
       alert("Las contraseñas no coinciden");
-    // } else 
-    // if (Object.keys(errors).length) {
-    //   alert("Todos los campos son obligatorios ");
+      // } else
+      // if (Object.keys(errors).length) {
+      //   alert("Todos los campos son obligatorios ");
     } else {
-
-      
       const userDataToSubmit = {
         name: userData.name,
         email: userData.email,
@@ -96,10 +93,10 @@ export function RegisterComponet({ token, setToken }: any) {
         password: userData.password,
         passwordConfirm: userData.passwordConfirm,
         delete: false,
-      }
-      
+      };
+
       console.log(userDataToSubmit);
-      
+
       const success = await signUp(userDataToSubmit);
 
       if (success) {
@@ -154,9 +151,7 @@ export function RegisterComponet({ token, setToken }: any) {
             placeholder="Ingrese su correo"
             required
             onChange={handleImputChange}
-            className={`peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 ${
-              userData.email ? "text-[#447988]" : "peer-focus:text-[#447988]"
-            } data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0`}
+            className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
           />
           <label
             htmlFor="email"
@@ -178,17 +173,21 @@ export function RegisterComponet({ token, setToken }: any) {
         {/* DNI Input */}
         <div className="relative mb-6" data-twe-input-wrapper-init>
           <input
-            type="number"
+            type="text"
             name="dni"
             id="dni"
-            placeholder="Enter your DNI"
+            placeholder="Ingrese su DNI"
             required
             onChange={handleImputChange}
             className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
           />
           <label
             htmlFor="dni"
-            className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988] peer-data-[twe-input-state-active]:-translate-y-[1.15rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]"
+            className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out ${
+              userData.dni
+                ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
+                : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
+            } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
           >
             DNI
           </label>
@@ -240,7 +239,11 @@ export function RegisterComponet({ token, setToken }: any) {
           />
           <label
             htmlFor="country"
-            className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988] peer-data-[twe-input-state-active]:-translate-y-[1.15rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]"
+            className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out ${
+              userData.country
+                ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
+                : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
+            } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
           >
             País
           </label>
@@ -282,7 +285,7 @@ export function RegisterComponet({ token, setToken }: any) {
         {/* Entrada de celular */}
         <div className="relative mb-6" data-twe-input-wrapper-init>
           <input
-            type="number"
+            type="text"
             name="phone"
             id="phone"
             placeholder="Ingrese su celular"
@@ -349,7 +352,6 @@ export function RegisterComponet({ token, setToken }: any) {
             className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
           />
           <label
-
             htmlFor="passwordConfirm"
             className="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988] peer-data-[twe-input-state-active]:-translate-y-[1.15rem] peer-data-[twe-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]"
           >

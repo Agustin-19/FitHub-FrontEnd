@@ -143,13 +143,14 @@ interface IErrorsLogin {
 interface IErrorsRegister {
   name?: string;
   email?: string;
-  dni?: number;
+  dni?: string;
   address?: string;
   city?: string;
   country?: string;
   password?: string;
-  repeat_password?: string;
-  phone?: number;
+  passwordConfirm?: string;
+  phone?: string;
+  delete?: boolean;
 }
 
 export type {
