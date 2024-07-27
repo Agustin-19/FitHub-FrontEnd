@@ -1,21 +1,39 @@
-import { IUser, ILogin } from "@/interface/interface";
-const API = "http://localhost:3000";
+import { ILogin, IRegisterUser } from "@/interface/interface";
+const API = "http://localhost:3001";
 
-export const postSigup = async (user: Omit<IUser, "id">) => {
-  const response = await fetch(`${API}/users/register`, {
+export const postSigup = async (user: IRegisterUser) => {
+  const response = await fetch(`${API}/auth/signupuser`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(user),
   });
-  const data = await response.json();
+  // const data = await response.json();
+  const data = 'usuario creado'
+  console.log(data);
+  
+  return data;
+};
+
+export const postSigupCoach = async (user: IRegisterUser) => {
+  const response = await fetch(`${API}/auth/signupentrenador`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+  // const data = await response.json();
+  const data = 'usuario creado'
+  console.log(data);
+  
   return data;
 };
 
 export const postSignin = async (credentials: ILogin) => {
   try {
-    const response = await fetch(`${API}/users/login`, {
+    const response = await fetch(`${API}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +54,7 @@ export const postSignin = async (credentials: ILogin) => {
 };
 
 export const getUserRutinas = async (token: string) => {
-  const response = await fetch(`${API}/users/rutinas`, {
+  const response = await fetch(`${API}/rutinas`, {
     method: "GET",
     headers: {
       Authorization: `${token}`,
@@ -56,3 +74,5 @@ export const getUserActividades = async (token: string) => {
   const data = await response.json();
   return data;
 };
+
+
