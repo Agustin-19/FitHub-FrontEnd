@@ -1,3 +1,4 @@
+"use client";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/userContext";
 import Link from "next/link";
@@ -20,6 +21,7 @@ interface IUserConext {
     email: string;
     address: string;
     city: string;
+    role: string;
   } | null;
 }
 

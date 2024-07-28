@@ -16,6 +16,7 @@ import {
   IRutina,
   IRegisterUser,
 } from "../interface/interface";
+import { jwtDecode } from "jwt-decode";
 // import { users } from "../../public/data/user.data";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +33,6 @@ export const UserContext = createContext<IUserConext>({
   getActividades: () => {},
   setIsLogged: () => {},
 });
-
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [user, setUser] = useState<Partial<IloginUserRegister> | null>(null);
@@ -52,25 +52,29 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signIn = async (credentials: ILogin) => {
-      try {
-        console.log("Production environment detected");
-        const data = await postSignin(credentials);
-        if (!data.token) {
-          throw new Error("Invalid Token");
-        }
+    try {
+      const data = await postSignin(credentials); // Envía las credenciales
 
-        setUser(data);
-        if (typeof window !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(data));
-          localStorage.setItem("token", data.token);
-        }
-        setIsLogged(true);
-        return true;
-      } catch (error) {
-        console.log("SignIn failed", error);
-        return false;
+      if (!data.token) {
+        throw new Error("Invalid Token");
       }
-    
+
+      const decodedToken: any = jwtDecode(data.token); // Decodifica el token
+      console.log("Decoded Token:", decodedToken); // Muestra el contenido del token decodificado
+
+      // Guarda el rol y otros datos del usuario
+      setUser({ ...decodedToken, token: data.token });
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
+        localStorage.setItem("token", data.token); // Almacena el token
+      }
+      setIsLogged(true);
+      return true;
+    } catch (error) {
+      console.log("SignIn failed", error);
+      return false;
+    }
   };
 
   const getActividades = async () => {

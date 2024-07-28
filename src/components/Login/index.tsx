@@ -7,7 +7,7 @@ import { UserContext } from "@/context/userContext";
 import Link from "next/link";
 
 export function LoginComponet({ token, setToken }: any) {
-  const { signIn } = useContext(UserContext);
+  const { signIn, setUser } = useContext(UserContext);
   const router = useRouter();
 
   const [userDate, setUserDate] = useState<ILogin>({
