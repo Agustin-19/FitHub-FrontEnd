@@ -1,30 +1,82 @@
 'use client';
 
-import React, { useState } from 'react';
+import { IRutinaEjercicio } from '@/interface/interface';
+import { ICategory } from '@/interface/plan.interface';
+import React, { useEffect, useState, useContext } from 'react';
 
-const CreatePlan: React.FC = () => {
-    const [plan, setPlan] = useState({
+
+const CreateRutina: React.FC = () => {
+
+    const token: string =
+        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+
+    const [rutina, setRutina] = useState({
         name: '',
         descripcion: '',
         category: '',
-        location: '',
+        exercise: [] as string[],
         difficultyLevel: ''
     });
 
+    // *************** CATEGORIAS ***********************
+    const [categories, setCategories] = useState<ICategory[]>([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/categorias');
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        }; fetchCategories();
+    }, []);
+
+    // ************** EJERCICIOS *******************
+    const [ejercicios, setEjercicio] = useState<IRutinaEjercicio[]>([]);
+    useEffect(() => {
+        const fetchEjercicios = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/ejercicio');
+                const data = await response.json();
+                setEjercicio(data);
+            } catch (error) {
+                console.error('Error fetching ejercicios:', error);
+            }
+        }; fetchEjercicios();
+    }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
-        setPlan(prevState => ({
+        setRutina(prevState => ({
             ...prevState,
             [id]: value
         }));
     };
+
+    const handleChangeSelectMultiple: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        // Aquí puedes acceder al valor seleccionado
+        const { id, options } = event.target;
+        console.log(event.target.value);
+        const values = Array.from(options)
+            .filter(option => option.selected)
+            .map(option => option.value);
+
+        setRutina(prevState => ({
+            ...prevState,
+            [id]: values
+        }));
+    };
+
+
 
     const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         // Aquí puedes acceder al valor seleccionado
         console.log(event.target.value);
 
         const { id, value } = event.target;
-        setPlan(prevState => ({
+        setRutina(prevState => ({
             ...prevState,
             [id]: value
         }));
@@ -33,7 +85,7 @@ const CreatePlan: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const { name, descripcion, location, difficultyLevel, category } = plan;
+        const { name, descripcion, exercise, difficultyLevel, category } = rutina;
 
         if (!name) {
             alert("Por favor ingresa un título.");
@@ -41,6 +93,10 @@ const CreatePlan: React.FC = () => {
         }
         if (!descripcion) {
             alert("Por favor ingresa una descripción.");
+            return;
+        }
+        if (!exercise.length) {
+            alert("Por favor selecciona al menos un ejercicio.");
             return;
         }
         if (!location) {
@@ -57,22 +113,20 @@ const CreatePlan: React.FC = () => {
         }
 
 
+
         const Data = {
             name,
             description: descripcion,
-            location,
+            admin: 'efdc58a4-d08d-4143-a546-513e85155c1a',
+            exercise,
             difficultyLevel,
-            category : ['118fae60-40a3-4514-b603-b5b6541a4354']
+            category: [category]
         };
 
         console.log(Data);
 
-        
-
-
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvcnJlb0BtYWlsLmNvbSIsInN1YiI6IjJhMzU1NTMzLTQ3ZDUtNGU2Mi1iYzk1LWQ4OGIxZjBhZDA2MSIsInJvbGUiOiJlbnRyZW5hZG9yIiwiaWF0IjoxNzIyMjU2OTYyLCJleHAiOjE3MjIyNjA1NjJ9.GsL1E0hyp5h6On8Xy-yb4-9qEj7oPfles9umzN7gTAY";
         try {
-            const response = await fetch('http://localhost:3001/plan', {
+            const response = await fetch('http://localhost:3001/rutina', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -82,9 +136,9 @@ const CreatePlan: React.FC = () => {
             });
 
             if (response.ok) {
-                console.log("Plan creado exitosamente");
+                console.log("rutina creado exitosamente");
             } else {
-                console.error("Error al crear el plan");
+                console.error("Error al crear el rutina");
             }
         } catch (error) {
             console.error("Error:", error);
@@ -98,7 +152,7 @@ const CreatePlan: React.FC = () => {
                 <input
                     type="text"
                     id="name"
-                    value={plan.name}
+                    value={rutina.name}
                     onChange={handleChange}
                 />
             </div>
@@ -107,25 +161,33 @@ const CreatePlan: React.FC = () => {
                 <input
                     type="text"
                     id="descripcion"
-                    value={plan.descripcion}
+                    value={rutina.descripcion}
                     onChange={handleChange}
                 />
             </div>
+
             <div>
-                <label htmlFor="location">Locacion:</label>
-                <input
-                    type="text"
-                    id="location"
-                    value={plan.location}
-                    onChange={handleChange}
-                />
+                <label htmlFor="exercise">Ejercicio:</label>
+                <select
+                    id="exercise"
+                    value={rutina.exercise}
+                    onChange={handleChangeSelectMultiple}
+                    className="daisy-select daisy-select-bordered w-full max-w-xs"
+                    multiple
+                >
+                    {ejercicios.map(ejercicio => (
+                        <option key={ejercicio.id} value={ejercicio.id}>
+                            {ejercicio.titulo}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <div>
                 <label htmlFor="difficultyLevel">Nivel de dificultad:</label>
                 <select
                     id="difficultyLevel"
-                    value={plan.difficultyLevel}
+                    value={rutina.difficultyLevel}
                     onChange={handleChangeSelect}
                     className="daisy-select daisy-select-bordered w-full max-w-xs"
                 >
@@ -141,15 +203,16 @@ const CreatePlan: React.FC = () => {
                 <label htmlFor="category">Categoría:</label>
                 <select
                     id="category"
-                    value={plan.category}
+                    value={rutina.category}
                     onChange={handleChangeSelect}
                     className="daisy-select daisy-select-bordered w-full max-w-xs"
                 >
                     <option value='' disabled>Seleccionar Categoría</option>
-                    <option value='1'>Fulbo</option>
-                    <option value='2'>Voley</option>
-                    <option value='3'>Hockey</option>
-                    <option value='4'>Correr</option>
+                    {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
                 </select>
             </div>
 
@@ -158,4 +221,4 @@ const CreatePlan: React.FC = () => {
     );
 };
 
-export default CreatePlan;
+export default CreateRutina;

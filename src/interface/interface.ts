@@ -79,14 +79,9 @@ interface IRutina {
 
 interface IRutinaEjercicio {
   id: number;
-  name: string;
+  titulo: string;
   description: string;
-  imagen: string;
-  videoUrl: string;
-  series: number;
-  repeticiones: number;
-  tiempoActividad: number;
-  tiempoDescanso: number;
+  imgUrl: string[] | null;
 }
 
 interface ICreateRutinaDpto {

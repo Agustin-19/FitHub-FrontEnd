@@ -1,13 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import { ICategory } from '@/interface/plan.interface';
+import React, { useEffect, useState } from 'react';
 
 const CreateExercise: React.FC = () => {
+
+    const token: string =
+        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+
     const [ejercicio, setEjercicio] = useState({
         titulo: '',
         descripcion: '',
         imgUrl: [''] // Ahora es un string que almacenará la URL del archivo
     });
+
     const [files, setFile] = useState<File | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +50,6 @@ const CreateExercise: React.FC = () => {
 
         console.log(files);
 
-
         // Primero, sube el archivo para obtener una URL
         const formData = new FormData();
         formData.append('files', files);
@@ -56,14 +61,12 @@ const CreateExercise: React.FC = () => {
 
         console.log(uploadResponse);
 
-
         if (!uploadResponse.ok) {
             console.error('Error al subir el archivo');
             return;
         }
 
         const fileUrl = await uploadResponse.json();
-
 
         // Construye el objeto Ejercicio para mostrar en la consola
         const ejercicioData = {
@@ -74,7 +77,6 @@ const CreateExercise: React.FC = () => {
 
         // Mostrar el objeto Ejercicio en la consola
         console.log('Ejercicio Data:', ejercicioData);
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc2R0QGV4YW1wbGUudXMiLCJzdWIiOiJjYmZkMDI2NS1kNzY5LTRlZWItYWY1Zi1kMzJiNWMwM2NiMWIiLCJyb2xlIjoiZW50cmVuYWRvciIsImlhdCI6MTcyMjIyMTk5NCwiZXhwIjoxNzIyMjI1NTk0fQ.4dfvwz9OrNIrbguUkSWVEgUTu2hP0VVOsUyMo3lKHns";
         try {
             const response = await fetch('http://localhost:3001/ejercicio', {
                 method: 'POST',
