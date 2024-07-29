@@ -2,6 +2,7 @@
 
 import { IRutinaEjercicio } from '@/interface/interface';
 import { ICategory } from '@/interface/plan.interface';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState, useContext } from 'react';
 
 
@@ -10,6 +11,7 @@ const CreateRutina: React.FC = () => {
     const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
+    const router = useRouter();
     const [rutina, setRutina] = useState({
         name: '',
         descripcion: '',
@@ -117,7 +119,8 @@ const CreateRutina: React.FC = () => {
         const Data = {
             name,
             description: descripcion,
-            admin: 'efdc58a4-d08d-4143-a546-513e85155c1a',
+            admin: '88dc3141-b757-4c7f-bd91-e55d8bde555a',
+            imgURL: 'url',
             exercise,
             difficultyLevel,
             category: [category]
@@ -136,10 +139,13 @@ const CreateRutina: React.FC = () => {
             });
 
             if (response.ok) {
-                console.log("rutina creado exitosamente");
+                alert("Rutina creada exitosamente");
+                router.push("/dashboard");
             } else {
-                console.error("Error al crear el rutina");
+                alert("Error al crear la rutina");
+                console.error("Error al crear la rutina");
             }
+
         } catch (error) {
             console.error("Error:", error);
         }

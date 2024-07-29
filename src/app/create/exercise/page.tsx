@@ -1,13 +1,14 @@
 'use client';
 
 import { ICategory } from '@/interface/plan.interface';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const CreateExercise: React.FC = () => {
 
     const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
-
+    const router = useRouter();
     const [ejercicio, setEjercicio] = useState({
         titulo: '',
         descripcion: '',
@@ -88,11 +89,14 @@ const CreateExercise: React.FC = () => {
             });
 
             if (response.ok) {
-                console.log("Ejercicio creado exitosamente");
+                alert("Ejercicio creado exitosamente");
+                router.push("/dashboard");
             } else {
+                alert("Error al crear el ejercicio");
                 console.error("Error al crear el ejercicio");
             }
         } catch (error) {
+            alert("Error al crear el ejercicio");
             console.error("Error:", error);
         }
     };

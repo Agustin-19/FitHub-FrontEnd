@@ -1,8 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import { ICategory } from '@/interface/plan.interface';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const CreatePlan: React.FC = () => {
+    const router = useRouter();
+    const token: string =
+        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+
     const [plan, setPlan] = useState({
         name: '',
         descripcion: '',
@@ -10,6 +16,21 @@ const CreatePlan: React.FC = () => {
         location: '',
         difficultyLevel: ''
     });
+
+    // *************** CATEGORIAS ***********************
+    const [categories, setCategories] = useState<ICategory[]>([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/categorias');
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        }; fetchCategories();
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
@@ -62,31 +83,33 @@ const CreatePlan: React.FC = () => {
             description: descripcion,
             location,
             difficultyLevel,
-            category : ['118fae60-40a3-4514-b603-b5b6541a4354']
+            category: [category]
         };
 
         console.log(Data);
 
-        
 
 
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNvcnJlb0BtYWlsLmNvbSIsInN1YiI6IjJhMzU1NTMzLTQ3ZDUtNGU2Mi1iYzk1LWQ4OGIxZjBhZDA2MSIsInJvbGUiOiJlbnRyZW5hZG9yIiwiaWF0IjoxNzIyMjU2OTYyLCJleHAiOjE3MjIyNjA1NjJ9.GsL1E0hyp5h6On8Xy-yb4-9qEj7oPfles9umzN7gTAY";
+
         try {
-            const response = await fetch('http://localhost:3001/plan', {
-                method: 'POST',
+            const response = await fetch("http://localhost:3001/plan", {
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify(Data)
+                body: JSON.stringify(Data),
             });
 
             if (response.ok) {
-                console.log("Plan creado exitosamente");
+                alert("Actividad creado exitosamente");
+                router.push("/dashboard");
             } else {
-                console.error("Error al crear el plan");
+                alert("Error al crear la actibidad");
+                console.error("Error al crear la actividad");
             }
         } catch (error) {
+            alert("Error al crear la actibidad");
             console.error("Error:", error);
         }
     };
@@ -146,10 +169,11 @@ const CreatePlan: React.FC = () => {
                     className="daisy-select daisy-select-bordered w-full max-w-xs"
                 >
                     <option value='' disabled>Seleccionar Categoría</option>
-                    <option value='1'>Fulbo</option>
-                    <option value='2'>Voley</option>
-                    <option value='3'>Hockey</option>
-                    <option value='4'>Correr</option>
+                    {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
                 </select>
             </div>
 
