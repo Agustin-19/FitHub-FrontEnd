@@ -45,6 +45,7 @@ interface IloginUserRegister {
   name: string;
   login: boolean;
   token: string;
+  role: string;
   user: Partial<IUser> | null;
 }
 

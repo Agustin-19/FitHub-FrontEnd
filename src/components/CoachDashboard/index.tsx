@@ -1,3 +1,4 @@
+"use client";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/userContext";
 import Link from "next/link";
@@ -95,14 +96,14 @@ const CoachDashboard = () => {
         >
           Crear Actividad
         </button>
-         <div className="flex flex-col items-center justify-center mt-0 text-[#97D6DF]">
-        <h3>Rutinas creadas</h3>
-        <button
-          onClick={handleCreateRoutine}
-          className="bg-[#FF3E1A] text-white p-2 rounded"
-        >
-          Crear Rutina
-        </button>
+        <div className="flex flex-col items-center justify-center mt-0 text-[#97D6DF]">
+          <h3>Rutinas creadas</h3>
+          <button
+            onClick={handleCreateRoutine}
+            className="bg-[#FF3E1A] text-white p-2 rounded"
+          >
+            Crear Rutina
+          </button>
         </div>
       </div>
     </div>
