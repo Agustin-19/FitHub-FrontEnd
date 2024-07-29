@@ -1,10 +1,10 @@
 import { IUser } from "./interface";
 
 enum Dificultad {
-    INICIAL = 'Inicial',
-    MEDIO = 'Medio',
-    AVANZADO = 'Avanzado',
-    PROFESIONAL = 'Profesional',
+    INICIAL = 'inicial',
+    INTERMEDIO = 'intermedio',
+    AVANZADO = 'avanzado',
+    PROFESIONAL = 'profesional',
 }
 
 interface ICreatePlan {
