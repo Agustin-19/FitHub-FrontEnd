@@ -16,8 +16,19 @@ const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
 
   if (fieldsToValidate.includes("password") && !values.password) {
     errors.password = "*";
-  } else if (values.password && values.password.length < 8) {
-    errors.password = "The password must be longer than 8 characters.";
+  } else if (values.password) {
+    if (values.password.length < 8 || values.password.length > 15) {
+      errors.password = "La contraseña debe tener entre 8 y 15 caracteres.";
+    } else if (!/[A-Z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una mayúscula.";
+    } else if (!/[a-z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una minúscula.";
+    } else if (!/\d/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos un número.";
+    } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(values.password)) {
+      errors.password =
+        "La contraseña debe contener al menos un carácter especial.";
+    }
   }
 
   return errors;
@@ -69,8 +80,19 @@ const validateRegister = (
 
   if (fieldsToValidate.includes("password") && !values.password) {
     errors.password = "*";
-  } else if (values.password && values.password.length < 8) {
-    errors.password = "The password must be longer than 8 characters.";
+  } else if (values.password) {
+    if (values.password.length < 8 || values.password.length > 15) {
+      errors.password = "La contraseña debe tener entre 8 y 15 caracteres.";
+    } else if (!/[A-Z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una mayúscula.";
+    } else if (!/[a-z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una minúscula.";
+    } else if (!/\d/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos un número.";
+    } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(values.password)) {
+      errors.password =
+        "La contraseña debe contener al menos un carácter especial.";
+    }
   }
 
   if (

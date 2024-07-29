@@ -19,7 +19,6 @@ interface CoachCardProps {
 }
 
 const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
-
   const rating = user.rating ?? 0; // Si la calificación es undefined, usar 0
 
   return (
@@ -69,7 +68,7 @@ const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
               ))}
             </span>
             <span className="ml-2 text-[#97D6DF] text-sm">
-              {rating !== undefined ? `${rating}/5` : "No rating"}
+              {rating !== undefined ? `${Math.floor(rating)}/5` : "No rating"}
             </span>
           </div>
         </div>
