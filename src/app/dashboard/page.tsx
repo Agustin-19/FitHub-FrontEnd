@@ -26,7 +26,7 @@ export default function Dashboard() {
     <div>
       {role === "user" ? (
         <UserDashboard />
-      ) : role === "coach" ? (
+      ) : role === "entrenador" ? (
         <CoachDashboard />
       ) : (
         <p>Rol no reconocido.</p>
