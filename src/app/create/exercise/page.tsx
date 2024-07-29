@@ -42,56 +42,57 @@ const CreateExercise: React.FC = () => {
             return;
         }
 
-        // let fileUrl = '';
+        console.log(files);
+
+
         // Primero, sube el archivo para obtener una URL
-        
-            const uploadResponse = await fetch('http://localhost:3001/files', {
-                method: 'POST',
-                body: files
-            });
+        const formData = new FormData();
+        formData.append('files', files);
 
-            console.log(uploadResponse);
-            
+        const uploadResponse = await fetch('http://localhost:3001/files', {
+            method: 'POST',
+            body: formData
+        });
 
-            if (!uploadResponse.ok) {
-                console.error('Error al subir el archivo');
-                return;
-            }
+        console.log(uploadResponse);
 
-            const {fileUrl} = await uploadResponse.json();
-            
 
-            console.log(fileUrl);
-            
+        if (!uploadResponse.ok) {
+            console.error('Error al subir el archivo');
+            return;
+        }
+
+        const fileUrl = await uploadResponse.json();
+
 
         // Construye el objeto Ejercicio para mostrar en la consola
-        // const ejercicioData = {
-        //     titulo,
-        //     descripcion,
-        //     imgUrl: JSON.stringify([fileUrl])
-        // };
+        const ejercicioData = {
+            titulo,
+            descripcion,
+            imgUrl: fileUrl
+        };
 
         // Mostrar el objeto Ejercicio en la consola
-        // console.log('Ejercicio Data:', ejercicioData);
-        // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc2R0QGV4YW1wbGUudXMiLCJzdWIiOiJjYmZkMDI2NS1kNzY5LTRlZWItYWY1Zi1kMzJiNWMwM2NiMWIiLCJyb2xlIjoiZW50cmVuYWRvciIsImlhdCI6MTcyMjIxODQzOCwiZXhwIjoxNzIyMjIyMDM4fQ.wLtIAwPik1FBtll2TTWHOLJ4J953E0ejpfJUZXE0whs'
-        // try {
-        //     const response = await fetch('http://localhost:3001/ejercicio', {
-        //         method: 'POST',
-        //         headers: {
-        //             Authorization: `${token}`,
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(ejercicioData)
-        //     });
+        console.log('Ejercicio Data:', ejercicioData);
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc2R0QGV4YW1wbGUudXMiLCJzdWIiOiJjYmZkMDI2NS1kNzY5LTRlZWItYWY1Zi1kMzJiNWMwM2NiMWIiLCJyb2xlIjoiZW50cmVuYWRvciIsImlhdCI6MTcyMjIyMTk5NCwiZXhwIjoxNzIyMjI1NTk0fQ.4dfvwz9OrNIrbguUkSWVEgUTu2hP0VVOsUyMo3lKHns";
+        try {
+            const response = await fetch('http://localhost:3001/ejercicio', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ejercicioData)
+            });
 
-        //     if (response.ok) {
-        //         console.log("Ejercicio creado exitosamente");
-        //     } else {
-        //         console.error("Error al crear el ejercicio");
-        //     }
-        // } catch (error) {
-        //     console.error("Error:", error);
-        // }
+            if (response.ok) {
+                console.log("Ejercicio creado exitosamente");
+            } else {
+                console.error("Error al crear el ejercicio");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
     };
 
     return (
