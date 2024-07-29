@@ -1,3 +1,4 @@
+import { Dificultad } from '@/interface/plan.interface';
 // Users:
 
 interface IUser {
@@ -71,11 +72,11 @@ interface IRutina {
   id: number;
   name: string;
   description: string;
-  precio: number;
+  precio?: number;
   imagen?: string;
-  categoria: string;
-  ejercicios: IRutinaEjercicio[];
-  borradologico: boolean;
+  category: string;
+  difficultyLevel: Dificultad;
+  exercise: IRutinaEjercicio[];
 }
 
 interface IRutinaEjercicio {
