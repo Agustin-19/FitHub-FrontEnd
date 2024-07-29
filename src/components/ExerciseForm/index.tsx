@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
 import styles from "./exerciseform.module.css";
+import { useRouter } from "next/navigation";
 
 export default function ExerciseForm() {
   const token: string =
     (typeof window !== "undefined" && localStorage.getItem("token")) || "";
-
+    const router = useRouter();
   const [ejercicio, setEjercicio] = useState({
     titulo: "",
     descripcion: "",
@@ -86,13 +87,16 @@ export default function ExerciseForm() {
       });
 
       if (response.ok) {
-        console.log("Ejercicio creado exitosamente");
-      } else {
+        alert("Ejercicio creado exitosamente");
+        router.push("/dashboard");
+    } else {
+        alert("Error al crear el ejercicio");
         console.error("Error al crear el ejercicio");
-      }
-    } catch (error) {
-      console.error("Error:", error);
     }
+} catch (error) {
+    alert("Error al crear el ejercicio");
+    console.error("Error:", error);
+}
   };
 
   return (
