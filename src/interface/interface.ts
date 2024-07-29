@@ -1,3 +1,4 @@
+import { Dificultad } from '@/interface/plan.interface';
 // Users:
 
 interface IUser {
@@ -45,6 +46,7 @@ interface IloginUserRegister {
   name: string;
   login: boolean;
   token: string;
+  role: string;
   user: Partial<IUser> | null;
 }
 
@@ -70,23 +72,18 @@ interface IRutina {
   id: number;
   name: string;
   description: string;
-  precio: number;
+  precio?: number;
   imagen?: string;
-  categoria: string;
-  ejercicios: IRutinaEjercicio[];
-  borradologico: boolean;
+  category: string;
+  difficultyLevel: Dificultad;
+  exercise: IRutinaEjercicio[];
 }
 
 interface IRutinaEjercicio {
   id: number;
-  name: string;
+  titulo: string;
   description: string;
-  imagen: string;
-  videoUrl: string;
-  series: number;
-  repeticiones: number;
-  tiempoActividad: number;
-  tiempoDescanso: number;
+  imgUrl: string[] | null;
 }
 
 interface ICreateRutinaDpto {
@@ -143,13 +140,14 @@ interface IErrorsLogin {
 interface IErrorsRegister {
   name?: string;
   email?: string;
-  dni?: number;
+  dni?: string;
   address?: string;
   city?: string;
   country?: string;
   password?: string;
-  repeat_password?: string;
-  phone?: number;
+  passwordConfirm?: string;
+  phone?: string;
+  delete?: boolean;
 }
 
 export type {

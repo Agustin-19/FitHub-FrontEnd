@@ -10,9 +10,9 @@ export const postSigup = async (user: IRegisterUser) => {
     body: JSON.stringify(user),
   });
   // const data = await response.json();
-  const data = 'usuario creado'
+  const data = "usuario creado";
   console.log(data);
-  
+
   return data;
 };
 
@@ -25,9 +25,9 @@ export const postSigupCoach = async (user: IRegisterUser) => {
     body: JSON.stringify(user),
   });
   // const data = await response.json();
-  const data = 'usuario creado'
+  const data = "usuario creado";
   console.log(data);
-  
+
   return data;
 };
 
@@ -74,5 +74,3 @@ export const getUserActividades = async (token: string) => {
   const data = await response.json();
   return data;
 };
-
-

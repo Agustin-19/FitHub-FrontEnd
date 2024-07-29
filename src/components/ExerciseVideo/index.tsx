@@ -1,21 +1,23 @@
+import { IRutinaEjercicio } from "@/interface/interface";
 
 
-interface IEjercicio {
-    id: number;
-    name: string;
-    description: string;
-    series: number;
-    repeticiones: number;
-    tiempoActividad: number;
-    tiempoDescanso: number;
-    imagen: string;
-    videoUrl: string;
-}
+
 
 interface IVideoPlayerProps {
-    ejercicio: IEjercicio | null;
+    ejercicio: IRutinaEjercicio | null;
     onClose: () => void;
 }
+
+const imgDefect = 'https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg'
+const getImageSrc = (image: string | string[] | null | undefined) => {
+    if (typeof image === 'string') {
+        return image;
+    } else if (Array.isArray(image) && image.length > 0) {
+        return image[0];
+    } else {
+        return imgDefect;
+    }
+};
 
 const ExerciseVideo = ({ ejercicio, onClose }: IVideoPlayerProps) => {
     if (!ejercicio) return null;
@@ -36,8 +38,8 @@ const ExerciseVideo = ({ ejercicio, onClose }: IVideoPlayerProps) => {
                     <iframe
 
                         className="w-full h-[340px]"
-                        src={ejercicio.videoUrl}
-                        title={ejercicio.name}
+                        src={ getImageSrc(ejercicio.imgUrl)}
+                        title={ejercicio.titulo}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerPolicy="strict-origin-when-cross-origin"
@@ -45,12 +47,8 @@ const ExerciseVideo = ({ ejercicio, onClose }: IVideoPlayerProps) => {
                     </iframe>
                 </div>
                 <div className="text-center">
-                    <h4 className="text-xl font-bold mb-2">{ejercicio.name}</h4>
+                    <h4 className="text-xl font-bold mb-2">{ejercicio.titulo}</h4>
                     <p>{ejercicio.description}</p>
-                    <p>Series: {ejercicio.series}</p>
-                    <p>Repeticiones: {ejercicio.repeticiones}</p>
-                    <p>Tiempo de Actividad: {ejercicio.tiempoActividad} segundos</p>
-                    <p>Tiempo de Descanso: {ejercicio.tiempoDescanso} segundos</p>
                 </div>
             </div>
         </div>

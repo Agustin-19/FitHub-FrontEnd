@@ -1,4 +1,8 @@
-import { IErrorsLogin, IErrorsRegister, IRegisterUser } from "@/interface/interface";
+import {
+  IErrorsLogin,
+  IErrorsRegister,
+  IRegisterUser,
+} from "@/interface/interface";
 
 const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
   const errors: IErrorsLogin = {};
@@ -12,28 +16,40 @@ const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
 
   if (fieldsToValidate.includes("password") && !values.password) {
     errors.password = "*";
-  } else if (values.password && values.password.length < 8) {
-    errors.password = "The password must be longer than 8 characters.";
+  } else if (values.password) {
+    if (values.password.length < 8 || values.password.length > 15) {
+      errors.password = "La contraseña debe tener entre 8 y 15 caracteres.";
+    } else if (!/[A-Z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una mayúscula.";
+    } else if (!/[a-z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una minúscula.";
+    } else if (!/\d/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos un número.";
+    } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(values.password)) {
+      errors.password =
+        "La contraseña debe contener al menos un carácter especial.";
+    }
   }
 
   return errors;
 };
 
 const validateRegister = (
-  values: IRegisterUser,
+  values: IErrorsRegister,
   fieldsToValidate: string[]
 ) => {
-  const errors: IRegisterUser = {
+  const errors: IErrorsRegister = {
     name: "",
     email: "",
-    dni: 0,
+    dni: "",
     address: "",
     city: "",
     country: "",
     password: "",
     passwordConfirm: "",
-    phone: 0,
-  }
+    phone: "",
+    delete: false,
+  };
 
   if (fieldsToValidate.includes("name") && !values.name) {
     errors.name = "*";
@@ -47,9 +63,8 @@ const validateRegister = (
   }
 
   if (fieldsToValidate.includes("dni") && !values.dni) {
-    errors.dni = 0;
+    errors.dni = "*";
   }
-
 
   if (fieldsToValidate.includes("address") && !values.address) {
     errors.address = "*";
@@ -59,14 +74,25 @@ const validateRegister = (
     errors.city = "*";
   }
 
-  if (fieldsToValidate.includes('country') && !values.country) {
-    errors.country = '*';
+  if (fieldsToValidate.includes("country") && !values.country) {
+    errors.country = "*";
   }
 
   if (fieldsToValidate.includes("password") && !values.password) {
     errors.password = "*";
-  } else if (values.password && values.password.length < 8) {
-    errors.password = "The password must be longer than 8 characters.";
+  } else if (values.password) {
+    if (values.password.length < 8 || values.password.length > 15) {
+      errors.password = "La contraseña debe tener entre 8 y 15 caracteres.";
+    } else if (!/[A-Z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una mayúscula.";
+    } else if (!/[a-z]/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos una minúscula.";
+    } else if (!/\d/.test(values.password)) {
+      errors.password = "La contraseña debe contener al menos un número.";
+    } else if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(values.password)) {
+      errors.password =
+        "La contraseña debe contener al menos un carácter especial.";
+    }
   }
 
   if (
@@ -77,9 +103,8 @@ const validateRegister = (
   }
 
   if (fieldsToValidate.includes("phone") && !values.phone) {
-    errors.phone = 0;
+    errors.phone = "*";
   }
-
 
   return errors;
 };

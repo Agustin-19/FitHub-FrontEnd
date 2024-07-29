@@ -3,7 +3,6 @@
 import { useState } from "react";
 import RutinaList from "@/components/RoutinesList/index";
 import { rutinas } from "../../../public/data/rutines.data";
-
 export default function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<string>("");

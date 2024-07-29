@@ -1,9 +1,9 @@
 "use client";
-import { rutinas } from "../../../../public/data/rutines.data";
+import { rutinas } from '../../../../public/data/rutines.data';
 import Image from "next/image";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ExerciseVideo from "@/components/ExerciseVideo";
-import { IRutinaEjercicio } from "@/interface/interface";
+import { IRutina, IRutinaEjercicio } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
 
 interface IRoutineProps {
@@ -18,23 +18,74 @@ const Routine = ({ params }: IRoutineProps) => {
   const [isPurchased, setIsPurchased] = useState(false);
   const { isLogged } = useContext(UserContext);
 
-  console.log("Estado de isLogged:", isLogged); //
+  console.log("Estado de isLogged:", isLogged); 
 
   const id = params.id;
-  const routine = rutinas.find((r) => r.id === parseInt(id || "0"));
+  const [routine, setRutina] = useState<IRutina>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!routine) {
-    return <div>Rutina no encontrada</div>;
+  useEffect(() => {
+    const fetchRutinaID = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/rutina/${id}`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+
+        });
+
+        if (!response.ok) {
+          throw new Error("Error al obtener las rutinas");
+        }
+        const routine = await response.json();
+        console.log(routine);
+
+        setRutina(routine);
+      } catch (err) {
+        console.log('error');
+
+      } finally {
+        setLoading(false);
+      }
+    }; fetchRutinaID();
+  }, [id]);
+
+
+
+  if (loading) {
+    return <div className="text-center text-white">Cargando...</div>;
   }
+
+  if (error) {
+    return <div className="text-center text-red-500">Error: {error}</div>;
+  }
+
+
+
 
   const handlePurchase = () => {
     if (!isLogged) {
       alert("Debes iniciar sesión para comprar la rutina.");
       return;
     }
+    
     setIsPurchased(true);
-    alert(`Rutina ${routine.name} comprada!`);
+    alert(`Rutina ${routine?.name} comprada!`);
+
   };
+  const imgDefect = 'https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg'
+  const getImageSrc = (image: string | string[] | null | undefined) => {
+    if (typeof image === 'string') {
+      return image;
+    } else if (Array.isArray(image) && image.length > 0) {
+      return image[0];
+    } else {
+      return imgDefect; 
+    }
+  };
+
 
   return (
     <div className=" ">
@@ -42,12 +93,12 @@ const Routine = ({ params }: IRoutineProps) => {
         <div className=" flex justify-center gap-5">
           <div className="m-3">
             <h2 className="text-2xl font-bold text-titulos mb-4">
-              {routine.name}
+              {routine?.name}
             </h2>
             <div className="relative object-contain w-40 h-40 rounded-t-lg">
               <Image
-                src={routine.imagen}
-                alt={routine.name}
+                src={routine?.imagen || imgDefect }
+                alt={routine?.name || 'imagen por defecto'}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 priority={true}
@@ -56,7 +107,7 @@ const Routine = ({ params }: IRoutineProps) => {
             </div>
           </div>
           <div className="m-5 ">
-            <p className="my-4">{routine.description}</p>
+            <p className="my-4">{routine?.description}</p>
             <h3 className="text-xl font-semibold mb-2">Ejercicios</h3>
             <button
               className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
@@ -67,15 +118,15 @@ const Routine = ({ params }: IRoutineProps) => {
           </div>
         </div>
         <ul>
-          {routine.ejercicios.map((ejercicio) => (
+          {routine?.exercise?.map((ejercicio) => (
             <li key={ejercicio.id} className="mb-2 border-2 borrder-[--titulo]">
               <div className="flex gap-3 align-middle">
                 <div className="m-2 text-center">
-                  <h4 className="font-bold m-1">{ejercicio.name}</h4>
+                  <h4 className="font-bold m-1">{ejercicio.titulo}</h4>
                   <div className="relative object-contain w-40 h-40 rounded-t-lg">
                     <Image
-                      src={ejercicio.imagen}
-                      alt={ejercicio.name}
+                      src={ getImageSrc(ejercicio.imgUrl)}
+                      alt={ejercicio.titulo}
                       fill={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       priority={true}
@@ -100,12 +151,6 @@ const Routine = ({ params }: IRoutineProps) => {
                 </div>
                 <div className=" text-center m-3 mt-10">
                   <p>{ejercicio.description}</p>
-                  <p>Series: {ejercicio.series}</p>
-                  <p>Repeticiones: {ejercicio.repeticiones}</p>
-                  <p>
-                    Tiempo de Actividad: {ejercicio.tiempoActividad} segundos
-                  </p>
-                  <p>Tiempo de Descanso: {ejercicio.tiempoDescanso} segundos</p>
                 </div>
               </div>
             </li>

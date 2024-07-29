@@ -1,3 +1,4 @@
+"use client";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/userContext";
 import Link from "next/link";
@@ -43,14 +44,6 @@ const CoachDashboard = () => {
     }
   };
 
-  const handleCreateActivity = () => {
-    // Logic for creating an activity goes here
-  };
-
-  const handleCreateRoutine = () => {
-    // Logic for creating a routine goes here
-  };
-
   return (
     <div className="grid grid-cols-2 border border-1 ">
       <div
@@ -88,22 +81,20 @@ const CoachDashboard = () => {
         <p>Ciudad: {user.city}</p>
       </div>
       <div className="flex flex-col items-center justify-center mt-0 text-[#97D6DF]">
-        <h3>Rutinas creadas</h3>
-        <button
-          onClick={handleCreateActivity}
-          className="bg-[#FF3E1A] text-white p-2 rounded mr-2"
-        >
-          Crear Actividad
-        </button>
-         <div className="flex flex-col items-center justify-center mt-0 text-[#97D6DF]">
-        <h3>Rutinas creadas</h3>
-        <button
-          onClick={handleCreateRoutine}
-          className="bg-[#FF3E1A] text-white p-2 rounded"
-        >
-          Crear Rutina
-        </button>
-        </div>
+        <Link href="/create/plan">
+          <h3>¿Deseas crear una nueva Actividad?</h3>
+          <button className="bg-[#FF3E1A] text-white p-2 rounded m-5">
+            Crear Actividad
+          </button>
+        </Link>
+        <Link href="/create/exercise">
+          <div className="flex flex-col items-center justify-center mt-0 text-[#97D6DF]">
+            <h3>¿Deseas crear una nueva rutina?</h3>
+            <button className="bg-[#FF3E1A] text-white p-2 rounded m-5">
+              Crear Rutina
+            </button>
+          </div>
+        </Link>
       </div>
     </div>
   );
