@@ -87,11 +87,19 @@ const CoachDashboard = () => {
             Crear Actividad
           </button>
         </Link>
-        <Link href="/create/exercise">
+        <Link href="/create/rutina">
           <div className="flex flex-col items-center justify-center mt-0 text-[#97D6DF]">
             <h3>¿Deseas crear una nueva rutina?</h3>
             <button className="bg-[#FF3E1A] text-white p-2 rounded m-5">
               Crear Rutina
+            </button>
+          </div>
+        </Link>
+        <Link href="/create/exercise">
+          <div className="flex flex-col items-center justify-center mt-0 text-[#97D6DF]">
+            <h3>¿Deseas crear una nuevo ejercicio?</h3>
+            <button className="bg-[#FF3E1A] text-white p-2 rounded m-5">
+              Crear Ejercicio
             </button>
           </div>
         </Link>
