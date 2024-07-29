@@ -16,7 +16,7 @@ export default function Programas() {
     // Función para obtener los datos del backend
     const fetchRutinas = async () => {
       try {
-        const response = await fetch(`${API}/rutina?limit=${2}&page=${page}`, {
+        const response = await fetch(`${API}/rutina?limit=${6}&page=${page}`, {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
