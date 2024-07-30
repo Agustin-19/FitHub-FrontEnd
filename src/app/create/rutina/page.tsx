@@ -1,5 +1,9 @@
-"use client";
+'use client';
 
+import { IRutinaEjercicio } from '@/interface/interface';
+import { ICategory } from '@/interface/plan.interface';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState, useContext } from 'react';
 import { IRutinaEjercicio } from "@/interface/interface";
 import { ICategory } from "@/interface/plan.interface";
 import React, { useEffect, useState } from "react";
@@ -7,31 +11,55 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const CreateRutina: React.FC = () => {
-  const token: string =
-    (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
-  const [rutina, setRutina] = useState({
-    name: "",
-    descripcion: "",
-    category: "",
-    exercise: [] as string[],
-    difficultyLevel: "",
-  });
 
-  const router = useRouter();
+    const token: string =
+        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
-  // *************** CATEGORIAS ***********************
-  const [categories, setCategories] = useState<ICategory[]>([]);
+    const router = useRouter();
+    const [rutina, setRutina] = useState({
+        name: '',
+        descripcion: '',
+        category: '',
+        exercise: [] as string[],
+        difficultyLevel: ''
+    });
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/categorias");
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
+    // *************** CATEGORIAS ***********************
+    const [categories, setCategories] = useState<ICategory[]>([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/categorias');
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        }; fetchCategories();
+    }, []);
+
+    // ************** EJERCICIOS *******************
+    const [ejercicios, setEjercicio] = useState<IRutinaEjercicio[]>([]);
+    useEffect(() => {
+        const fetchEjercicios = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/ejercicio');
+                const data = await response.json();
+                setEjercicio(data);
+            } catch (error) {
+                console.error('Error fetching ejercicios:', error);
+            }
+        }; fetchEjercicios();
+    }, []);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { id, value } = e.target;
+        setRutina(prevState => ({
+            ...prevState,
+            [id]: value
+        }));
     };
     fetchCategories();
   }, []);
@@ -48,74 +76,83 @@ const CreateRutina: React.FC = () => {
         console.error("Error fetching ejercicios:", error);
       }
     };
-    fetchEjercicios();
-  }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setRutina((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
-  };
+    const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        // Aquí puedes acceder al valor seleccionado
+        console.log(event.target.value);
 
-  const handleChangeSelectMultiple: React.ChangeEventHandler<
-    HTMLSelectElement
-  > = (event) => {
-    const { id, options } = event.target;
-    const values = Array.from(options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
+        const { id, value } = event.target;
+        setRutina(prevState => ({
+            ...prevState,
+            [id]: value
+        }));
+    };
 
-    setRutina((prevState) => ({
-      ...prevState,
-      [id]: values,
-    }));
-  };
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
-    event
-  ) => {
-    const { id, value } = event.target;
-    setRutina((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
-  };
+        const { name, descripcion, exercise, difficultyLevel, category } = rutina;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+        if (!name) {
+            alert("Por favor ingresa un título.");
+            return;
+        }
+        if (!descripcion) {
+            alert("Por favor ingresa una descripción.");
+            return;
+        }
+        if (!exercise.length) {
+            alert("Por favor selecciona al menos un ejercicio.");
+            return;
+        }
+        if (!location) {
+            alert("Por favor ingresa una ubicación.");
+            return;
+        }
+        if (!difficultyLevel) {
+            alert("Por favor ingresa un nivel de dificultad.");
+            return;
+        }
+        if (!category.length) {
+            alert("Por favor selecciona una categoría.");
+            return;
+        }
 
-    const { name, descripcion, exercise, difficultyLevel, category } = rutina;
 
-    if (!name) {
-      alert("Por favor ingresa un título.");
-      return;
-    }
-    if (!descripcion) {
-      alert("Por favor ingresa una descripción.");
-      return;
-    }
-    if (!exercise.length) {
-      alert("Por favor selecciona al menos un ejercicio.");
-      return;
-    }
-    if (!difficultyLevel) {
-      alert("Por favor ingresa un nivel de dificultad.");
-      return;
-    }
-    if (!category.length) {
-      alert("Por favor selecciona una categoría.");
-      return;
-    }
 
-    const Data = {
-      name,
-      description: descripcion,
-      admin: "efdc58a4-d08d-4143-a546-513e85155c1a",
-      exercise,
-      difficultyLevel,
-      category: [category],
+        const Data = {
+            name,
+            description: descripcion,
+            admin: '88dc3141-b757-4c7f-bd91-e55d8bde555a',
+            imgURL: 'url',
+            exercise,
+            difficultyLevel,
+            category: [category]
+        };
+
+        console.log(Data);
+
+        try {
+            const response = await fetch('http://localhost:3001/rutina', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Data)
+            });
+
+            if (response.ok) {
+                alert("Rutina creada exitosamente");
+                router.push("/dashboard");
+            } else {
+                alert("Error al crear la rutina");
+                console.error("Error al crear la rutina");
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+        }
     };
 
     try {

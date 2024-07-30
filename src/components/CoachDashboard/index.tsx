@@ -83,7 +83,6 @@ const CoachDashboard = () => {
             onChange={handleImageChange}
             className="hidden"
           />
-
           <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
           <p>nombre: {user.name}</p>
           <p>Email: {user.email}</p>
