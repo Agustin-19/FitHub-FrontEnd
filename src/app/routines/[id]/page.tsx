@@ -1,5 +1,4 @@
 "use client";
-import { rutinas } from '../../../../public/data/rutines.data';
 import Image from "next/image";
 import { useState, useContext, useEffect } from "react";
 import ExerciseVideo from "@/components/ExerciseVideo";
@@ -18,12 +17,10 @@ const Routine = ({ params }: IRoutineProps) => {
   const [isPurchased, setIsPurchased] = useState(false);
   const { isLogged } = useContext(UserContext);
 
-  console.log("Estado de isLogged:", isLogged); 
-
   const id = params.id;
   const [routine, setRutina] = useState<IRutina>();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRutinaID = async () => {
@@ -31,28 +28,23 @@ const Routine = ({ params }: IRoutineProps) => {
         const response = await fetch(`http://localhost:3001/rutina/${id}`, {
           method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-
         });
 
         if (!response.ok) {
           throw new Error("Error al obtener las rutinas");
         }
         const routine = await response.json();
-        console.log(routine);
-
         setRutina(routine);
       } catch (err) {
-        console.log('error');
-
+        setError("Error al obtener las rutinas");
       } finally {
         setLoading(false);
       }
-    }; fetchRutinaID();
+    };
+    fetchRutinaID();
   }, [id]);
-
-
 
   if (loading) {
     return <div className="text-center text-white">Cargando...</div>;
@@ -62,30 +54,49 @@ const Routine = ({ params }: IRoutineProps) => {
     return <div className="text-center text-red-500">Error: {error}</div>;
   }
 
-
-
-
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
     if (!isLogged) {
       alert("Debes iniciar sesión para comprar la rutina.");
       return;
     }
-    
-    setIsPurchased(true);
-    alert(`Rutina ${routine?.name} comprada!`);
 
+    try {
+      const response = await fetch(
+        "http://localhost:3000/rutina/create-order",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ rutinaId: routine?.id }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al iniciar el proceso de pago");
+      }
+
+      const data = await response.json();
+      window.location.href = data.init_point;
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Hubo un error al intentar procesar el pago.");
+    }
   };
-  const imgDefect = 'https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg'
+
+  const imgDefect =
+    "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
   const getImageSrc = (image: string | string[] | null | undefined) => {
-    if (typeof image === 'string') {
+    if (typeof image === "string") {
       return image;
     } else if (Array.isArray(image) && image.length > 0) {
       return image[0];
     } else {
-      return imgDefect; 
+      return imgDefect;
     }
   };
 
+  console.log(routine);
 
   return (
     <div className=" ">
@@ -97,8 +108,8 @@ const Routine = ({ params }: IRoutineProps) => {
             </h2>
             <div className="relative object-contain w-40 h-40 rounded-t-lg">
               <Image
-                src={routine?.imagen || imgDefect }
-                alt={routine?.name || 'imagen por defecto'}
+                src={routine?.imagen || imgDefect}
+                alt={routine?.name || "imagen por defecto"}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 priority={true}
@@ -125,7 +136,7 @@ const Routine = ({ params }: IRoutineProps) => {
                   <h4 className="font-bold m-1">{ejercicio.titulo}</h4>
                   <div className="relative object-contain w-40 h-40 rounded-t-lg">
                     <Image
-                      src={ getImageSrc(ejercicio.imgUrl)}
+                      src={getImageSrc(ejercicio.imgUrl)}
                       alt={ejercicio.titulo}
                       fill={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
