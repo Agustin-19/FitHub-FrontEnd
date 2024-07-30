@@ -1,4 +1,3 @@
-
 import PlanForm from "@/components/PlanForm";
 
 const CreatePlan: React.FC = () => {
