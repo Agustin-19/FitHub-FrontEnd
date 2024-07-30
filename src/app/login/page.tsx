@@ -1,5 +1,5 @@
 import { LoginComponet } from "../../components/Login";
-import HumanScan from "../../components/HumanScan";
+
 import Link from "next/link";
 
 export default function Login() {
@@ -13,9 +13,6 @@ export default function Login() {
         </Link>
       </div>
       <div className="flex ">
-        <div className="flex-1 flex justify-center items-center">
-          <HumanScan />
-        </div>
         <div className="flex-1 flex justify-center items-center">
           <LoginComponet />
         </div>
