@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "@mercadopago/sdk-react": "^0.0.19",
     "@splinetool/react-spline": "^4.0.0",
     "@splinetool/runtime": "^1.9.3",
     "aos": "^2.3.4",

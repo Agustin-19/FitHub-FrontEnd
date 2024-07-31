@@ -4,6 +4,15 @@ import { useState, useContext, useEffect } from "react";
 import ExerciseVideo from "@/components/ExerciseVideo";
 import { IRutina, IRutinaEjercicio } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
+import { useRouter } from "next/navigation";
+import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+
+// Declarar globalmente el tipo Window para incluir checkoutButton
+declare global {
+  interface Window {
+    checkoutButton: any;
+  }
+}
 
 interface IRoutineProps {
   params: {
@@ -21,6 +30,10 @@ const Routine = ({ params }: IRoutineProps) => {
   const [routine, setRutina] = useState<IRutina>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+
+  const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRutinaID = async () => {
@@ -46,6 +59,12 @@ const Routine = ({ params }: IRoutineProps) => {
     fetchRutinaID();
   }, [id]);
 
+  useEffect(() => {
+    initMercadoPago("APP_USR-170df093-20f9-45fb-9bb2-11eb49586790", {
+      locale: "es-AR",
+    });
+  }, []);
+
   if (loading) {
     return <div className="text-center text-white">Cargando...</div>;
   }
@@ -57,31 +76,41 @@ const Routine = ({ params }: IRoutineProps) => {
   const handlePurchase = async () => {
     if (!isLogged) {
       alert("Debes iniciar sesión para comprar la rutina.");
+      router.push("/login");
       return;
     }
 
     try {
+      const rutinaData = {
+        title: routine?.name,
+        quantity: 1,
+        unit_price: 100,
+      };
+
       const response = await fetch(
-        "http://localhost:3000/rutina/create-order",
+        "http://localhost:3001/rutina/create-order",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ rutinaId: routine?.id }),
+          body: JSON.stringify(rutinaData),
         }
       );
 
       if (!response.ok) {
-        throw new Error("Error al iniciar el proceso de pago");
+        throw new Error("Error al crear la orden");
       }
 
-      const data = await response.json();
-      window.location.href = data.init_point;
+      const preference = await response.json();
+      setPreferenceId(preference.id);
     } catch (error) {
-      console.error("Error:", error);
-      alert("Hubo un error al intentar procesar el pago.");
+      console.log(error);
     }
+  };
+
+  const handleBuy = async () => {
+    await handlePurchase();
   };
 
   const imgDefect =
@@ -96,8 +125,6 @@ const Routine = ({ params }: IRoutineProps) => {
     }
   };
 
-  console.log(routine);
-
   return (
     <div className=" ">
       <div className=" p-4 rounded-lg ">
@@ -108,7 +135,7 @@ const Routine = ({ params }: IRoutineProps) => {
             </h2>
             <div className="relative object-contain w-40 h-40 rounded-t-lg">
               <Image
-                src={routine?.imagen || imgDefect}
+                src={routine?.imgUrl || imgDefect}
                 alt={routine?.name || "imagen por defecto"}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -122,15 +149,21 @@ const Routine = ({ params }: IRoutineProps) => {
             <h3 className="text-xl font-semibold mb-2">Ejercicios</h3>
             <button
               className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-              onClick={handlePurchase}
+              onClick={handleBuy}
             >
               Comprar Rutina
             </button>
+            {preferenceId && (
+              <Wallet
+                initialization={{ preferenceId: preferenceId }}
+                customization={{ texts: { valueProp: "smart_option" } }}
+              />
+            )}
           </div>
         </div>
         <ul>
           {routine?.exercise?.map((ejercicio) => (
-            <li key={ejercicio.id} className="mb-2 border-2 borrder-[--titulo]">
+            <li key={ejercicio.id} className="mb-2 border-2 border-[--titulo]">
               <div className="flex gap-3 align-middle">
                 <div className="m-2 text-center">
                   <h4 className="font-bold m-1">{ejercicio.titulo}</h4>
