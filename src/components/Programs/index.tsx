@@ -1,16 +1,14 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import RutinaList from "../RoutinesList";
 import "./programs.module.css";
 const API = "http://localhost:3001";
 
 export default function Programas() {
-
   const [rutinas, setRutinas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1); 
-
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     // Función para obtener los datos del backend
@@ -19,9 +17,8 @@ export default function Programas() {
         const response = await fetch(`${API}/rutina?limit=${6}&page=${page}`, {
           method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-
         });
 
         if (!response.ok) {
@@ -32,21 +29,20 @@ export default function Programas() {
 
         setRutinas(rutinas);
       } catch (err) {
-        console.log('error');
-
+        console.log("error");
       } finally {
         setLoading(false);
       }
     };
 
     fetchRutinas();
-  }, [page]); 
+  }, [page]);
 
   const handlePrevious = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 1)); 
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
   };
   const handleNext = () => {
-    setPage(prevPage => prevPage + 1); 
+    setPage((prevPage) => prevPage + 1);
   };
 
   if (loading) {
@@ -56,13 +52,6 @@ export default function Programas() {
   if (error) {
     return <div className="text-center text-red-500">Error: {error}</div>;
   }
-
- 
-
-
-
-
-
 
   return (
     <div className="bg-[#1A1D1A] p-8">
@@ -83,10 +72,14 @@ export default function Programas() {
         </div>
       </div>
       <RutinaList rutinas={rutinas} />
-      <div className="daisy-join">
-        <button className="daisy-join-item daisy-btn" onClick={handlePrevious}>«</button>
+      <div className="daisy-join flex justify-center">
+        <button className="daisy-join-item daisy-btn" onClick={handlePrevious}>
+          «
+        </button>
         <button className="daisy-join-item daisy-btn">Page {page}</button>
-        <button className="daisy-join-item daisy-btn" onClick={handleNext}>»</button>
+        <button className="daisy-join-item daisy-btn" onClick={handleNext}>
+          »
+        </button>
       </div>
     </div>
   );
