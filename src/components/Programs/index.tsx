@@ -1,49 +1,59 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client';
+import { useContext, useEffect, useState, useCallback } from "react";
 import RutinaList from "../RoutinesList";
 import "./programs.module.css";
-const API = "http://localhost:3001";
+import { RutinaContext } from "@/context/trainingContext";
 
-export default function Programas() {
-  const [rutinas, setRutinas] = useState([]);
+const Programas: React.FC = () => {
+  const { rutinas, setRutinas, error, setError, getAllRutinas } = useContext(RutinaContext);
+
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useState({
+    limit: '',
+    category: '',
+    location: '',
+    difficultyLevel: '',
+    search: ''
+  });
+
+  const fetchRutinas = async () => {
+    const { limit, category, location, difficultyLevel, search } = searchParams;
+    setLoading(true);
+    try {
+      const queryString = {
+        page: page.toString(),
+        limit,
+        category,
+        location,
+        difficultyLevel,
+        search,
+      };
+
+      const data = await getAllRutinas(queryString);
+      setRutinas(data);
+    } catch (err) {
+      setError("Error al obtener las rutinas");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    // Función para obtener los datos del backend
-    const fetchRutinas = async () => {
-      try {
-        const response = await fetch(`${API}/rutina?limit=${6}&page=${page}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al obtener las rutinas");
-        }
-        const rutinas = await response.json();
-        console.log(rutinas);
-
-        setRutinas(rutinas);
-      } catch (err) {
-        console.log("error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchRutinas();
-  }, [page]);
+  }, []);
 
   const handlePrevious = () => {
-    setPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
-  const handleNext = () => {
-    setPage((prevPage) => prevPage + 1);
-  };
+    setPage(prevPage => Math.max(prevPage - 1, 1));
+    fetchRutinas(); // Fetch routines for the new page
+};
+
+const handleNext = () => {
+    setPage(prevPage => prevPage + 1);
+    fetchRutinas(); // Fetch routines for the new page
+};
+
 
   if (loading) {
     return <div className="text-center text-white">Cargando...</div>;
@@ -72,15 +82,13 @@ export default function Programas() {
         </div>
       </div>
       <RutinaList rutinas={rutinas} />
-      <div className="daisy-join flex justify-center">
-        <button className="daisy-join-item daisy-btn" onClick={handlePrevious}>
-          «
-        </button>
+      <div className="daisy-join">
+        <button className="daisy-join-item daisy-btn" onClick={handlePrevious}>«</button>
         <button className="daisy-join-item daisy-btn">Page {page}</button>
-        <button className="daisy-join-item daisy-btn" onClick={handleNext}>
-          »
-        </button>
+        <button className="daisy-join-item daisy-btn" onClick={handleNext}>»</button>
       </div>
     </div>
   );
 }
+
+export default Programas;

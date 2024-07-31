@@ -8,13 +8,16 @@ interface RutinaListProps {
 }
 
 const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
-  console.log(rutinas);
 
-  const imgDefect =
-    "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
-
-  const getImageSrc = (image: string | null | undefined) => {
-    return image ? image : imgDefect;
+  const imgDefect = 'https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg'
+  const getImageSrc = (image: string | string[] | null | undefined) => {
+    if (typeof image === 'string') {
+      return image;
+    } else if (Array.isArray(image) && image.length > 0) {
+      return image[0];
+    } else {
+      return imgDefect;
+    }
   };
 
   return (

@@ -2,11 +2,11 @@
 import { useState } from "react";
 import styles from "./exerciseform.module.css";
 import { useRouter } from "next/navigation";
+import { uploaFile } from "@/server/fetchFile";
+import { createExercise } from '../../server/fetchRoutines';
 
 export default function ExerciseForm() {
-  const token: string =
-    (typeof window !== "undefined" && localStorage.getItem("token")) || "";
-    const router = useRouter();
+  const router = useRouter();
   const [ejercicio, setEjercicio] = useState({
     titulo: "",
     descripcion: "",
@@ -46,57 +46,26 @@ export default function ExerciseForm() {
       alert("Por favor selecciona un archivo primero.");
       return;
     }
-
     console.log(files);
 
-    // Primero, sube el archivo para obtener una URL
-    const formData = new FormData();
-    formData.append("files", files);
-
-    const uploadResponse = await fetch("http://localhost:3001/files", {
-      method: "POST",
-      body: formData,
-    });
-
-    console.log(uploadResponse);
-
-    if (!uploadResponse.ok) {
-      console.error("Error al subir el archivo");
-      return;
-    }
-
-    const fileUrl = await uploadResponse.json();
-
-    // Construye el objeto Ejercicio para mostrar en la consola
-    const ejercicioData = {
-      titulo,
-      descripcion,
-      imgUrl: fileUrl,
-    };
-
-    // Mostrar el objeto Ejercicio en la consola
-    console.log("Ejercicio Data:", ejercicioData);
     try {
-      const response = await fetch("http://localhost:3001/ejercicio", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(ejercicioData),
-      });
+      // Primero, sube el archivo para obtener una URL
+      const fileUrl: string[] = await uploaFile(files)
 
-      if (response.ok) {
-        alert("Ejercicio creado exitosamente");
-        router.push("/dashboard");
-    } else {
-        alert("Error al crear el ejercicio");
-        console.error("Error al crear el ejercicio");
+      const ejercicioData = {
+        titulo,
+        descripcion,
+        imgUrl: fileUrl,
+      };
+      
+      console.log(ejercicioData);
+      
+      // Luego, crea el ejercicio con la URL del archivo
+      await createExercise(ejercicioData)
+      router.push("/dashboard");
+    } catch (error) {
+      return 'error al subir el archivo';
     }
-} catch (error) {
-    alert("Error al crear el ejercicio");
-    console.error("Error:", error);
-}
   };
 
   return (
