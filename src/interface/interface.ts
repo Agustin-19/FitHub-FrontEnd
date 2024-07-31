@@ -1,4 +1,4 @@
-import { Dificultad } from '@/interface/plan.interface';
+import { Dificultad } from "@/interface/plan.interface";
 // Users:
 
 interface IUser {
@@ -73,7 +73,7 @@ interface IRutina {
   name: string;
   description: string;
   precio?: number;
-  imagen?: string;
+  imgUrl?: string;
   category: string;
   difficultyLevel: Dificultad;
   exercise: IRutinaEjercicio[];

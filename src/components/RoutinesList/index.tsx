@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { IRutina } from "@/interface/interface";
 
-
 interface RutinaListProps {
   rutinas: IRutina[];
 }
@@ -29,14 +28,14 @@ const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
           className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
         >
           <div className="relative w-full h-48">
-          <Image
-                src={rutina?.imagen || imgDefect }
-                alt={rutina?.name || 'imagen por defecto'}
-                fill={true}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority={true}
-                className="rounded-t-lg"
-              />
+            <Image
+              src={getImageSrc(rutina.imgUrl)}
+              alt={rutina.name}
+              fill={true}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority={true}
+              className="object-cover w-full h-full"
+            />
           </div>
           <div className="p-3">
             <h2 className="text-xl font-bold mb-2">{rutina.name}</h2>
