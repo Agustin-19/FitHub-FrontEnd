@@ -1,4 +1,5 @@
-import { IUser } from "./interface";
+import { Dispatch, SetStateAction } from "react";
+import { IRutina, IUser } from "./interface";
 
 enum Dificultad {
     INICIAL = 'inicial',
@@ -35,9 +36,28 @@ interface ICategory {
 }
 
 
+interface IRutinaContextProps {
+    rutinas: IRutina[];
+    setRutinas: (rutinas: IRutina[]) => void;
+    error: string | null;
+    setError: (error: string | null) => void;
+    getAllRutinas: (queryString: ISearch) => Promise<IRutina[]>;
+}
+
+interface ISearch {
+    limit?: string;
+    page: string;
+    category?: string,
+    location?: string,
+    difficultyLevel?: string,
+    search?: string
+}
+
 export type {
     ICreatePlan,
     IPlan,
     ICategory,
     Dificultad,
+    IRutinaContextProps,
+    ISearch
 }

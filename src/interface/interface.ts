@@ -57,7 +57,7 @@ interface IUserConext {
   >;
   isLogged: boolean;
   signIn: (credentials: ILogin) => Promise<boolean>;
-  signUp: (user: IRegisterUser) => Promise<boolean>;
+  signUp: (user: IRegisterUser) => Promise<string | false>;
   logOut: () => void;
   getRutinas: () => void;
   getActividades: () => void;
@@ -80,9 +80,9 @@ interface IRutina {
 }
 
 interface IRutinaEjercicio {
-  id: number;
+  id?: string;
   titulo: string;
-  description: string;
+  descripcion: string;
   imgUrl: string[] | null;
 }
 
