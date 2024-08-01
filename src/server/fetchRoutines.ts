@@ -2,19 +2,16 @@ import { ICreateRutina, IRutina, IRutinaEjercicio } from "@/interface/interface"
 import { API } from "@/helpers/helper";
 import { ISearch } from "@/interface/plan.interface";
 
-export const get_Rutinas = async (queryString: ISearch): Promise<IRutina[]> => {
-    const {
-        search,
-        difficultyLevel,
-        location,
-        category,
-        page,
-        limit,
-    } = queryString
+export const get_Rutinas = async (queryString?: ISearch): Promise<IRutina[]> => {
 
-    const lim = limit || 8;
+    const lim = queryString?.limit || 8;
+    const pag = queryString?.page || 1;
+    const cat = queryString?.category || '';
+    const loc = queryString?.location || '';
+    const dif = queryString?.difficultyLevel || '';
+    const sea = queryString?.search || '';
 
-    const arg = `limit=${lim}&page=${page}&category=${category}&location=${location}&difficultyLevel=${difficultyLevel}&search=${search}`;
+    const arg = `limit=${lim}&page=${pag}&category=${cat}&location=${loc}&difficultyLevel=${dif}&search=${sea}`;
     // console.log(arg);
     
     try {
@@ -43,7 +40,7 @@ export const createExercise = async (ejercicio: IRutinaEjercicio) => {
         const response = await fetch(`${API}/ejercicio`, {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${(typeof window !== "undefined" && localStorage.getItem('token'))}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(ejercicio),
