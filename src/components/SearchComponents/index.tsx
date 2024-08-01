@@ -1,7 +1,7 @@
 "use client";
 import { ICategory, ISearch } from "@/interface/plan.interface";
 import { get_Category } from "@/server/fetchPlan";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 interface SearchComponentProps {
   fetchItems: (params: ISearch) => Promise<any[]>;
@@ -50,7 +50,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     fetchCategories();
   }, []);
 
-  const fetchAndSetItems = async () => {
+  const fetchAndSetItems = useCallback(async () => {
     const { limit, category, location, difficultyLevel, search } = searchParams;
     setLoading(true);
     try {
@@ -66,11 +66,11 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, searchParams, fetchItems]);
 
   useEffect(() => {
     fetchAndSetItems();
-  }, [page]);
+  }, [fetchAndSetItems]);
 
   const handlePrevious = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));

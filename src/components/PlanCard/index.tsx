@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { IPlan } from "@/interface/plan.interface";
 import Link from "next/link";
 
@@ -13,9 +14,11 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl m-4">
       <div className="relative w-full h-48">
-        <img
+        <Image
           src={plan.imgUrl || imgDefect}
           alt={plan.name || "Imagen no disponible"}
+          layout="fill"
+          objectFit="cover"
           className="object-cover w-full h-full"
         />
       </div>

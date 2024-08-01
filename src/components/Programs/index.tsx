@@ -18,7 +18,7 @@ const Programas: React.FC = () => {
     search: "",
   });
 
-  const fetchRutinas = async () => {
+  const fetchRutinas = useCallback(async () => {
     const { limit, category, location, difficultyLevel, search } = searchParams;
     setLoading(true);
     try {
@@ -39,20 +39,18 @@ const Programas: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, searchParams, getAllRutinas, setRutinas, setError]);
 
   useEffect(() => {
     fetchRutinas();
-  }, []);
+  }, [fetchRutinas]);
 
   const handlePrevious = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
-    fetchRutinas(); // Fetch routines for the new page
   };
 
   const handleNext = () => {
     setPage((prevPage) => prevPage + 1);
-    fetchRutinas(); // Fetch routines for the new page
   };
 
   if (loading) {

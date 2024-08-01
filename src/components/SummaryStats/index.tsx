@@ -4,7 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css"; // Importa los estilos de AOS
 
 // Función para animar el conteo de números
-const useCountUp = (end, duration) => {
+const useCountUp = (end: number, duration: number) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
