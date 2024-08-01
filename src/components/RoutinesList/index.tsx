@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +7,7 @@ interface RutinaListProps {
   rutinas: IRutina[];
 }
 
-const RutinaList: React.FC<RutinaListProps> = React.memo(({ rutinas }) => {
+const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
   const imgDefect =
     "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
   const getImageSrc = (image: string | string[] | null | undefined) => {
@@ -53,6 +52,6 @@ const RutinaList: React.FC<RutinaListProps> = React.memo(({ rutinas }) => {
       ))}
     </div>
   );
-});
+};
 
 export default RutinaList;
