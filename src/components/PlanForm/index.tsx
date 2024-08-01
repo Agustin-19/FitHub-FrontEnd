@@ -15,6 +15,7 @@ export default function Plan() {
     category: "",
     location: "",
     difficultyLevel: "",
+    price: "",
   });
 
   // *************** CATEGORIAS ***********************
@@ -86,6 +87,7 @@ export default function Plan() {
       location,
       difficultyLevel,
       category: [category],
+      price: 0,
     };
 
     console.log(Data);
@@ -124,6 +126,16 @@ export default function Plan() {
           type="text"
           id="name"
           value={plan.name}
+          onChange={handleChange}
+        />
+        <label id="login-lable" htmlFor="name">
+          Precio:
+        </label>
+        <input
+          className="form-content"
+          type="text"
+          id="price"
+          value={plan.price}
           onChange={handleChange}
         />
         <label id="login-lable" htmlFor="descripcion">
@@ -174,7 +186,11 @@ export default function Plan() {
           <option value="" disabled>
             Seleccionar Categoría
           </option>
-          <option value="inicial">Inicial</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </select>
 
         <button type="submit">Enviar</button>

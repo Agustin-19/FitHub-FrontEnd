@@ -43,8 +43,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signUp = async (user: IRegisterUser) => {
     try {
-      // const data = await postSigup(user);
-      const data = await postSigupCoach(user);
+      const data = await postSigup(user);
+      // const data = await postSigupCoach(user);
       return data;
     } catch (error) {
       console.log(error);
