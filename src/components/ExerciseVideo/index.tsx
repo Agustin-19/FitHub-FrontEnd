@@ -8,6 +8,8 @@ interface IVideoPlayerProps {
     onClose: () => void;
 }
 
+const videoDefect = "https://res.cloudinary.com/dae25mckx/video/upload/v1722454955/ulgn0mob8nixsqf2fqwr.mp4"
+
 const imgDefect = 'https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg'
 const getImageSrc = (image: string | string[] | null | undefined) => {
     if (typeof image === 'string') {
@@ -38,7 +40,7 @@ const ExerciseVideo = ({ ejercicio, onClose }: IVideoPlayerProps) => {
                     <iframe
 
                         className="w-full h-[340px]"
-                        src={ getImageSrc(ejercicio.imgUrl)}
+                        src={ getImageSrc(videoDefect)}
                         title={ejercicio.titulo}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -48,7 +50,7 @@ const ExerciseVideo = ({ ejercicio, onClose }: IVideoPlayerProps) => {
                 </div>
                 <div className="text-center">
                     <h4 className="text-xl font-bold mb-2">{ejercicio.titulo}</h4>
-                    <p>{ejercicio.description}</p>
+                    <p>{ejercicio.descripcion}</p>
                 </div>
             </div>
         </div>

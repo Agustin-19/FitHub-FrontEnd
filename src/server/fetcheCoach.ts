@@ -1,7 +1,6 @@
 import { IRegisterUser } from "@/interface/interface";
+import { API } from "@/helpers/helper";
 
-
-const API = "http://localhost:3001";
 
 export const postSigupCoach = async (user: IRegisterUser) => {
     const response = await fetch(`${API}/auth/signupentrenador`, {

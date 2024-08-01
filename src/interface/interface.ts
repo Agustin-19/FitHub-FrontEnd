@@ -1,4 +1,4 @@
-import { Dificultad } from '@/interface/plan.interface';
+import { Dificultad, ICategory } from "@/interface/plan.interface";
 // Users:
 
 interface IUser {
@@ -57,7 +57,7 @@ interface IUserConext {
   >;
   isLogged: boolean;
   signIn: (credentials: ILogin) => Promise<boolean>;
-  signUp: (user: IRegisterUser) => Promise<boolean>;
+  signUp: (user: IRegisterUser) => Promise<string | false>;
   logOut: () => void;
   getRutinas: () => void;
   getActividades: () => void;
@@ -69,20 +69,31 @@ interface IUserConext {
 // Rutinas
 
 interface IRutina {
-  id: number;
+  id?: string;
   name: string;
   description: string;
-  precio?: number;
-  imagen?: string;
-  category: string;
+  price?: number;
+  imgUrl?: string;
+  category: ICategory[];
   difficultyLevel: Dificultad;
   exercise: IRutinaEjercicio[];
 }
 
-interface IRutinaEjercicio {
-  id: number;
-  titulo: string;
+ export interface ICreateRutina {
+  id?: string;
+  name: string;
   description: string;
+  precio?: number;
+  imgUrl?: string;
+  category: string[];
+  difficultyLevel: Dificultad;
+  exercise: string[];
+}
+
+interface IRutinaEjercicio {
+  id?: string;
+  titulo: string;
+  descripcion: string;
   imgUrl: string[] | null;
 }
 

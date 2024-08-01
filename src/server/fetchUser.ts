@@ -1,5 +1,5 @@
 import { ILogin, IRegisterUser } from "@/interface/interface";
-const API = "http://localhost:3001";
+import { API } from "@/helpers/helper";
 
 export const postSigup = async (user: IRegisterUser) => {
   const response = await fetch(`${API}/auth/signupuser`, {
