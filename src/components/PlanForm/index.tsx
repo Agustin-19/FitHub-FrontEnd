@@ -10,11 +10,11 @@ export default function Plan() {
     (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
   const [plan, setPlan] = useState({
-    name: '',
-    descripcion: '',
-    category: '',
-    location: '',
-    difficultyLevel: ''
+    name: "",
+    descripcion: "",
+    category: "",
+    location: "",
+    difficultyLevel: "",
   });
 
   // *************** CATEGORIAS ***********************
@@ -23,31 +23,34 @@ export default function Plan() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:3001/categorias');
+        const response = await fetch("http://localhost:3001/categorias");
         const data = await response.json();
         setCategories(data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       }
-    }; fetchCategories();
+    };
+    fetchCategories();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setPlan(prevState => ({
+    setPlan((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
-  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
     // Aquí puedes acceder al valor seleccionado
     console.log(event.target.value);
 
     const { id, value } = event.target;
-    setPlan(prevState => ({
+    setPlan((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -77,19 +80,15 @@ export default function Plan() {
       return;
     }
 
-
     const Data = {
       name,
       description: descripcion,
       location,
       difficultyLevel,
-      category: [category]
+      category: [category],
     };
 
     console.log(Data);
-
-
-
 
     try {
       const response = await fetch("http://localhost:3001/plan", {
@@ -113,7 +112,6 @@ export default function Plan() {
       console.error("Error:", error);
     }
   };
-
 
   return (
     <div id="Container">
@@ -173,12 +171,10 @@ export default function Plan() {
           onChange={handleChangeSelect}
           className="daisy-select daisy-select-bordered w-full max-w-xs"
         >
-          <option value='' disabled>Seleccionar Categoría</option>
-          {categories.map(category => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
+          <option value="" disabled>
+            Seleccionar Categoría
+          </option>
+          <option value="inicial">Inicial</option>
         </select>
 
         <button type="submit">Enviar</button>

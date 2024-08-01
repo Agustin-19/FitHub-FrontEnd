@@ -5,6 +5,7 @@ import {
   postSigup,
   getUserRutinas,
   getUserActividades,
+  postSigupCoach,
 } from "../server/fetchUser";
 import {
   IUserConext,
@@ -42,8 +43,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signUp = async (user: IRegisterUser) => {
     try {
-      const data = await postSigup(user);
-      // const data = await postSigupCoach(user); para entrenadores
+      // const data = await postSigup(user);
+      const data = await postSigupCoach(user);
       return data;
     } catch (error) {
       console.log(error);
