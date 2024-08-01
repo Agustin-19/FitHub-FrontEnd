@@ -1,24 +1,23 @@
-'use client';
+"use client";
 
-import { IRutinaEjercicio } from '@/interface/interface';
-import { ICategory } from '@/interface/plan.interface';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState, useContext } from 'react';
-
+import { IRutinaEjercicio } from "@/interface/interface";
+import { ICategory } from "@/interface/plan.interface";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState, useContext } from "react";
 
 const CreateRutina: React.FC = () => {
-
   const token: string =
     (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
   const router = useRouter();
   const [rutina, setRutina] = useState({
-    name: '',
-    descripcion: '',
-    category: '',
+    name: "",
+    descripcion: "",
+    category: "",
     exercise: [] as string[],
-    difficultyLevel: ''
+    difficultyLevel: "",
+    price: "",
   });
 
   // *************** CATEGORIAS ***********************
@@ -27,13 +26,14 @@ const CreateRutina: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://localhost:3001/categorias');
+        const response = await fetch("http://localhost:3001/categorias");
         const data = await response.json();
         setCategories(data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       }
-    }; fetchCategories();
+    };
+    fetchCategories();
   }, []);
 
   // ************** EJERCICIOS *******************
@@ -41,47 +41,50 @@ const CreateRutina: React.FC = () => {
   useEffect(() => {
     const fetchEjercicios = async () => {
       try {
-        const response = await fetch('http://localhost:3001/ejercicio');
+        const response = await fetch("http://localhost:3001/ejercicio");
         const data = await response.json();
         setEjercicio(data);
       } catch (error) {
-        console.error('Error fetching ejercicios:', error);
+        console.error("Error fetching ejercicios:", error);
       }
-    }; fetchEjercicios();
+    };
+    fetchEjercicios();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setRutina(prevState => ({
+    setRutina((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
-  const handleChangeSelectMultiple: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const handleChangeSelectMultiple: React.ChangeEventHandler<
+    HTMLSelectElement
+  > = (event) => {
     // Aquí puedes acceder al valor seleccionado
     const { id, options } = event.target;
     console.log(event.target.value);
     const values = Array.from(options)
-      .filter(option => option.selected)
-      .map(option => option.value);
+      .filter((option) => option.selected)
+      .map((option) => option.value);
 
-    setRutina(prevState => ({
+    setRutina((prevState) => ({
       ...prevState,
-      [id]: values
+      [id]: values,
     }));
   };
 
-
-
-  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
     // Aquí puedes acceder al valor seleccionado
     console.log(event.target.value);
 
     const { id, value } = event.target;
-    setRutina(prevState => ({
+    setRutina((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -115,28 +118,27 @@ const CreateRutina: React.FC = () => {
       return;
     }
 
-
-
     const Data = {
       name,
       description: descripcion,
-      admin: '88dc3141-b757-4c7f-bd91-e55d8bde555a',
-      imgURL: 'url',
+      admin: "88dc3141-b757-4c7f-bd91-e55d8bde555a",
+      imgURL: "url",
       exercise,
       difficultyLevel,
-      category: [category]
+      category: [category],
+      price: 0,
     };
 
     console.log(Data);
 
     try {
-      const response = await fetch('http://localhost:3001/rutina', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/rutina", {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(Data)
+        body: JSON.stringify(Data),
       });
 
       if (response.ok) {
@@ -146,7 +148,6 @@ const CreateRutina: React.FC = () => {
         alert("Error al crear la rutina");
         console.error("Error al crear la rutina");
       }
-
     } catch (error) {
       console.error("Error:", error);
     }
@@ -188,7 +189,7 @@ const CreateRutina: React.FC = () => {
             className="daisy-select daisy-select-bordered w-full max-w-xs"
             multiple
           >
-            {ejercicios.map(ejercicio => (
+            {ejercicios.map((ejercicio) => (
               <option key={ejercicio.id} value={ejercicio.id}>
                 {ejercicio.titulo}
               </option>
@@ -204,11 +205,13 @@ const CreateRutina: React.FC = () => {
             onChange={handleChangeSelect}
             className="daisy-select daisy-select-bordered w-full max-w-xs"
           >
-            <option value='' disabled>Selecciona</option>
-            <option value='inicial'>Inicial</option>
-            <option value='intermedio'>Intermedio</option>
-            <option value='avanzado'>Avanzado</option>
-            <option value='profesional'>Profesional</option>
+            <option value="" disabled>
+              Selecciona
+            </option>
+            <option value="inicial">Inicial</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+            <option value="profesional">Profesional</option>
           </select>
         </div>
 
@@ -220,13 +223,24 @@ const CreateRutina: React.FC = () => {
             onChange={handleChangeSelect}
             className="daisy-select daisy-select-bordered w-full max-w-xs"
           >
-            <option value='' disabled>Seleccionar Categoría</option>
-            {categories.map(category => (
+            <option value="" disabled>
+              Seleccionar Categoría
+            </option>
+            {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>
             ))}
           </select>
+        </div>
+        <div>
+          <label htmlFor="name">Precio: $</label>
+          <input
+            type="text"
+            id="price"
+            value={rutina.price}
+            onChange={handleChange}
+          />
         </div>
 
         <button type="submit">Enviar</button>
