@@ -1,21 +1,26 @@
 'use client';
-import { useContext, useEffect, useState } from "react";
-import RutinaList from "../RoutinesList";
-import { RutinaContext } from "@/context/trainingContext";
-import { IRutina } from "@/interface/interface";
+import { ICategory, ISearch } from '@/interface/plan.interface';
+import { get_Category } from '@/server/fetchPlan';
+import React, { useEffect, useState } from 'react';
 
-const SearchComponents: React.FC = () => {
-    const { rutinas, setRutinas, error, setError, getAllRutinas } = useContext(RutinaContext);
+interface SearchComponentProps {
+    fetchItems: (params: ISearch) => Promise<any[]>;
+    renderList: (items: any[]) => JSX.Element;
+    error: string | null;
+}
 
+const SearchComponent: React.FC<SearchComponentProps> = ({ fetchItems, renderList, error }) => {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
-    const [searchParams, setSearchParams] = useState({
+    const [searchParams, setSearchParams] = useState<ISearch>({
         limit: '',
         category: '',
         location: '',
         difficultyLevel: '',
-        search: ''
+        search: '',
+        page: '1'
     });
+    const [items, setItems] = useState<any[]>([]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setSearchParams({
@@ -24,31 +29,34 @@ const SearchComponents: React.FC = () => {
         });
     };
 
-    const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-        const { name, value } = event.target;
-        setSearchParams(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+    // *************** CATEGORIAS ***********************
+    const [categories, setCategories] = useState<ICategory[]>([]);
 
-    const fetchRutinas = async () => {
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const data = await get_Category();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        }; fetchCategories();
+    }, []);
+
+
+
+    const fetchAndSetItems = async () => {
         const { limit, category, location, difficultyLevel, search } = searchParams;
         setLoading(true);
         try {
-            const queryString = {
+            const queryString = { 
+                ...searchParams, 
                 page: page.toString(),
-                limit,
-                category,
-                location,
-                difficultyLevel,
-                search,
+                category: category
             };
-
-            const data = await getAllRutinas(queryString);
-            setRutinas(data);
+            const data = await fetchItems(queryString);
+            setItems(data);
         } catch (err) {
-            setError("Error al obtener las rutinas");
             console.error(err);
         } finally {
             setLoading(false);
@@ -56,23 +64,21 @@ const SearchComponents: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchRutinas();
-    }, []);
+        fetchAndSetItems();
+    }, [page]);
 
     const handlePrevious = () => {
         setPage(prevPage => Math.max(prevPage - 1, 1));
-        fetchRutinas(); // Fetch routines for the new page
     };
 
     const handleNext = () => {
         setPage(prevPage => prevPage + 1);
-        fetchRutinas(); // Fetch routines for the new page
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setPage(1);
-        fetchRutinas();
+        fetchAndSetItems();
     };
 
     if (loading) {
@@ -91,7 +97,7 @@ const SearchComponents: React.FC = () => {
                         Explora nuestros
                     </span>
                     <span className="text-4xl font-bold text-[#97D6DF] animate-fadeIn">
-                        SearchComponents para
+                        elementos para
                     </span>
                     <span className="text-4xl font-bold text-[#447988] animate-fadeIn">
                         dar forma a tu cuerpo
@@ -108,12 +114,26 @@ const SearchComponents: React.FC = () => {
                         onChange={handleChange}
                         className="p-2 rounded border"
                     />
-                    <select name="category" value={searchParams.category} onChange={handleChange} className="p-2 rounded border">
-                        <option value="">Categoría</option>
-                        <option value="e7775355-f280-420d-ad54-3a88d370437e">Gimnasia</option>
-                        <option value="f5abde3a-443c-44f6-9aa1-3fb8c147c93c">Tenis</option>
+                    <select
+                        id="category"
+                        name="category"
+                        value={searchParams.category}
+                        onChange={handleChange}
+                        className="daisy-select daisy-select-bordered w-full max-w-xs"
+                    >
+                        <option value=''>Seleccionar Categoría</option>
+                        {categories.map(category => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
                     </select>
-                    <select name="difficultyLevel" value={searchParams.difficultyLevel} onChange={handleChangeSelect} className="p-2 rounded border">
+
+                    <select
+                        name="difficultyLevel"
+                        value={searchParams.difficultyLevel}
+                        onChange={handleChange}
+                        className="p-2 rounded border">
                         <option value="">Nivel de Dificultad</option>
                         <option value="inicial">Inicial</option>
                         <option value="intermedio">Intermedio</option>
@@ -123,7 +143,7 @@ const SearchComponents: React.FC = () => {
                     <button type="submit" className="p-2 rounded bg-blue-500 text-white">Buscar</button>
                 </div>
             </form>
-            <RutinaList rutinas={rutinas} />
+            {renderList(items)}
             <div className="daisy-join">
                 <button className="daisy-join-item daisy-btn" onClick={handlePrevious}>«</button>
                 <button className="daisy-join-item daisy-btn">Page {page}</button>
@@ -131,6 +151,6 @@ const SearchComponents: React.FC = () => {
             </div>
         </div>
     );
-}
+};
 
-export default SearchComponents;
+export default SearchComponent;

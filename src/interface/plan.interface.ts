@@ -44,6 +44,15 @@ interface IRutinaContextProps {
     getAllRutinas: (queryString: ISearch) => Promise<IRutina[]>;
 }
 
+interface IPlanContextProps {
+    plans: IPlan[];
+    setPlans: (planes: IPlan[]) => void;
+    error: string | null;
+    setError: (error: string) => void;
+    getAllPlanes: (params: ISearch) => Promise<IPlan[]>;
+}
+
+
 interface ISearch {
     limit?: string;
     page: string;
@@ -59,5 +68,6 @@ export type {
     ICategory,
     Dificultad,
     IRutinaContextProps,
-    ISearch
+    ISearch,
+    IPlanContextProps
 }

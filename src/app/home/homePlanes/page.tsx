@@ -8,9 +8,9 @@ export default function Home() {
   const router = useRouter();
   const { isLogged } = useContext(UserContext);
 
-  if (!isLogged) {
-    router.push("/login");
-  }
+  // if (!isLogged) {
+  //   router.push("/login");
+  // }
   return (
     <div>
       <HomeUserPlan />

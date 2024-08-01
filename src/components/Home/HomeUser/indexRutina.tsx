@@ -1,13 +1,6 @@
 "use client";
-
-import { useCallback, useContext, useEffect, useState } from "react";
-import RutinaList from "@/components/RoutinesList/index";
-// import { rutinas } from "../../../../public/data/rutines.data";
 import Link from "next/link";
-import PriceFilter from "@/components/Filtros/FiltroPrecio";
-import CategoryFilter from "@/components/Filtros/FiltroCategoria";
-import { RutinaContext } from "@/context/trainingContext";
-import SearchComponents from "@/components/SearchComponents";
+import SearchRutina from "@/components/SearchRutina";
 export default function HomeUserRutina() {
 
 
@@ -18,7 +11,7 @@ export default function HomeUserRutina() {
           Volver
         </button>
       </Link>
-      <SearchComponents/>
+      <SearchRutina/>
     </div>
   );
 }
