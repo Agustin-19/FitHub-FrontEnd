@@ -6,6 +6,8 @@ import { IRutina, IRutinaEjercicio } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+import { get_RutinaById } from "@/server/fetchRoutines";
+import { createOrder } from "@/server/fetchMercadoPago";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -38,17 +40,7 @@ const Routine = ({ params }: IRoutineProps) => {
   useEffect(() => {
     const fetchRutinaID = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/rutina/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al obtener las rutinas");
-        }
-        const routine = await response.json();
+        const routine = await get_RutinaById(id);
         setRutina(routine);
       } catch (err) {
         setError("Error al obtener las rutinas");
@@ -76,37 +68,25 @@ const Routine = ({ params }: IRoutineProps) => {
   const handlePurchase = async () => {
     if (!isLogged) {
       alert("Debes iniciar sesión para comprar la rutina.");
-      router.push("/login");
+      // router.push("/login");
       return;
     }
 
-    try {
-      const rutinaData = {
-        title: routine?.name,
-        quantity: 1,
-        unit_price: 100,
-      };
+    setIsPurchased(true);
+    alert(`Rutina ${routine?.name} comprada!`);
 
-      const response = await fetch(
-        "http://localhost:3001/rutina/create-order",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(rutinaData),
-        }
-      );
+    // try {
+    //   const rutinaData = {
+    //     title: routine?.name,
+    //     quantity: 1,
+    //     unit_price: 100,
+    //   };
 
-      if (!response.ok) {
-        throw new Error("Error al crear la orden");
-      }
-
-      const preference = await response.json();
-      setPreferenceId(preference.id);
-    } catch (error) {
-      console.log(error);
-    }
+    //   const preference = await createOrder(rutinaData)
+    //   setPreferenceId(preference.id);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const handleBuy = async () => {
@@ -194,7 +174,7 @@ const Routine = ({ params }: IRoutineProps) => {
                   )}
                 </div>
                 <div className=" text-center m-3 mt-10">
-                  <p>{ejercicio.description}</p>
+                  <p>{ejercicio.descripcion}</p>
                 </div>
               </div>
             </li>

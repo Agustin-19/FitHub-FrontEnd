@@ -1,4 +1,4 @@
-import { Dificultad } from "@/interface/plan.interface";
+import { Dificultad, ICategory } from "@/interface/plan.interface";
 // Users:
 
 interface IUser {
@@ -69,14 +69,25 @@ interface IUserConext {
 // Rutinas
 
 interface IRutina {
-  id: number;
+  id?: string;
   name: string;
   description: string;
   precio?: number;
   imgUrl?: string;
-  category: string;
+  category: ICategory[];
   difficultyLevel: Dificultad;
   exercise: IRutinaEjercicio[];
+}
+
+ export interface ICreateRutina {
+  id?: string;
+  name: string;
+  description: string;
+  precio?: number;
+  imgUrl?: string;
+  category: string[];
+  difficultyLevel: Dificultad;
+  exercise: string[];
 }
 
 interface IRutinaEjercicio {
