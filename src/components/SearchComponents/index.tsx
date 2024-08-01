@@ -50,7 +50,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     fetchCategories();
   }, []);
 
-  const fetchAndSetItems = useCallback(async () => {
+  const fetchAndSetItems = async () => {
     const { limit, category, location, difficultyLevel, search } = searchParams;
     setLoading(true);
     try {
@@ -66,11 +66,11 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     } finally {
       setLoading(false);
     }
-  }, [page, searchParams, fetchItems]);
+  };
 
   useEffect(() => {
     fetchAndSetItems();
-  }, [fetchAndSetItems]);
+  }, [page]);
 
   const handlePrevious = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
