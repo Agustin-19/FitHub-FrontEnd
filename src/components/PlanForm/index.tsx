@@ -11,11 +11,12 @@ export default function Plan() {
     (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
   const [plan, setPlan] = useState({
-    name: '',
-    descripcion: '',
-    category: '',
-    location: '',
-    difficultyLevel: ''
+    name: "",
+    descripcion: "",
+    category: "",
+    location: "",
+    difficultyLevel: "",
+    price: "",
   });
 
   // *************** CATEGORIAS ***********************
@@ -25,29 +26,33 @@ export default function Plan() {
     const fetchCategories = async () => {
       try {
         const data = await get_Category();
+
         setCategories(data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       }
-    }; fetchCategories();
+    };
+    fetchCategories();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setPlan(prevState => ({
+    setPlan((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
-  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
     // Aquí puedes acceder al valor seleccionado
     console.log(event.target.value);
 
     const { id, value } = event.target;
-    setPlan(prevState => ({
+    setPlan((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -77,19 +82,16 @@ export default function Plan() {
       return;
     }
 
-
     const Data = {
       name,
       description: descripcion,
       location,
       difficultyLevel,
-      category: [category]
+      category: [category],
+      price: 0,
     };
 
     console.log(Data);
-
-
-
 
     try {
       const response = await fetch("http://localhost:3001/plan", {
@@ -114,7 +116,6 @@ export default function Plan() {
     }
   };
 
-
   return (
     <div id="Container">
       <form className="form" onSubmit={handleSubmit}>
@@ -126,6 +127,16 @@ export default function Plan() {
           type="text"
           id="name"
           value={plan.name}
+          onChange={handleChange}
+        />
+        <label id="login-lable" htmlFor="name">
+          Precio:
+        </label>
+        <input
+          className="form-content"
+          type="text"
+          id="price"
+          value={plan.price}
           onChange={handleChange}
         />
         <label id="login-lable" htmlFor="descripcion">
@@ -173,8 +184,10 @@ export default function Plan() {
           onChange={handleChangeSelect}
           className="daisy-select daisy-select-bordered w-full max-w-xs"
         >
-          <option value='' disabled>Seleccionar Categoría</option>
-          {categories.map(category => (
+          <option value="" disabled>
+            Seleccionar Categoría
+          </option>
+          {categories.map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>

@@ -8,10 +8,10 @@ interface RutinaListProps {
 }
 
 const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
-
-  const imgDefect = 'https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg'
+  const imgDefect =
+    "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
   const getImageSrc = (image: string | string[] | null | undefined) => {
-    if (typeof image === 'string') {
+    if (typeof image === "string") {
       return image;
     } else if (Array.isArray(image) && image.length > 0) {
       return image[0];
@@ -40,7 +40,7 @@ const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
           <div className="p-3">
             <h2 className="text-xl font-bold mb-2">{rutina.name}</h2>
             <p className="text-gray-600 mb-2">{rutina.description}</p>
-            <p className="text-gray-700 font-semibold mb-4">${rutina.precio}</p>
+            <p className="text-gray-700 font-semibold mb-4">${rutina.price}</p>
             <Link
               href={`/routines/${rutina.id}`}
               className="mt-4 inline-block px-3 py-1 bg-[#FF3E1A] text-white rounded-lg hover:bg-[#FF5722] transition-colors"

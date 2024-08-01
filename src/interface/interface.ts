@@ -72,7 +72,7 @@ interface IRutina {
   id?: string;
   name: string;
   description: string;
-  precio?: number;
+  price?: number;
   imgUrl?: string;
   category: ICategory[];
   difficultyLevel: Dificultad;

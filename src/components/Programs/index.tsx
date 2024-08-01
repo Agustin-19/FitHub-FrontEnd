@@ -1,20 +1,21 @@
-'use client';
+"use client";
 import { useContext, useEffect, useState, useCallback } from "react";
 import RutinaList from "../RoutinesList";
 import "./programs.module.css";
 import { RutinaContext } from "@/context/trainingContext";
 
 const Programas: React.FC = () => {
-  const { rutinas, setRutinas, error, setError, getAllRutinas } = useContext(RutinaContext);
+  const { rutinas, setRutinas, error, setError, getAllRutinas } =
+    useContext(RutinaContext);
 
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useState({
-    limit: '',
-    category: '',
-    location: '',
-    difficultyLevel: '',
-    search: ''
+    limit: "",
+    category: "",
+    location: "",
+    difficultyLevel: "",
+    search: "",
   });
 
   const fetchRutinas = async () => {
@@ -45,15 +46,14 @@ const Programas: React.FC = () => {
   }, []);
 
   const handlePrevious = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 1));
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
     fetchRutinas(); // Fetch routines for the new page
-};
+  };
 
-const handleNext = () => {
-    setPage(prevPage => prevPage + 1);
+  const handleNext = () => {
+    setPage((prevPage) => prevPage + 1);
     fetchRutinas(); // Fetch routines for the new page
-};
-
+  };
 
   if (loading) {
     return <div className="text-center text-white">Cargando...</div>;
@@ -82,13 +82,17 @@ const handleNext = () => {
         </div>
       </div>
       <RutinaList rutinas={rutinas} />
-      <div className="daisy-join">
-        <button className="daisy-join-item daisy-btn" onClick={handlePrevious}>«</button>
+      <div className="daisy-join flex justify-center">
+        <button className="daisy-join-item daisy-btn" onClick={handlePrevious}>
+          «
+        </button>
         <button className="daisy-join-item daisy-btn">Page {page}</button>
-        <button className="daisy-join-item daisy-btn" onClick={handleNext}>»</button>
+        <button className="daisy-join-item daisy-btn" onClick={handleNext}>
+          »
+        </button>
       </div>
     </div>
   );
-}
+};
 
 export default Programas;

@@ -9,7 +9,14 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState, useContext } from 'react';
 
 
+import { IRutinaEjercicio } from "@/interface/interface";
+import { ICategory } from "@/interface/plan.interface";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState, useContext } from "react";
+
 const CreateRutina: React.FC = () => {
+
 
 
 
@@ -20,6 +27,7 @@ const CreateRutina: React.FC = () => {
     category: [] as string[],
     exercise: [] as string[],
     difficultyLevel: '' as Dificultad | '',
+
   });
 
   // *************** CATEGORIAS ***********************
@@ -28,12 +36,14 @@ const CreateRutina: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+
         const data = await get_Category();
         setCategories(data);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error("Error fetching categories:", error);
       }
-    }; fetchCategories();
+    };
+    fetchCategories();
   }, []);
 
   // ************** EJERCICIOS *******************
@@ -41,44 +51,49 @@ const CreateRutina: React.FC = () => {
   useEffect(() => {
     const fetchEjercicios = async () => {
       try {
+
         const data = await get_Ejercicios();
+
         setEjercicio(data);
       } catch (error) {
-        console.error('Error fetching ejercicios:', error);
+        console.error("Error fetching ejercicios:", error);
       }
-    }; fetchEjercicios();
+    };
+    fetchEjercicios();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setRutina(prevState => ({
+    setRutina((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
   const handleChangeSelectMultiple: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+
     const { id, options } = event.target;
     const values = Array.from(options)
       .filter(option => option.selected)
       .map(option => option.value);
   
     setRutina(prevState => ({
+
       ...prevState,
-      [id]: values
+      [id]: values,
     }));
   };
 
-
-
-  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
     // Aquí puedes acceder al valor seleccionado
     console.log(event.target.value);
 
     const { id, value } = event.target;
-    setRutina(prevState => ({
+    setRutina((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -120,14 +135,15 @@ const CreateRutina: React.FC = () => {
       difficultyLevel,
       category,
       admin: '5061e26f-3375-41a2-bebf-bea3a9ba49f5' // El ID del administrador de la app
+
     };
 
     // console.log(data);
-
     try {
       await create_Rutina(data); // Usa la función modularizada
       alert("Rutina creada exitosamente");
       router.push("/dashboard");
+
     } catch (error) {
       alert("Error al crear la rutina");
       console.error("Error al crear la rutina:", error);
@@ -170,7 +186,7 @@ const CreateRutina: React.FC = () => {
             className="daisy-select daisy-select-bordered w-full max-w-xs"
             multiple
           >
-            {ejercicios.map(ejercicio => (
+            {ejercicios.map((ejercicio) => (
               <option key={ejercicio.id} value={ejercicio.id}>
                 {ejercicio.titulo}
               </option>
@@ -186,11 +202,13 @@ const CreateRutina: React.FC = () => {
             onChange={handleChangeSelect}
             className="daisy-select daisy-select-bordered w-full max-w-xs"
           >
-            <option value='' disabled>Selecciona</option>
-            <option value='inicial'>Inicial</option>
-            <option value='intermedio'>Intermedio</option>
-            <option value='avanzado'>Avanzado</option>
-            <option value='profesional'>Profesional</option>
+            <option value="" disabled>
+              Selecciona
+            </option>
+            <option value="inicial">Inicial</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+            <option value="profesional">Profesional</option>
           </select>
         </div>
 
@@ -203,13 +221,24 @@ const CreateRutina: React.FC = () => {
             className="daisy-select daisy-select-bordered w-full max-w-xs"
             multiple
           >
-            <option value='' disabled>Seleccionar Categoría</option>
-            {categories.map(category => (
+            <option value="" disabled>
+              Seleccionar Categoría
+            </option>
+            {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>
             ))}
           </select>
+        </div>
+        <div>
+          <label htmlFor="name">Precio: $</label>
+          <input
+            type="text"
+            id="price"
+            value={rutina.price}
+            onChange={handleChange}
+          />
         </div>
 
         <button type="submit">Enviar</button>
