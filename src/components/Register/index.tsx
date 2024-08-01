@@ -12,7 +12,6 @@ import Image from "next/image";
 import register1 from "../../../public/assets/loginyregister/register1.png";
 import { motion } from "framer-motion";
 import register2 from "../../../public/assets/loginyregister/register2.png";
-import { register } from "module";
 
 export function RegisterComponet({ token, setToken }: any) {
   const { signUp } = useContext(UserContext);

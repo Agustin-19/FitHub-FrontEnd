@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 import Link from "next/link";
 import SearchRutina from "@/components/SearchRutina";
+import styles from "../home.module.css";
 export default function HomeUserRutina() {
 
 =======
@@ -64,7 +65,7 @@ export default function HomeUserRutina() {
 >>>>>>> eedb157 (register listo)
 
   return (
-    <div>
+    <div className={styles.container}>
       <Link href="/home">
         <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
@@ -140,6 +141,21 @@ export default function HomeUserRutina() {
         </div>
       </div>
 >>>>>>> eedb157 (register listo)
+      <div className="flex justify-center space-x-4 mb-8 ">
+        <span
+          className="text-4xl font-bold stroke-text animate-fadeIn z-10"
+          data-text="Explora nuestros"
+        >
+          Explora nuestros
+        </span>
+        <span className="text-4xl font-bold text-[#97D6DF] animate-fadeIn z-10">
+          elementos para
+        </span>
+        <span className="text-4xl font-bold text-[#447988] animate-fadeIn z-10">
+          dar forma a tu cuerpo
+        </span>
+      </div>
+      <SearchRutina />
     </div>
   );
 }

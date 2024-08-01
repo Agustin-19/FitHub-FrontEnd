@@ -90,6 +90,15 @@ interface IRutina {
   exercise: string[];
 }
 
+export interface ICreateRutina {
+  name: string;
+  description: string;
+  precio?: number;
+  imgUrl?: string;
+  category: string[];
+  difficultyLevel: Dificultad;
+  exercise: string[];
+}
 interface IRutinaEjercicio {
   id?: string;
   titulo: string;
