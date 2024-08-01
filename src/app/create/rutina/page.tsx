@@ -1,4 +1,13 @@
-"use client";
+'use client';
+
+import { IRutinaEjercicio } from '@/interface/interface';
+import { Dificultad, ICategory } from '@/interface/plan.interface';
+import { get_Category } from '@/server/fetchPlan';
+import { create_Rutina, get_Ejercicios } from '@/server/fetchRoutines';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState, useContext } from 'react';
+
 
 import { IRutinaEjercicio } from "@/interface/interface";
 import { ICategory } from "@/interface/plan.interface";
@@ -7,17 +16,18 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useContext } from "react";
 
 const CreateRutina: React.FC = () => {
-  const token: string =
-    (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+
+
+
 
   const router = useRouter();
   const [rutina, setRutina] = useState({
-    name: "",
-    descripcion: "",
-    category: "",
+    name: '',
+    descripcion: '',
+    category: [] as string[],
     exercise: [] as string[],
-    difficultyLevel: "",
-    price: "",
+    difficultyLevel: '' as Dificultad | '',
+
   });
 
   // *************** CATEGORIAS ***********************
@@ -26,8 +36,8 @@ const CreateRutina: React.FC = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3001/categorias");
-        const data = await response.json();
+
+        const data = await get_Category();
         setCategories(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -41,8 +51,9 @@ const CreateRutina: React.FC = () => {
   useEffect(() => {
     const fetchEjercicios = async () => {
       try {
-        const response = await fetch("http://localhost:3001/ejercicio");
-        const data = await response.json();
+
+        const data = await get_Ejercicios();
+
         setEjercicio(data);
       } catch (error) {
         console.error("Error fetching ejercicios:", error);
@@ -59,17 +70,15 @@ const CreateRutina: React.FC = () => {
     }));
   };
 
-  const handleChangeSelectMultiple: React.ChangeEventHandler<
-    HTMLSelectElement
-  > = (event) => {
-    // Aquí puedes acceder al valor seleccionado
-    const { id, options } = event.target;
-    console.log(event.target.value);
-    const values = Array.from(options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
+  const handleChangeSelectMultiple: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
 
-    setRutina((prevState) => ({
+    const { id, options } = event.target;
+    const values = Array.from(options)
+      .filter(option => option.selected)
+      .map(option => option.value);
+  
+    setRutina(prevState => ({
+
       ...prevState,
       [id]: values,
     }));
@@ -118,43 +127,31 @@ const CreateRutina: React.FC = () => {
       return;
     }
 
-    const Data = {
+    const data = {
       name,
       description: descripcion,
-      admin: "88dc3141-b757-4c7f-bd91-e55d8bde555a",
-      imgURL: "url",
+      imgURL: 'url',
       exercise,
       difficultyLevel,
-      category: [category],
-      price: 0,
+      category,
+      admin: '5061e26f-3375-41a2-bebf-bea3a9ba49f5' // El ID del administrador de la app
+
     };
 
-    console.log(Data);
-
+    // console.log(data);
     try {
-      const response = await fetch("http://localhost:3001/rutina", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Data),
-      });
+      await create_Rutina(data); // Usa la función modularizada
+      alert("Rutina creada exitosamente");
+      router.push("/dashboard");
 
-      if (response.ok) {
-        alert("Rutina creada exitosamente");
-        router.push("/dashboard");
-      } else {
-        alert("Error al crear la rutina");
-        console.error("Error al crear la rutina");
-      }
     } catch (error) {
-      console.error("Error:", error);
+      alert("Error al crear la rutina");
+      console.error("Error al crear la rutina:", error);
     }
   };
 
   return (
-    <div>
+    <div className='w-full m-5 gap-3'>
       <Link href="/dashboard">
         <button className="mt-4 mb-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
@@ -220,8 +217,9 @@ const CreateRutina: React.FC = () => {
           <select
             id="category"
             value={rutina.category}
-            onChange={handleChangeSelect}
+            onChange={handleChangeSelectMultiple}
             className="daisy-select daisy-select-bordered w-full max-w-xs"
+            multiple
           >
             <option value="" disabled>
               Seleccionar Categoría

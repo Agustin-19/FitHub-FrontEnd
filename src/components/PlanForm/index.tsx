@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./planform.Module.css";
 import { ICategory } from "@/interface/plan.interface";
 import { useRouter } from "next/navigation";
+import { get_Category } from "@/server/fetchPlan";
 
 export default function Plan() {
   const router = useRouter();
@@ -24,8 +25,8 @@ export default function Plan() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3001/categorias");
-        const data = await response.json();
+        const data = await get_Category();
+
         setCategories(data);
       } catch (error) {
         console.error("Error fetching categories:", error);

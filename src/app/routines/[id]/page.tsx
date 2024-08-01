@@ -6,7 +6,10 @@ import { IRutina, IRutinaEjercicio } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+import { get_RutinaById } from "@/server/fetchRoutines";
+import { createOrder } from "@/server/fetchMercadoPago";
 import Link from "next/link";
+
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -39,17 +42,7 @@ const Routine = ({ params }: IRoutineProps) => {
   useEffect(() => {
     const fetchRutinaID = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/rutina/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al obtener las rutinas");
-        }
-        const routine = await response.json();
+        const routine = await get_RutinaById(id);
         setRutina(routine);
       } catch (err) {
         setError("Error al obtener las rutinas");
@@ -81,6 +74,9 @@ const Routine = ({ params }: IRoutineProps) => {
       return;
     }
 
+//     setIsPurchased(true);
+//     alert(`Rutina ${routine?.name} comprada!`);
+
     try {
       const rutinaData = {
         title: routine?.name,
@@ -88,22 +84,7 @@ const Routine = ({ params }: IRoutineProps) => {
         unit_price: 100,
       };
 
-      const response = await fetch(
-        "http://localhost:3001/rutina/create-order",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(rutinaData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Error al crear la orden");
-      }
-
-      const preference = await response.json();
+      const preference = await createOrder(rutinaData)
       setPreferenceId(preference.id);
     } catch (error) {
       console.log(error);
@@ -206,6 +187,24 @@ const Routine = ({ params }: IRoutineProps) => {
                   <div className=" text-center m-3 mt-10">
                     <p>{ejercicio.descripcion}</p>
                   </div>
+                  {isPurchased ? (
+                    <button
+                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                      onClick={() => setSelectedEjercicio(ejercicio)}
+                    >
+                      Ver Video
+                    </button>
+                  ) : (
+                    <button
+                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                      onClick={() => alert("Debes comprar la rutina")}
+                    >
+                      Ver Video
+                    </button>
+                  )}
+                </div>
+                <div className=" text-center m-3 mt-10">
+                  <p>{ejercicio.descripcion}</p>
                 </div>
               </li>
             ))}
