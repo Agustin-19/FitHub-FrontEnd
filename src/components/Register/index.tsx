@@ -9,9 +9,10 @@ import { IErrorsRegister, IRegisterUser } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
 import style from "./register.module.css";
 import Image from "next/image";
-import hombre2 from "../../../public/assets/loginyregister/hombre2.png";
+import register1 from "../../../public/assets/loginyregister/register1.png";
 import { motion } from "framer-motion";
-import basket from "../../../public/assets/loginyregister/basket.png";
+import register2 from "../../../public/assets/loginyregister/register2.png";
+import { register } from "module";
 
 export function RegisterComponet({ token, setToken }: any) {
   const { signUp } = useContext(UserContext);
@@ -119,12 +120,12 @@ export function RegisterComponet({ token, setToken }: any) {
     >
       <div className={style.left} data-aos="fade-right">
         <Image
-          src={hombre2}
+          src={register1}
           alt="Woman on the right"
           width={1000}
-          height={1000}
+          height={900}
         />
-      </div>
+      </div>{" "}
       <form className={style.form} onSubmit={handleSubmit}>
         <h1 className="text-[#97D6DF] text-5xl p-3 mb-5 text-center font-bold">
           Registro
@@ -133,7 +134,7 @@ export function RegisterComponet({ token, setToken }: any) {
         {/* Entrada de nombre */}
         <div className="grid grid-cols-2 p-4 gap-x-9  ">
           <div
-            className="relative border rounded-lg mb-6 "
+            className="relative rounded-lg mb-6 "
             data-twe-input-wrapper-init
           >
             <input
@@ -154,17 +155,17 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               Nombre y Apellido
-              {errors.name && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.name}
-                </p>
-              )}
             </label>
+            {errors.name && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.name}
+              </p>
+            )}
           </div>
 
           {/* Entrada de correo */}
           <div
-            className="relative border rounded-lg mb-6 "
+            className="relative  rounded-lg mb-6 "
             data-twe-input-wrapper-init
           >
             <input
@@ -185,17 +186,17 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               Correo
-              {errors.email && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.email}
-                </p>
-              )}
             </label>
+            {errors.email && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.email}
+              </p>
+            )}
           </div>
 
           {/* DNI Input */}
           <div
-            className="relative border rounded-lg mb-6"
+            className="relative  rounded-lg mb-6"
             data-twe-input-wrapper-init
           >
             <input
@@ -216,17 +217,17 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               DNI
-              {errors.dni && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.dni}
-                </p>
-              )}
             </label>
+            {errors.dni && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.dni}
+              </p>
+            )}
           </div>
 
           {/* Entrada de dirección */}
           <div
-            className="relative border rounded-lg mb-6 "
+            className="relative rounded-lg mb-6 "
             data-twe-input-wrapper-init
           >
             <input
@@ -247,17 +248,17 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               Dirección
-              {errors.address && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.address}
-                </p>
-              )}
             </label>
+            {errors.address && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.address}
+              </p>
+            )}
           </div>
 
           {/* Entrada de país */}
           <div
-            className="relative border rounded-lg mb-6 "
+            className="relative rounded-lg mb-6 "
             data-twe-input-wrapper-init
           >
             <input
@@ -278,19 +279,16 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               País
-              {errors.country && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.country}
-                </p>
-              )}
             </label>
+            {errors.country && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
+                {errors.country}
+              </p>
+            )}
           </div>
 
           {/* Entrada de ciudad */}
-          <div
-            className="relative border rounded-lg mb-6 "
-            data-twe-input-wrapper-init
-          >
+          <div className="relative rounded-lg mb-6" data-twe-input-wrapper-init>
             <input
               type="text"
               name="city"
@@ -309,17 +307,17 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               Ciudad
-              {errors.city && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.city}
-                </p>
-              )}
             </label>
+            {errors.city && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.city}
+              </p>
+            )}
           </div>
 
           {/* Entrada de celular */}
           <div
-            className="relative border rounded-lg mb-6 "
+            className="relative rounded-lg mb-6 "
             data-twe-input-wrapper-init
           >
             <input
@@ -340,17 +338,17 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               Celular
-              {errors.phone && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.phone}
-                </p>
-              )}
             </label>
+            {errors.phone && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.phone}
+              </p>
+            )}
           </div>
 
           {/* Entrada de contraseña */}
           <div
-            className="relative border rounded-lg mb-6 "
+            className="relative rounded-lg mb-6 "
             data-twe-input-wrapper-init
           >
             <input
@@ -371,17 +369,17 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               Contraseña
-              {errors.password && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.password}
-                </p>
-              )}
             </label>
+            {errors.password && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.password}
+              </p>
+            )}
           </div>
 
           {/* Confirmación de contraseña */}
           <div
-            className="relative border rounded-lg mb-6 "
+            className="relative  rounded-lg mb-6 "
             data-twe-input-wrapper-init
           >
             <input
@@ -402,13 +400,14 @@ export function RegisterComponet({ token, setToken }: any) {
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
             >
               Repita su Contraseña
-              {errors.passwordConfirm && (
-                <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-                  {errors.passwordConfirm}
-                </p>
-              )}
             </label>
+            {errors.passwordConfirm && (
+              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+                {errors.passwordConfirm}
+              </p>
+            )}
           </div>
+
           {/* Mensaje de campos obligatorios */}
           {!todosLosCamposCompletos() && (
             <p
@@ -540,6 +539,14 @@ export function RegisterComponet({ token, setToken }: any) {
           </button>
         </Link>
       </form>
+      <div className={style.right} data-aos="fade-left">
+        <motion.img
+          src={register2.src}
+          alt="Woman on the right"
+          width={900}
+          height={900}
+        />
+      </div>
     </section>
   );
 }

@@ -60,7 +60,7 @@ export function LoginComponet({ token, setToken }: any) {
         <Image src={hombre} alt="Woman on the right" width={700} height={700} />
       </div>
       <form onSubmit={handleSubmit} className={style.form}>
-        <h1 className="text-[#97D6DF] text-3xl font-bold mb-5 text-center uppercase">
+        <h1 className="text-[#97D6DF] text-3xl font-bold mb-5 text-center uppercase ">
           Ingresa a FitHub
         </h1>
 

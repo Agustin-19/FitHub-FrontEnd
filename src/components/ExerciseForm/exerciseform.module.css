@@ -1,25 +1,43 @@
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    /* Asegúrate de que el contenedor tenga posición relativa */
+    background-image: url(../../../public/assets/loginyregister/lyr2.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+
 }
 
 .form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 10px;
-    background-image: linear-gradient(45deg, #330808,
-            #3a2c09);
-    border-radius: 2.5em;
-    padding: 30px;
-    width: 300px;
-    height: 350px;
-    border: 4px solid #ff5900
+    background: transparent;
+    border: 2px solid #FF3E1A;
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 20px;
+    width: 420px;
+    padding: 30px 40px;
+    position: relative;
+    z-index: 10;
+    bottom: 10px;
+    margin-top: 20px;
+
 }
 
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 29, 26, 0.4);
+}
 
 
 
