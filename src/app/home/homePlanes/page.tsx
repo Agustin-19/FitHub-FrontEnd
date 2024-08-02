@@ -11,6 +11,7 @@ export default function Home() {
   // if (!isLogged) {
   //   router.push("/login");
   // }
+
   return (
     <div>
       <HomeUserPlan />

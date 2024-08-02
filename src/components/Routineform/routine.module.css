@@ -48,12 +48,13 @@
     background: #FF3E1A;
     color: black;
     padding: 0.7em 5.5em;
+    display: flex;
+    align-items: center;
     border: 2px solid #66da4300;
     border-radius: 5em;
     overflow: hidden;
     transition: all 0.2s;
     cursor: pointer;
-    width: 50px;
 }
 
 .button:hover {
@@ -67,8 +68,6 @@
     background: #ff5900;
     color: black;
 }
-
-
 
 .input {
     width: calc(100% - 10px);
@@ -84,10 +83,10 @@
 }
 
 .input:focus {
-    border: 1px solid #97d6df00;
+    border: 1px solid #3cff0000;
     border-bottom: 1px solid #ff5900;
     background-color: transparent;
-    color: #447988;
+    color: #97D6DF;
 }
 
 .input::placeholder {

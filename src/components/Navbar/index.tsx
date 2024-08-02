@@ -12,7 +12,7 @@ export function Navbar() {
   const { isLogged, user, logOut } = useContext(UserContext);
 
   return (
-    <div className="relative flex w-full flex-nowrap items-center justify-between bg-[#1A1D1A] py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
+    <div className="relative  border-4 border-[#97D6DF] flex w-full flex-nowrap items-center justify-between bg-[#1A1D1A] py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
       <div className="flex w-full flex-wrap items-center justify-between px-3">
         <div className="flex items-center ms-10 md:me-2">
           <Link
