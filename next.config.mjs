@@ -8,9 +8,6 @@ const nextConfig = {
                 hostname: '**',
             }
         ]
-    },
-    video: {
-        formats: ['mp4', 'webm', 'ogg']
     }
 };
 

@@ -66,10 +66,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       // Guarda el rol y otros datos del usuario
       setUser({ ...decodedToken, token: data.token });
 
-      if (typeof window !== "undefined") {
-        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
-        localStorage.setItem("token", data.token); // Almacena el token
-      }
+      
+      (typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(decodedToken))); // Guarda el usuario en localStorage
+      (typeof window !== "undefined" && localStorage.setItem("token", data.token)); // Almacena el token
+      
       setIsLogged(true);
       return true;
     } catch (error) {
@@ -101,10 +101,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logOut = () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-    }
+    (typeof window !== "undefined" && localStorage.removeItem("user"));
+    (typeof window !== "undefined" && localStorage.removeItem("token"));
     setUser(null);
     setIsLogged(false);
     router.push("/");
