@@ -6,6 +6,7 @@ import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Link from "next/link";
+import { createPlanOrder } from "@/server/fetchMercadoPago";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -84,19 +85,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
         unit_price: plan?.price || 100,
       };
 
-      const response = await fetch("http://localhost:3001/plan/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(planData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al crear la orden");
-      }
-
-      const preference = await response.json();
+      const preference = await createPlanOrder(planData);
       setPreferenceId(preference.id);
     } catch (error) {
       console.log(error);

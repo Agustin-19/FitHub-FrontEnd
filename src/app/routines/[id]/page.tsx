@@ -7,9 +7,8 @@ import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { get_RutinaById } from "@/server/fetchRoutines";
-import { createOrder } from "@/server/fetchMercadoPago";
+import { createRutineOrder } from "@/server/fetchMercadoPago";
 import Link from "next/link";
-
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -74,8 +73,8 @@ const Routine = ({ params }: IRoutineProps) => {
       return;
     }
 
-//     setIsPurchased(true);
-//     alert(`Rutina ${routine?.name} comprada!`);
+    //     setIsPurchased(true);
+    //     alert(`Rutina ${routine?.name} comprada!`);
 
     try {
       const rutinaData = {
@@ -84,7 +83,7 @@ const Routine = ({ params }: IRoutineProps) => {
         unit_price: 100,
       };
 
-      const preference = await createOrder(rutinaData)
+      const preference = await createRutineOrder(rutinaData);
       setPreferenceId(preference.id);
     } catch (error) {
       console.log(error);
