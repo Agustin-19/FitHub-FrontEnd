@@ -10,7 +10,6 @@ export default function Register() {
         </button>
       </Link>
       <RegisterComponet />
->>>>>>> eedb157 (register listo)
     </div>
   );
 }

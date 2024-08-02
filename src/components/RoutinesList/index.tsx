@@ -25,7 +25,7 @@ const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
       {rutinas.map((rutina) => (
         <div
           key={rutina.id}
-          className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
+          className=" border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
         >
           <div className="relative w-full h-48">
             <Image

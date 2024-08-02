@@ -8,15 +8,10 @@ export default function Home() {
   const router = useRouter();
   const { isLogged } = useContext(UserContext);
 
-<<<<<<< HEAD
   // if (!isLogged) {
   //   router.push("/login");
   // }
-=======
-  if (!isLogged) {
-    router.push("/login");
-  }
->>>>>>> eedb157 (register listo)
+
   return (
     <div>
       <HomeUserPlan />

@@ -2,14 +2,14 @@
 
 import { IRutinaEjercicio } from "@/interface/interface";
 import { Dificultad, ICategory } from "@/interface/plan.interface";
+import { get_Category } from "@/server/fetchPlan";
+import { create_Rutina, get_Ejercicios } from "@/server/fetchRoutines";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "./routine.module.css";
-import { get_Category } from "@/server/fetchPlan";
-import { get_Ejercicios, create_Rutina } from "@/server/fetchRoutines";
 
-export default function RoutineForm() {
+const CreateRutina: React.FC = () => {
   const router = useRouter();
   const [rutina, setRutina] = useState({
     name: "",
@@ -17,6 +17,7 @@ export default function RoutineForm() {
     category: [] as string[],
     exercise: [] as string[],
     difficultyLevel: "" as Dificultad | "",
+    price: "",
   });
 
   // *************** CATEGORIAS ***********************
@@ -40,6 +41,7 @@ export default function RoutineForm() {
     const fetchEjercicios = async () => {
       try {
         const data = await get_Ejercicios();
+
         setEjercicio(data);
       } catch (error) {
         console.error("Error fetching ejercicios:", error);
@@ -59,7 +61,6 @@ export default function RoutineForm() {
   const handleChangeSelectMultiple: React.ChangeEventHandler<
     HTMLSelectElement
   > = (event) => {
-    // Aquí puedes acceder al valor seleccionado
     const { id, options } = event.target;
     const values = Array.from(options)
       .filter((option) => option.selected)
@@ -114,20 +115,19 @@ export default function RoutineForm() {
       return;
     }
 
-    const Data = {
+    const data = {
       name,
       description: descripcion,
-      admin: "88dc3141-b757-4c7f-bd91-e55d8bde555a",
       imgURL: "url",
       exercise,
       difficultyLevel,
       category,
+      admin: "5061e26f-3375-41a2-bebf-bea3a9ba49f5", // El ID del administrador de la app
     };
 
-    console.log(Data);
-
+    // console.log(data);
     try {
-      await create_Rutina(Data);
+      await create_Rutina(data); // Usa la función modularizada
       alert("Rutina creada exitosamente");
       router.push("/dashboard");
     } catch (error) {
@@ -144,11 +144,8 @@ export default function RoutineForm() {
         </button>
       </Link>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1 className="uppercase text-3xl text-[#97D6DF] font-extrabold text-center ">
-          Crear Rutina
-        </h1>
-        <div>
-          <label htmlFor="name" className="text-[#97D6DF]">
+        <div className="flex flex-col  justify-center items-center">
+          <label className="text-[#97D6DF]" htmlFor="name">
             Título:
           </label>
           <input
@@ -159,10 +156,8 @@ export default function RoutineForm() {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label className="text-[#97D6DF]" htmlFor="descripcion">
-            Descripción:
-          </label>
+        <div className="flex flex-col  justify-center items-center">
+          <label htmlFor="descripcion">Descripción:</label>
           <input
             className={styles.input}
             type="text"
@@ -172,15 +167,23 @@ export default function RoutineForm() {
           />
         </div>
 
-        <div>
-          <label className="text-[#97D6DF]" htmlFor="exercise">
-            Ejercicio:
-          </label>
+        <div className="flex flex-col  justify-center items-center">
+          <label htmlFor="name">Precio: $</label>
+          <input
+            className={styles.input}
+            type="text"
+            id="price"
+            value={rutina.price}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex flex-col  justify-center items-center">
+          <label htmlFor="exercise">Ejercicio:</label>
           <select
             id="exercise"
             value={rutina.exercise}
             onChange={handleChangeSelectMultiple}
-            className="daisy-select daisy-select-bordered w-full max-w-xs bg-transparent"
+            className="daisy-select daisy-select-bordered w-full max-w-xs form-content bg-transparent  border-[#97D6DF] mb-5 mt-3"
             multiple
           >
             {ejercicios.map((ejercicio) => (
@@ -191,15 +194,13 @@ export default function RoutineForm() {
           </select>
         </div>
 
-        <div>
-          <label className="text-[#97D6DF]" htmlFor="difficultyLevel">
-            Nivel de dificultad:
-          </label>
+        <div className="flex flex-col  justify-center items-center">
+          <label htmlFor="difficultyLevel">Nivel de dificultad:</label>
           <select
             id="difficultyLevel"
             value={rutina.difficultyLevel}
             onChange={handleChangeSelect}
-            className="daisy-select daisy-select-bordered w-full max-w-xs bg-transparent"
+            className="daisy-select daisy-select-bordered  max-w-xs form-content bg-transparent  border-[#97D6DF] mb-5 mt-3"
           >
             <option value="" disabled>
               Selecciona
@@ -211,18 +212,16 @@ export default function RoutineForm() {
           </select>
         </div>
 
-        <div>
-          <label className="text-[#97D6DF]" htmlFor="category">
-            Categoría:
-          </label>
+        <div className="flex flex-col  justify-center items-center">
+          <label htmlFor="category">Categoría:</label>
           <select
             id="category"
             value={rutina.category}
             onChange={handleChangeSelectMultiple}
+            className="daisy-select daisy-select-bordered w-full max-w-xs form-content bg-transparent  border-[#97D6DF] mb-5 mt-3"
             multiple
-            className="daisy-select daisy-select-bordered w-full max-w-xs bg-transparent"
           >
-            <option className="text-[#97D6DF]" value="" disabled>
+            <option value="" disabled>
               Seleccionar Categoría
             </option>
             {categories.map((category) => (
@@ -232,14 +231,14 @@ export default function RoutineForm() {
             ))}
           </select>
         </div>
-
-        <button
-          className="mt-4 mb-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
-          type="submit"
-        >
-          Enviar
-        </button>
+        <div className="flex justify-center">
+          <button type="submit" className={styles.button}>
+            Enviar
+          </button>
+        </div>
       </form>
     </div>
   );
-}
+};
+
+export default CreateRutina;

@@ -38,6 +38,10 @@ body {
   color: #447988;
 }
 
+label {
+  color: #97D6DF;
+}
+
 ul {
   list-style: none;
 }

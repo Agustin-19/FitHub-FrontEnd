@@ -25,7 +25,7 @@
     position: relative;
     z-index: 10;
     bottom: 10px;
-    margin-top: 20px;
+    margin-top: 50px;
 
 }
 
@@ -45,16 +45,15 @@
     margin-top: 10px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
-    background: #ff5900;
+    background: #FF3E1A;
     color: black;
     padding: 0.7em 5.5em;
-    display: flex;
-    align-items: center;
     border: 2px solid #66da4300;
     border-radius: 5em;
     overflow: hidden;
     transition: all 0.2s;
     cursor: pointer;
+    width: 50px;
 }
 
 .button:hover {
@@ -69,12 +68,14 @@
     color: black;
 }
 
+
+
 .input {
     width: calc(100% - 10px);
     padding: 8px;
     margin-bottom: 20px;
     border: 1px solid #66da4300;
-    border-bottom: 1px solid #ff5900;
+    border-bottom: 1px solid #FF3E1A;
     outline: none;
     background-color: transparent;
     color: #97D6DF;
@@ -83,10 +84,10 @@
 }
 
 .input:focus {
-    border: 1px solid #3cff0000;
+    border: 1px solid #97d6df00;
     border-bottom: 1px solid #ff5900;
     background-color: transparent;
-    color: #97D6DF;
+    color: #447988;
 }
 
 .input::placeholder {

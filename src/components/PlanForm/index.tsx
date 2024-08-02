@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import styles from "./planform.module.css";
 import { ICategory } from "@/interface/plan.interface";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { get_Category } from "@/server/fetchPlan";
 
 export default function Plan() {
@@ -12,11 +11,6 @@ export default function Plan() {
     (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
   const [plan, setPlan] = useState({
-    name: "",
-    descripcion: "",
-    category: "",
-    location: "",
-    difficultyLevel: "",
     name: "",
     descripcion: "",
     category: "",
@@ -31,17 +25,12 @@ export default function Plan() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3001/categorias");
-        const data = await response.json();
         const data = await get_Category();
 
         setCategories(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
-        console.error("Error fetching categories:", error);
       }
-    };
-    fetchCategories();
     };
     fetchCategories();
   }, []);
@@ -49,16 +38,11 @@ export default function Plan() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setPlan((prevState) => ({
-    setPlan((prevState) => ({
       ...prevState,
-      [id]: value,
       [id]: value,
     }));
   };
 
-  const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
-    event
-  ) => {
   const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
     event
   ) => {
@@ -67,9 +51,7 @@ export default function Plan() {
 
     const { id, value } = event.target;
     setPlan((prevState) => ({
-    setPlan((prevState) => ({
       ...prevState,
-      [id]: value,
       [id]: value,
     }));
   };
@@ -106,7 +88,6 @@ export default function Plan() {
       location,
       difficultyLevel,
       category: [category],
-      category: [category],
       price: 0,
     };
 
@@ -126,7 +107,7 @@ export default function Plan() {
         alert("Actividad creado exitosamente");
         router.push("/dashboard");
       } else {
-        alert("Error al crear la actibidad");
+        alert("Error al crear la actividad");
         console.error("Error al crear la actividad");
       }
     } catch (error) {
@@ -136,17 +117,15 @@ export default function Plan() {
   };
 
   return (
-    <div className={styles.container}>
-      <Link href="/dashboard">
-        <button className="mt-4 relative z-[2] rounded-full  top-2 border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
-          Volver
-        </button>
-      </Link>
+    <div id="Container" className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1 className="uppercase text-3xl text-[#97D6DF] font-extrabold text-center ">
-          Crear Plan
+        <h1
+          id="login-title"
+          className="text-5xl text-[#FF3E1A] font-extrabold text-center mb-10"
+        >
+          Crear Actividad
         </h1>
-        <label id="login-lable" className="text-[#97D6DF]" htmlFor="name">
+        <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
           Título:
         </label>
         <input
@@ -156,16 +135,11 @@ export default function Plan() {
           value={plan.name}
           onChange={handleChange}
         />
-        <label
-          id="login-lable"
-          className="text-[#97D6DF]"
-          htmlFor="descripcion"
-        >
         <label id="login-lable" htmlFor="name">
           Precio:
         </label>
         <input
-          className="form-content"
+          className={styles.input}
           type="text"
           id="price"
           value={plan.price}
@@ -181,7 +155,7 @@ export default function Plan() {
           value={plan.descripcion}
           onChange={handleChange}
         />
-        <label className="text-[#97D6DF]" id="login-lable" htmlFor="location">
+        <label id="login-lable" htmlFor="location">
           Locacion:
         </label>
         <input
@@ -191,19 +165,14 @@ export default function Plan() {
           value={plan.location}
           onChange={handleChange}
         />
-
-        <label
-          className="text-[#97D6DF]"
-          id="login-lable"
-          htmlFor="difficultyLevel"
-        >
+        <label id="login-lable" htmlFor="difficultyLevel">
           Nivel de dificultad:
         </label>
         <select
           id="difficultyLevel"
           value={plan.difficultyLevel}
           onChange={handleChangeSelect}
-          className="daisy-select border-[#FF3E1A] border-2 bg-transparent w-full max-w-xs "
+          className="daisy-select daisy-select-bordered w-full max-w-xs form-content bg-transparent  border-[#97D6DF] mb-5 mt-3"
         >
           <option value="" disabled>
             Selecciona
@@ -214,19 +183,13 @@ export default function Plan() {
           <option value="profesional">Profesional</option>
         </select>
 
-        <label htmlFor="category" className="text-[#97D6DF] ">
-          Categoría:
-        </label>
+        <label htmlFor="category">Categoría:</label>
         <select
           id="category"
           value={plan.category}
           onChange={handleChangeSelect}
-          className="daisy-select border-[#FF3E1A] border-2 bg-transparent w-full max-w-xs "
+          className="daisy-select daisy-select-bordered w-full max-w-xs form-content bg-transparent  border-[#97D6DF] mb-2 mt-5"
         >
-          <option value="" disabled className="text-[#97D6DF]">
-            Seleccionar Categoría
-          </option>
-          {categories.map((category) => (
           <option value="" disabled>
             Seleccionar Categoría
           </option>
@@ -236,13 +199,11 @@ export default function Plan() {
             </option>
           ))}
         </select>
-
-        <button
-          className="mt-4 relative z-[2] rounded-full  top-2 border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
-          type="submit"
-        >
-          Enviar
-        </button>
+        <div className="flex justify-center">
+          <button type="submit" className={styles.button}>
+            Enviar
+          </button>
+        </div>
       </form>
     </div>
   );
