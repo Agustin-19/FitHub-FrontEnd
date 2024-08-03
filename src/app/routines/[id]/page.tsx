@@ -27,7 +27,7 @@ const Routine = ({ params }: IRoutineProps) => {
   const [selectedEjercicio, setSelectedEjercicio] =
     useState<IRutinaEjercicio | null>(null);
   const [isPurchased, setIsPurchased] = useState(false);
-  const { isLogged } = useContext(UserContext);
+  const { isLogged, user } = useContext(UserContext);
 
   const id = params.id;
   const [routine, setRutina] = useState<IRutina>();
@@ -78,10 +78,13 @@ const Routine = ({ params }: IRoutineProps) => {
 
     try {
       const rutinaData = {
+        id: user?.sub,
+        rutinaId: id,
         title: routine?.name,
         quantity: 1,
-        unit_price: 100,
+        unit_price: routine?.price,
       };
+      console.log(rutinaData);
 
       const preference = await createRutineOrder(rutinaData);
       setPreferenceId(preference.id);
@@ -133,7 +136,10 @@ const Routine = ({ params }: IRoutineProps) => {
             </div>
             <div className="m-5 ">
               <p className="my-4">{routine?.description}</p>
-              <h3 className="text-xl font-semibold mb-2">Ejercicios</h3>
+              <h3 className="text-sm font-semibold mb-2">Ejercicios</h3>
+              <h3 className="text-xl font-semibold mb-2">
+                Precio: ${routine?.price}
+              </h3>
               <button
                 className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
                 onClick={handleBuy}

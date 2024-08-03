@@ -22,7 +22,7 @@ interface IPlanProps {
 }
 
 const PlanDetail = ({ params }: IPlanProps) => {
-  const { isLogged } = useContext(UserContext);
+  const { isLogged, user } = useContext(UserContext);
 
   const id = params.id;
   const [plan, setPlan] = useState<IPlan>();
@@ -80,11 +80,14 @@ const PlanDetail = ({ params }: IPlanProps) => {
 
     try {
       const planData = {
+        id: user?.sub,
+        planId: id,
         title: plan?.name,
         quantity: 1,
         unit_price: plan?.price || 100,
       };
 
+      console.log(planData);
       const preference = await createPlanOrder(planData);
       setPreferenceId(preference.id);
     } catch (error) {
