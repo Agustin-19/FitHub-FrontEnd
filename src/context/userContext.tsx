@@ -6,6 +6,7 @@ import {
   getUserRutinas,
   getUserActividades,
   postSigupCoach,
+  post_LoginAuth0,
 } from "../server/fetchUser";
 import {
   IUserConext,
@@ -16,6 +17,7 @@ import {
   ILogin,
   IRutina,
   IRegisterUser,
+  IRegister3ros,
 } from "../interface/interface";
 import { jwtDecode } from "jwt-decode";
 // import { users } from "../../public/data/user.data";
@@ -26,6 +28,7 @@ export const UserContext = createContext<IUserConext>({
   setUser: () => {},
   isLogged: false,
   signIn: async () => false,
+  loginAuth0: async () => false,
   signUp: async () => false,
   rutinas: [],
   actividades: [],
@@ -33,8 +36,9 @@ export const UserContext = createContext<IUserConext>({
   getRutinas: () => {},
   getActividades: () => {},
   setIsLogged: () => {},
+  
 });
-export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [user, setUser] = useState<Partial<IloginUserRegister> | null>(null);
   const [isLogged, setIsLogged] = useState(false);
@@ -51,6 +55,30 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       return false;
     }
   };
+
+  const loginAuth0 = async (credencials: IRegister3ros) => {
+    try {
+      const data = await post_LoginAuth0(credencials); // Envía las credenciales
+      
+      if (!data.token) {
+        throw new Error("Invalid Token");
+      }
+
+      const decodedToken: any = jwtDecode(data.token); 
+      console.log("Decoded Token:", decodedToken);
+      // Guarda datos del usuario
+      setUser({...decodedToken, token: data.token });
+
+      (typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(decodedToken))); // Guarda el usuario en localStorage
+      (typeof window !== "undefined" && localStorage.setItem("token", data.token))
+
+      setIsLogged(true);
+      return true;
+    } catch (error) {
+      console.log('auth0 fallo',error);
+      return false;
+    }
+  }
 
   const signIn = async (credentials: ILogin) => {
     try {
@@ -105,7 +133,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     (typeof window !== "undefined" && localStorage.removeItem("token"));
     setUser(null);
     setIsLogged(false);
-    router.push("/");
+    router.push("/api/auth/logout/");
   };
 
   useEffect(() => {
@@ -139,6 +167,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLogged,
         rutinas,
         actividades,
+        loginAuth0
       }}
     >
       {children}

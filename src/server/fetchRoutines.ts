@@ -66,6 +66,7 @@ export const get_Ejercicios = async (): Promise<IRutinaEjercicio[]> => {
     const response = await fetch(`${API}/ejercicio`, {
       method: "GET",
       headers: {
+        Authorization: `Bearer ${(typeof window !== "undefined" && localStorage.getItem('token'))}`,
         "Content-Type": "application/json",
       },
     });
