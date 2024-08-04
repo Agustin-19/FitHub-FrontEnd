@@ -7,7 +7,7 @@ interface RutinaListProps {
 
 const RutinaLista: React.FC<RutinaListProps> = ({ rutinas }) => {
   return (
-    <div className="rutina-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 bg-fondo">
+    <div className="relative z-10 rutina-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 bg-fondo">
       {rutinas.map((rutina) => (
         <div key={rutina.id} className="rutina-card">
           {/* Renderiza la rutina */}

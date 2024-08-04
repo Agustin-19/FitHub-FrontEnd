@@ -98,11 +98,10 @@ const coaches: IUser[] = [
 ];
 const CoachList: React.FC = () => {
   return (
-    <div className="p-4 bg-[#1A1D1A] min-h-screen">
-      {" "}
+    <div className="p-4 relative z-10 min-h-screen">
       <h1 className="text-center text-[#FF3E1A] text-5xl font-extrabold leading-tight bg-clip-text  text-centertext-transparent bg-gradient-to-r from-[#FF3E1A] via-[#FF6F3E] to-[#FF9E3E] shadow-lg mb-12">
         Coaches
-      </h1>{" "}
+      </h1>
       <div className="flex flex-wrap justify-center">
         {coaches.map((coach, index) => (
           <CoachCard key={index} user={coach} />

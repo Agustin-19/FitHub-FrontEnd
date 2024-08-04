@@ -145,39 +145,86 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           Volver
         </button>
       </Link>
-      <div className="text-center z-10">
+      <div className="text-center z-10 ">
         <div className="flex justify-center space-x-4 mb-8">
           <span
-            className="text-4xl font-bold stroke-text animate-fadeIn"
+            className="text-5xl font-bold stroke-text text-[#FF3E1A] animate-fadeIn"
             data-text="Explora nuestros"
           >
-            Explora nuestros
+            Explora nuestras
           </span>
-          <span className="text-4xl font-bold text-[#97D6DF] animate-fadeIn">
-            elementos para
+          <span className="text-6xl font-bold text-[#97D6DF] animate-fadeIn">
+            Rutinas para
           </span>
-          <span className="text-4xl font-bold text-[#447988] animate-fadeIn">
-            dar forma a tu cuerpo
+          <span className="text-5xl font-bold text-[#FF3E1A] animate-fadeIn">
+            Dar forma a tu cuerpo
           </span>
         </div>
       </div>
       <div className="flex">
         <form
           onSubmit={handleSubmit}
-          className={`${styles.form} flex flex-col`}
+          className={`${styles.form} flex flex-col `}
         >
-          <input
-            type="text"
-            name="search"
-            placeholder="Buscar..."
-            value={searchParams.search}
-            onChange={handleChange}
-            className="p-2 rounded border mb-2"
-          />
-          <div className="flex flex-col">
-            <label className="mb-2">Categoría:</label>
+          {/* search */}
+          <div className="form relative mb-3 ">
+            <button className="absolute left-2 -translate-y-1/2 top-1/2 p-1">
+              <svg
+                width="17"
+                height="16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-labelledby="search"
+                className="w-5 h-5 text-[#97D6DF"
+              >
+                <path
+                  d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
+                  stroke="currentColor"
+                  stroke-width="1.333"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </button>
+            <input
+              type="text"
+              name="search"
+              placeholder="Buscar..."
+              value={searchParams.search}
+              onChange={handleChange}
+              className="input  rounded-full px-8 py-3 border-2 border-transparent focus:outline-none focus:border-[#FF3E1A] placeholder-[#97D6DF] transition-all duration-300 shadow-md bg-[#1A1D1A]"
+            />
+            <button
+              type="reset"
+              className="absolute right-3 -translate-y-1/2 top-1/2 p-1"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 text-[#97D6DF]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          {/* checkbox category */}
+          <div className="flex border-3 flex-col p-4">
+            <label className="relative text-[#97D6DF] flex cursor-pointer mb-2 gap-[1em] ">
+              Categoría:
+            </label>
             {categories.map((category) => (
-              <div key={category.id} className="mb-2">
+              <div
+                key={category.id}
+                className="relative text-[#447988] flex cursor-pointer items-center  gap-[1em] "
+              >
                 <input
                   type="checkbox"
                   name="category"
@@ -192,9 +239,11 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
               </div>
             ))}
           </div>
-          <div className="flex flex-col">
-            <label className="mb-2">Nivel de Dificultad:</label>
-            <div className="mb-2">
+          <div className="flex border-3 flex-col p-4 mb-9">
+            <label className="relative text-[#97D6DF] flex cursor-pointer mb-2 gap-[1em]">
+              Nivel de Dificultad:
+            </label>
+            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[1em] ">
               <input
                 type="checkbox"
                 name="difficultyLevel"
@@ -206,9 +255,11 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
                 }
                 onChange={handleChange}
               />
-              <span className="ml-2">Inicial</span>
+              <span className="relative text-[#447988] flex cursor-pointer items-center  gap-[1em] ">
+                Inicial
+              </span>
             </div>
-            <div className="mb-2">
+            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[0.5em] ">
               <input
                 type="checkbox"
                 name="difficultyLevel"
@@ -222,7 +273,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
               />
               <span className="ml-2">Intermedio</span>
             </div>
-            <div className="mb-2">
+            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[0.5em]  ">
               <input
                 type="checkbox"
                 name="difficultyLevel"
@@ -236,7 +287,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
               />
               <span className="ml-2">Avanzado</span>
             </div>
-            <div className="mb-2">
+            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[0.5em]">
               <input
                 type="checkbox"
                 name="difficultyLevel"
@@ -251,7 +302,10 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
               <span className="ml-2">Profesional</span>
             </div>
           </div>
-          <button type="submit" className="p-2 rounded bg-blue-500 text-white">
+          <button
+            type="submit"
+            className="p-2 border  rounded-2xl bg-[#FF3E1A] text-white"
+          >
             Buscar
           </button>
         </form>

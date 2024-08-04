@@ -13,7 +13,7 @@ export default function Home() {
   // }
 
   return (
-    <div>
+    <div className="z-10 relative">
       <HomeUserPlan />
     </div>
   );

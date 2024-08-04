@@ -53,7 +53,8 @@ export function LoginComponet({ token, setToken }: any) {
   return (
     <section
       className={
-        style.login + " w-full h-full p-4 flex items-center justify-center"
+        style.login +
+        "relative z-10 w-full h-full p-4 flex items-center justify-center"
       }
     >
       <div className={style.left} data-aos="fade-right">
