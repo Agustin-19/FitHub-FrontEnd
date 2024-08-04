@@ -207,9 +207,8 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLogged,
         rutinas,
         actividades,
-        loginAuth0
+        loginAuth0,
         getUserRutinasYPlanes,
-
       }}
     >
       {children}
