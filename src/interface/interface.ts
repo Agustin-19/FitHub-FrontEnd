@@ -36,6 +36,11 @@ interface IRegisterUser {
   delete: boolean;
 }
 
+interface IRegister3ros {
+  name: string;
+  email: string;
+}
+
 interface ICreateCredential {
   password: string;
   id: number;
@@ -62,6 +67,7 @@ interface IUserConext {
   >;
   isLogged: boolean;
   signIn: (credentials: ILogin) => Promise<boolean>;
+  loginAuth0: (credentials: IRegister3ros) => Promise<boolean>;
   signUp: (user: IRegisterUser) => Promise<string | false>;
   logOut: () => void;
   getRutinas: () => void;
@@ -194,4 +200,5 @@ export type {
   IErrorsRegister,
   IRutinaListProps,
   IFilters,
+  IRegister3ros
 };

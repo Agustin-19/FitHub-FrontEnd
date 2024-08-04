@@ -1,5 +1,20 @@
-import { ILogin, IRegisterUser } from "@/interface/interface";
+import { ILogin, IRegister3ros, IRegisterUser } from "@/interface/interface";
 import { API } from "@/helpers/helper";
+
+export const post_LoginAuth0 = async (user: IRegister3ros) => {
+  const response = await fetch(`${API}/auth/auth0`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user)
+  });
+  const data = await response.json();
+  // const data = "usuario creado";
+  console.log(data);
+
+  return data;
+}
 
 export const postSigup = async (user: IRegisterUser) => {
   const response = await fetch(`${API}/auth/signupuser`, {
@@ -9,8 +24,8 @@ export const postSigup = async (user: IRegisterUser) => {
     },
     body: JSON.stringify(user),
   });
-  // const data = await response.json();
-  const data = "usuario creado";
+  const data = await response.json();
+  // const data = "usuario creado";
   console.log(data);
 
   return data;
