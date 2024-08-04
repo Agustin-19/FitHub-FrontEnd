@@ -3,6 +3,7 @@ import SummaryStats from "@/components/SummaryStats";
 import Programs from "@/components/Programs";
 import CoachList from "@/components/CoachList";
 import Link from "next/link";
+import LoginLogout from "@/components/Login-Logout";
 
 export default function LandingPage() {
   return (
@@ -13,6 +14,9 @@ export default function LandingPage() {
             INGRESAR
           </button>
         </Link>
+        <div className=" hidden ">
+          <LoginLogout />
+        </div>
       </div>
       <div>
         <section className="mb-8 ">

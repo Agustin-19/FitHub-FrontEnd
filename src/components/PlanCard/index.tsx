@@ -12,7 +12,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
     "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl m-4">
+    <div className="border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl m-4">
       <div className="relative w-full h-48">
         <Image
           src={plan.imgUrl || imgDefect}

@@ -1,10 +1,11 @@
 import { Navbar } from "@/components/Navbar";
 import type { Metadata } from "next";
 import { Footer } from "@/components/Footer";
-import { UserProvider } from "@/context/userContext";
+import { UsersProvider } from "@/context/userContext";
 import "@/app/globals.css";
 import { RutinaProvider } from "@/context/trainingContext";
 import { PlanProvider } from "@/context/planContext";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,11 +22,13 @@ export default function RootLayout({
       <body>
         <PlanProvider>
           <RutinaProvider>
-            <UserProvider>
-              <Navbar />
-              {children}
-              <Footer />
-            </UserProvider>
+            <UsersProvider>
+              <UserProvider>
+                <Navbar />
+                {children}
+                <Footer />
+              </UserProvider>
+            </UsersProvider>
           </RutinaProvider>
         </PlanProvider>
       </body>

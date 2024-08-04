@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,10 +12,12 @@
 }
 
 * {
+
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+
 }
 
 *,
@@ -24,15 +27,40 @@
 }
 
 body {
-
+  @apply min-h-screen bg-cover bg-center bg-no-repeat;
+  background-image: url('/assets/loginyregister/fondo.png');
   color: #447988;
-  background-color: #1A1D1A;
+  overflow-x: hidden;
+  position: relative;
+  /* Asegúrate de que el body tenga posición relativa */
+}
 
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 29, 26, 0.765);
+  z-index: 1;
+  /* Asegúrate de que este z-index sea menor */
+}
+
+.elemento {
+  position: relative;
+  /* Asegúrate de que los elementos tengan un contexto de apilamiento */
+  z-index: 2;
+  /* Este z-index debe ser mayor que el de la máscara */
 }
 
 .links {
   text-decoration: none;
   color: #447988;
+}
+
+label {
+  color: #97D6DF;
 }
 
 ul {

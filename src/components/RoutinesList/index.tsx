@@ -21,11 +21,11 @@ const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 m-4">
+    <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 m-4">
       {rutinas.map((rutina) => (
         <div
           key={rutina.id}
-          className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
+          className=" border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
         >
           <div className="relative w-full h-48">
             <Image

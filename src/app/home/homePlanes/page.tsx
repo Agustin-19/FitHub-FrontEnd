@@ -11,8 +11,9 @@ export default function Home() {
   // if (!isLogged) {
   //   router.push("/login");
   // }
+
   return (
-    <div>
+    <div className="z-10 relative">
       <HomeUserPlan />
     </div>
   );
