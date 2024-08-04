@@ -22,6 +22,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 // import { users } from "../../public/data/user.data";
 import { useRouter } from "next/navigation";
+import { IGetRutYPlan } from "@/interface/plan.interface";
 
 export const UserContext = createContext<IUserConext>({
   user: null,
@@ -36,7 +37,8 @@ export const UserContext = createContext<IUserConext>({
   getRutinas: () => {},
   getActividades: () => {},
   setIsLogged: () => {},
-  
+  getUserRutinasYPlanes: async () => null,
+
 });
 export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -47,8 +49,8 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signUp = async (user: IRegisterUser) => {
     try {
-      const data = await postSigup(user);
-      // const data = await postSigupCoach(user);
+      // const data = await postSigup(user);
+      const data = await postSigupCoach(user);
       return data;
     } catch (error) {
       console.log(error);
@@ -94,10 +96,11 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       // Guarda el rol y otros datos del usuario
       setUser({ ...decodedToken, token: data.token });
 
-      
-      (typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(decodedToken))); // Guarda el usuario en localStorage
-      (typeof window !== "undefined" && localStorage.setItem("token", data.token)); // Almacena el token
-      
+      typeof window !== "undefined" &&
+        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
+      typeof window !== "undefined" &&
+        localStorage.setItem("token", data.token); // Almacena el token
+
       setIsLogged(true);
       return true;
     } catch (error) {
@@ -128,9 +131,46 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const getUserRutinasYPlanes = async (
+    userId: string
+  ): Promise<IGetRutYPlan | null> => {
+    console.log("userId:", userId);
+
+    try {
+      const token: string =
+        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+      console.log("Token:", token);
+      const response = await fetch(
+        `http://localhost:3001/users/userpyr/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al obtener las rutinas y planes");
+      }
+
+      const data = await response.json();
+      console.log("Data:", data);
+
+      setRutinas(data.rutinas);
+      setActividades(data.subscriptcion);
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const logOut = () => {
-    (typeof window !== "undefined" && localStorage.removeItem("user"));
-    (typeof window !== "undefined" && localStorage.removeItem("token"));
+    typeof window !== "undefined" && localStorage.removeItem("user");
+    typeof window !== "undefined" && localStorage.removeItem("token");
     setUser(null);
     setIsLogged(false);
     router.push("/api/auth/logout/");
@@ -168,6 +208,8 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
         rutinas,
         actividades,
         loginAuth0
+        getUserRutinasYPlanes,
+
       }}
     >
       {children}

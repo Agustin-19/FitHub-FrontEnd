@@ -27,10 +27,31 @@
 }
 
 body {
-  background-color: #1A1D1A;
+  @apply min-h-screen bg-cover bg-center bg-no-repeat;
+  background-image: url('/assets/loginyregister/fondo.png');
   color: #447988;
+  overflow-x: hidden;
+  position: relative;
+  /* Asegúrate de que el body tenga posición relativa */
+}
 
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 29, 26, 0.765);
+  z-index: 1;
+  /* Asegúrate de que este z-index sea menor */
+}
 
+.elemento {
+  position: relative;
+  /* Asegúrate de que los elementos tengan un contexto de apilamiento */
+  z-index: 2;
+  /* Este z-index debe ser mayor que el de la máscara */
 }
 
 .links {

@@ -18,6 +18,7 @@ const CreateRutina: React.FC = () => {
     exercise: [] as string[],
     difficultyLevel: "" as Dificultad | "",
     price: "",
+    admin: "",
   });
 
   // *************** CATEGORIAS ***********************
@@ -122,6 +123,7 @@ const CreateRutina: React.FC = () => {
       exercise,
       difficultyLevel,
       category,
+      price: parseFloat(rutina.price),
       admin: "5061e26f-3375-41a2-bebf-bea3a9ba49f5", // El ID del administrador de la app
     };
 

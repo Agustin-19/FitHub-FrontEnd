@@ -1,9 +1,11 @@
 import { API } from "@/helpers/helper";
 
 export const createRutineOrder = async (routineData: {
+  id: string | undefined;
+  rutinaId: string;
   title: string | undefined;
   quantity: number;
-  unit_price: number;
+  unit_price: number | undefined;
 }) => {
   try {
     const response = await fetch(`${API}/rutina/create-order`, {
@@ -27,6 +29,8 @@ export const createRutineOrder = async (routineData: {
 };
 
 export const createPlanOrder = async (planData: {
+  id: string | undefined;
+  planId: string;
   title: string | undefined;
   quantity: number;
   unit_price: number;

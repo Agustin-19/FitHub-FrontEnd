@@ -1,4 +1,8 @@
-import { Dificultad, ICategory } from "@/interface/plan.interface";
+import {
+  Dificultad,
+  ICategory,
+  IGetRutYPlan,
+} from "@/interface/plan.interface";
 // Users:
 
 interface IUser {
@@ -53,6 +57,7 @@ interface IloginUserRegister {
   token: string;
   role: string;
   user: Partial<IUser> | null;
+  sub: string;
 }
 
 interface IUserConext {
@@ -70,6 +75,7 @@ interface IUserConext {
   setIsLogged: (isLogged: boolean) => void;
   rutinas: IRutina[];
   actividades: ICreateActividadDpto[];
+  getUserRutinasYPlanes: (userId: string) => Promise<IGetRutYPlan | null>;
 }
 
 // Rutinas
@@ -85,7 +91,7 @@ interface IRutina {
   exercise: IRutinaEjercicio[];
 }
 
- export interface ICreateRutina {
+export interface ICreateRutina {
   id?: string;
   name: string;
   description: string;
