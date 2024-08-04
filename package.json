@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.5.0",
     "@heroicons/react": "^2.1.5",
     "@mercadopago/sdk-react": "^0.0.19",
     "@splinetool/react-spline": "^4.0.0",
