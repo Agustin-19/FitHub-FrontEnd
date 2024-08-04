@@ -36,6 +36,12 @@ interface ICategory {
   name: string;
 }
 
+interface IGetRutYPlan {
+  id: string;
+  rutinas: IRutina[];
+  plan: IPlan[];
+}
+
 interface IRutinaContextProps {
   rutinas: IRutina[];
   setRutinas: (rutinas: IRutina[]) => void;
@@ -62,6 +68,7 @@ interface ISearch {
 }
 
 export type {
+  IGetRutYPlan,
   ICreatePlan,
   IPlan,
   ICategory,

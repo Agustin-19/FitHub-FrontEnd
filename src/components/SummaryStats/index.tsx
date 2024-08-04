@@ -38,7 +38,7 @@ export default function SummaryStats() {
   const happySubscribers = useCountUp(1200, 1000);
 
   return (
-    <div className="summary-stats p-8 rounded-lg shadow-md">
+    <div className=" relative z-10 summary-stats p-8 rounded-lg shadow-md ">
       <div className="stats-container flex justify-around items-center gap-8">
         <div className="stat-item text-center" data-aos="fade-up">
           <span className="block text-4xl font-bold text-[#FF3E1A]">

@@ -4,7 +4,7 @@ import { PhoneIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 
 export function Footer() {
   return (
-    <div className="relative bg-[#1A1D1A]">
+    <div className="relative  z-10 backdrop-blur-sm">
       <div className="bottom-[3000px] left-0 w-full overflow-hidden ">
         <svg
           data-name="Layer 1"

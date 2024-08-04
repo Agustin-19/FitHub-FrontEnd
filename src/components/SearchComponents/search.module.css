@@ -1,0 +1,142 @@
+/* Add padding to the left */
+
+
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    /* Space between columns */
+}
+
+.form {
+    margin-right: 20px;
+    /* Space between form and rendered items */
+    background: transparent;
+    border: 2px solid #ff3c1a00;
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 20px;
+    padding: 50px 50px;
+    /* Adjust padding as needed */
+    margin-top: 50px;
+
+
+}
+
+.ml-8 {
+    margin-left: 20px;
+    /* Space for the rendered items */
+}
+
+
+
+
+
+
+.button {
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    background: #FF3E1A;
+    color: black;
+    padding: 0.7em 5.5em;
+    display: flex;
+    align-items: center;
+    border: 2px solid #66da4300;
+    border-radius: 5em;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.button:hover {
+    border: 2px solid #ff5900;
+    background: #00000000;
+    color: #ffffff;
+}
+
+.button:active {
+    border: 2px solid #66da4300;
+    background: #ff5900;
+    color: black;
+}
+
+
+
+.input {
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #66da4300;
+    border-bottom: 1px solid #FF3E1A;
+    outline: none;
+    background-color: transparent;
+    color: #97D6DF;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.2s;
+}
+
+.input:focus {
+    border: 1px solid #97d6df00;
+    border-bottom: 1px solid #ff5900;
+    background-color: transparent;
+    color: #447988;
+}
+
+.input::placeholder {
+    color: #9b725b;
+}
+
+
+.group {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    position: relative;
+    max-width: 100%;
+    margin-bottom: 9px;
+}
+
+.input {
+    font-family: "Montserrat", sans-serif;
+    width: 100%;
+    height: 45px;
+    padding-left: 2.5rem;
+    box-shadow: 0 0 0 1.5px #97D6DF, 0 0 25px -17px #000;
+    border: 0;
+    border-radius: 12px;
+    background-color: #1A1D1A;
+    outline: none;
+    color: #97D6DF;
+    transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: text;
+    z-index: 0;
+}
+
+.input::placeholder {
+    color: #97D6DF;
+}
+
+.input:hover {
+    box-shadow: 0 0 0 2.5px #447988, 0px 0px 25px -15px #000;
+}
+
+.input:active {
+    transform: scale(0.95);
+}
+
+.input:focus {
+    box-shadow: 0 0 0 2.5px #447988;
+}
+
+.icon {
+    position: absolute;
+    left: 1rem;
+    fill: #97D6DF;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    z-index: 1;
+}

@@ -1,4 +1,8 @@
-import { Dificultad, ICategory } from "@/interface/plan.interface";
+import {
+  Dificultad,
+  ICategory,
+  IGetRutYPlan,
+} from "@/interface/plan.interface";
 // Users:
 
 interface IUser {
@@ -32,6 +36,11 @@ interface IRegisterUser {
   delete: boolean;
 }
 
+interface IRegister3ros {
+  name: string;
+  email: string;
+}
+
 interface ICreateCredential {
   password: string;
   id: number;
@@ -48,6 +57,7 @@ interface IloginUserRegister {
   token: string;
   role: string;
   user: Partial<IUser> | null;
+  sub: string;
 }
 
 interface IUserConext {
@@ -57,6 +67,7 @@ interface IUserConext {
   >;
   isLogged: boolean;
   signIn: (credentials: ILogin) => Promise<boolean>;
+  loginAuth0: (credentials: IRegister3ros) => Promise<boolean>;
   signUp: (user: IRegisterUser) => Promise<string | false>;
   logOut: () => void;
   getRutinas: () => void;
@@ -64,6 +75,7 @@ interface IUserConext {
   setIsLogged: (isLogged: boolean) => void;
   rutinas: IRutina[];
   actividades: ICreateActividadDpto[];
+  getUserRutinasYPlanes: (userId: string) => Promise<IGetRutYPlan | null>;
 }
 
 // Rutinas
@@ -79,7 +91,7 @@ interface IRutina {
   exercise: IRutinaEjercicio[];
 }
 
- export interface ICreateRutina {
+export interface ICreateRutina {
   id?: string;
   name: string;
   description: string;
@@ -90,6 +102,15 @@ interface IRutina {
   exercise: string[];
 }
 
+export interface ICreateRutina {
+  name: string;
+  description: string;
+  precio?: number;
+  imgUrl?: string;
+  category: string[];
+  difficultyLevel: Dificultad;
+  exercise: string[];
+}
 interface IRutinaEjercicio {
   id?: string;
   titulo: string;
@@ -179,4 +200,5 @@ export type {
   IErrorsRegister,
   IRutinaListProps,
   IFilters,
+  IRegister3ros
 };

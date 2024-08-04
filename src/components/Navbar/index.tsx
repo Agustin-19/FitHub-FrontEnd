@@ -12,15 +12,23 @@ export function Navbar() {
   const { isLogged, user, logOut } = useContext(UserContext);
 
   return (
-    <div className="relative flex w-full flex-nowrap items-center justify-between bg-[#1A1D1A] py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
+    <div className="relative z-10 backdrop-blur-lg border-4 border-[#97D6DF] flex w-full flex-nowrap items-center justify-between py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
       <div className="flex w-full flex-wrap items-center justify-between px-3">
         <div className="flex items-center ms-10 md:me-2">
           <Link
             href="/"
             className="flex items-center text-xl text-black dark:text-white"
           >
-            <Image src={logo} alt="Logo" width={100} height={100} />
-            <h1 className="text-3xl font-bold ms-3 text-[#FF3E1A]">-FITHUB-</h1>
+            <Image
+              src={logo}
+              className="z-10"
+              alt="Logo"
+              width={100}
+              height={100}
+            />
+            <h1 className="text-3xl font-bold ms-3 text-[#FF3E1A] z-10">
+              -FITHUB-
+            </h1>
           </Link>
         </div>
 

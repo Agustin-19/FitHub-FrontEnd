@@ -23,7 +23,7 @@ export default function Dashboard() {
   const role = user?.role;
 
   return (
-    <div>
+    <div className="z-10 relative">
       {role === "user" ? (
         <UserDashboard />
       ) : role === "entrenador" ? (

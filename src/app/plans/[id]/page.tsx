@@ -6,6 +6,7 @@ import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Link from "next/link";
+import { createPlanOrder } from "@/server/fetchMercadoPago";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -21,7 +22,7 @@ interface IPlanProps {
 }
 
 const PlanDetail = ({ params }: IPlanProps) => {
-  const { isLogged } = useContext(UserContext);
+  const { isLogged, user } = useContext(UserContext);
 
   const id = params.id;
   const [plan, setPlan] = useState<IPlan>();
@@ -79,24 +80,15 @@ const PlanDetail = ({ params }: IPlanProps) => {
 
     try {
       const planData = {
+        id: user?.sub,
+        planId: id,
         title: plan?.name,
         quantity: 1,
         unit_price: plan?.price || 100,
       };
 
-      const response = await fetch("http://localhost:3001/plan/create-order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(planData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al crear la orden");
-      }
-
-      const preference = await response.json();
+      console.log(planData);
+      const preference = await createPlanOrder(planData);
       setPreferenceId(preference.id);
     } catch (error) {
       console.log(error);
@@ -111,7 +103,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
     "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
 
   return (
-    <div>
+    <div className="relative z-10">
       <Link href="/home/homePlanes">
         <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
