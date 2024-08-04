@@ -15,16 +15,6 @@
 }
 
 
-
-
-.register {
-    background-image: url(../../../public/assets/loginyregister/lyr2.png);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
 .register::before {
     content: '';
     position: absolute;

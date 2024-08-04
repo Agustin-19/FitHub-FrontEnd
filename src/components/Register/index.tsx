@@ -542,7 +542,7 @@ export function RegisterComponet({ token, setToken }: any) {
         <motion.img
           src={register2.src}
           alt="Woman on the right"
-          width={900}
+          width={1000}
           height={900}
         />
       </div>

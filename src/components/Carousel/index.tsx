@@ -17,27 +17,27 @@ export function Carousel() {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#1A1D1A]">
+    <div className="relative  overflow-hidden z-10">
       <div
         className={`daisy-carousel-item relative w-full transition-transform duration-500 ease-in-out ${
           currentSlide === 1 ? "block" : "hidden"
         }`}
       >
-        <Image src={image1} alt="" className="w-full object-cover h-[510px]" />
+        <Image src={image1} alt="" className="w-full object-cover " />
       </div>
       <div
         className={`daisy-carousel-item relative w-full transition-transform duration-500 ease-in-out ${
           currentSlide === 2 ? "block" : "hidden"
         }`}
       >
-        <Image src={image2} alt="" className="w-full object-cover h-[510px]" />
+        <Image src={image2} alt="" className="w-full object-cover " />
       </div>
       <div
         className={`daisy-carousel-item relative w-full transition-transform duration-500 ease-in-out ${
           currentSlide === 3 ? "block" : "hidden"
         }`}
       >
-        <Image src={image3} alt="" className="w-full object-cover h-[510px]" />
+        <Image src={image3} alt="" className="w-full object-cover" />
       </div>
     </div>
   );

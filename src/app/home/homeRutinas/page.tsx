@@ -12,7 +12,7 @@ export default function Home() {
     router.push("/login");
   }
   return (
-    <div>
+    <div className="z-10 relative">
       <HomeUserRutina />
     </div>
   );

@@ -9,9 +9,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        customBackground: "#1A1D1A",
-      },
       keyframes: {
         fadeIn: {
           "0%": { opacity: "0" },
@@ -20,6 +17,10 @@ const config: Config = {
       },
       animation: {
         fadeIn: "fadeIn 2s ease-in-out",
+      },
+      backgroundImage: {
+        "custom-background":
+          'url("../../../public/assets/loginyregister/lyr2.png")',
       },
     },
   },
