@@ -11,11 +11,12 @@ export default function ExerciseForm() {
   const [ejercicio, setEjercicio] = useState({
     titulo: "",
     descripcion: "",
-    imgUrl: [""], // Ahora es un string que almacenará la URL del archivo
+    imgUrl: [""], 
     videoUrl: ""
   });
 
-  const [files, setFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -26,8 +27,13 @@ export default function ExerciseForm() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
+    const { id, files } = e.target;
+    if (files && files.length > 0) {
+      if (id === "imageFile") {
+        setImageFile(files[0]);
+      } else if (id === "videoFile") {
+        setVideoFile(files[0]);
+      }
     }
   };
 
@@ -44,21 +50,28 @@ export default function ExerciseForm() {
       alert("Por favor ingresa una descripción.");
       return;
     }
-    if (!files) {
-      alert("Por favor selecciona un archivo primero.");
+    if (!imageFile) {
+      alert("Por favor selecciona una imagen primero.");
       return;
     }
-    console.log(files);
-
+    
     try {
-      // Primero, sube el archivo para obtener una URL
-      const fileUrl: string[] = await uploaFile(files);
+      let videoUrl = "";
+      if (videoFile) {
+        // Primero, sube el video para obtener una URL
+        const videoUrls = await uploaFile(videoFile);
+        videoUrl = videoUrls[0];
+      }
+
+      // Luego, sube la imagen para obtener una URL
+      const imageUrls = await uploaFile(imageFile);
+      const imgUrl = imageUrls[0];
 
       const ejercicioData = {
         titulo,
         descripcion,
-        imgUrl: fileUrl,
-        videoUrl: "",
+        imgUrl: [imgUrl],
+        videoUrl,
       };
 
       console.log(ejercicioData);
@@ -67,7 +80,7 @@ export default function ExerciseForm() {
       await createExercise(ejercicioData);
       router.push("/dashboard");
     } catch (error) {
-      return "error al subir el archivo";
+      console.error("Error al subir el archivo", error);
     }
   };
 
@@ -86,7 +99,7 @@ export default function ExerciseForm() {
           >
             Crear Ejercicio
           </h1>
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
+          <label id="login-lable" className="text-[#97D6DF] " htmlFor="titulo">
             Título:
           </label>
           <input
@@ -96,7 +109,7 @@ export default function ExerciseForm() {
             value={ejercicio.titulo}
             onChange={handleChange}
           />
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
+          <label id="login-lable" className="text-[#97D6DF] " htmlFor="descripcion">
             Descripción:
           </label>
           <input
@@ -106,13 +119,22 @@ export default function ExerciseForm() {
             value={ejercicio.descripcion}
             onChange={handleChange}
           />
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
-            Sube Tu Ejercicio Aqui:
+          <label id="login-lable" className="text-[#97D6DF] " htmlFor="videoFile">
+            Sube Tu Video Aqui (opcional):
           </label>
           <input
             className={styles.input}
             type="file"
-            id="file"
+            id="videoFile"
+            onChange={handleFileChange}
+          />
+          <label id="login-lable" className="text-[#97D6DF] " htmlFor="imageFile">
+            Sube Tu Imagen Aqui:
+          </label>
+          <input
+            className={styles.input}
+            type="file"
+            id="imageFile"
             onChange={handleFileChange}
           />
           <div className="flex justify-center">
