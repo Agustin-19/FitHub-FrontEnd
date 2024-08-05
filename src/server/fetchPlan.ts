@@ -1,5 +1,5 @@
 import { API } from "@/helpers/helper";
-import { IPlan, ISearch } from "@/interface/plan.interface";
+import { ICreatePlan, IPlan, ISearch } from "@/interface/plan.interface";
 
 export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
   const lim = queryString?.limit || 8;
@@ -48,5 +48,23 @@ export const get_Category = async () => {
   } catch (err) {
     console.log("Error al obtener las Categorías:", err);
     throw err;
+  }
+};
+
+export const createPlan = async (plan: ICreatePlan, token: string): Promise<Response> => {
+  try {
+    const response = await fetch("http://localhost:3001/plan", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(plan),
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error creating plan:", error);
+    throw new Error("Error creating plan");
   }
 };

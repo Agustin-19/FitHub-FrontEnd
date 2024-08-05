@@ -10,10 +10,11 @@ enum Dificultad {
 
 interface ICreatePlan {
   name: string;
-  category: ICategory[];
+  category: string[];
   description: string;
   location: string;
-  difficultyLevel: Dificultad;
+  difficultyLevel: string;
+  imgUrl: string[]
 }
 
 interface IPlan {
