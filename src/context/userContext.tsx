@@ -96,10 +96,8 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       // Guarda el rol y otros datos del usuario
       setUser({ ...decodedToken, token: data.token });
 
-      typeof window !== "undefined" &&
-        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
-      typeof window !== "undefined" &&
-        localStorage.setItem("token", data.token); // Almacena el token
+      typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
+      typeof window !== "undefined" && localStorage.setItem("token", data.token); // Almacena el token
 
       setIsLogged(true);
       return true;
