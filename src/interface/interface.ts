@@ -116,6 +116,7 @@ interface IRutinaEjercicio {
   titulo: string;
   descripcion: string;
   imgUrl: string[] | null;
+  videoUrl: string| null;
 }
 
 interface ICreateRutinaDpto {
