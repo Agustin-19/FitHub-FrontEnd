@@ -45,7 +45,9 @@ export function LoginComponet({ token, setToken }: any) {
     const success = await signIn(userDate);
     if (success) {
       console.log("Login successful");
-      router.push("/home");
+      setTimeout(() => {
+        router.push("/home");
+      }, 0); // Este retraso puede ayudar a evitar problemas de renderizado.
     } else {
       console.log("Invalid login");
     }
@@ -59,7 +61,7 @@ export function LoginComponet({ token, setToken }: any) {
       }
     >
       <div className={style.left} data-aos="fade-right">
-        <Image src={hombre} alt="Woman on the right" width={700} height={700} />
+        <Image src={hombre} alt="Man on the left" width={700} height={700} />
       </div>
       <form onSubmit={handleSubmit} className={style.form}>
         <h1 className="text-[#97D6DF] text-3xl font-bold mb-5 text-center uppercase ">
@@ -136,3 +138,4 @@ export function LoginComponet({ token, setToken }: any) {
     </section>
   );
 }
+stop;

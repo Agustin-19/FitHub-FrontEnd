@@ -1,18 +1,18 @@
 import { API } from "@/helpers/helper";
 import { IPlan, ISearch } from "@/interface/plan.interface";
 
-export const get_Plan = async (queryString: ISearch): Promise<IPlan[]> => {
-  const { search, difficultyLevel, location, category, page, limit } =
-    queryString;
+export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
+  const lim = queryString?.limit || 8;
+  const pag = queryString?.page || 1;
+  const cat = queryString?.category || "";
+  const loc = queryString?.location || "";
+  const dif = queryString?.difficultyLevel || "";
+  const sea = queryString?.search || "";
 
-  const lim = limit || 8;
-  const pag = page || 1;
-
-  const arg = `limit=${lim}&page=${pag}&category=${category}&location=${location}&difficultyLevel=${difficultyLevel}&search=${search}`;
-  console.log(arg);
+  const arg = `limit=${lim}&page=${pag}&category=${cat}&location=${loc}&difficultyLevel=${dif}&search=${sea}`;
 
   try {
-    const response = await fetch(`${API}/plan?`, {
+    const response = await fetch(`${API}/plan?${arg}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,6 @@ export const get_Plan = async (queryString: ISearch): Promise<IPlan[]> => {
       throw new Error("Error al obtener los Planes ");
     }
     const data = await response.json();
-    console.log(data);
 
     return data;
   } catch (err) {

@@ -17,7 +17,6 @@ export const get_Rutinas = async (
   const sea = queryString?.search || "";
 
   const arg = `limit=${lim}&page=${pag}&category=${cat}&location=${loc}&difficultyLevel=${dif}&search=${sea}`;
-  // console.log(arg);
 
   try {
     const response = await fetch(`${API}/rutina?${arg}`, {
@@ -66,10 +65,12 @@ export const createExercise = async (ejercicio: IRutinaEjercicio) => {
 
 export const get_Ejercicios = async (): Promise<IRutinaEjercicio[]> => {
   try {
-    const response = await fetch(`${API}/ejercicio`, {
+    const response = await fetch(`${API}/ejercicio/entrenador`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${(typeof window !== "undefined" && localStorage.getItem('token'))}`,
+        Authorization: `Bearer ${
+          typeof window !== "undefined" && localStorage.getItem("token")
+        }`,
         "Content-Type": "application/json",
       },
     });
@@ -134,7 +135,7 @@ export const get_RutinaById = async (id: string): Promise<IRutina> => {
   }
 };
 
-const getUserRutinasYPlanes = async (
+export const getUserRutinasYPlanes = async (
   userId: string
 ): Promise<IGetRutYPlan | null> => {
   try {
