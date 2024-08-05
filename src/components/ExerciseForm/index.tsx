@@ -12,6 +12,7 @@ export default function ExerciseForm() {
     titulo: "",
     descripcion: "",
     imgUrl: [""], // Ahora es un string que almacenará la URL del archivo
+    videoUrl: ""
   });
 
   const [files, setFile] = useState<File | null>(null);
@@ -57,6 +58,7 @@ export default function ExerciseForm() {
         titulo,
         descripcion,
         imgUrl: fileUrl,
+        videoUrl: "",
       };
 
       console.log(ejercicioData);
