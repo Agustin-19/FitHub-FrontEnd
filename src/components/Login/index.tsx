@@ -138,4 +138,3 @@ export function LoginComponet({ token, setToken }: any) {
     </section>
   );
 }
-stop;
