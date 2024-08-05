@@ -29,7 +29,7 @@ const PlanList: React.FC<PlanListProps> = ({ plans }) => {
         >
           <div className="relative w-full h-48">
             <Image
-              src={getImageSrc(plan.imgUrl)}
+              src={plan.imgUrl[0] || imgDefect}
               alt={plan.name}
               fill={true}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
