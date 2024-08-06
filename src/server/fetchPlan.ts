@@ -24,6 +24,9 @@ export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
     }
     const data = await response.json();
 
+    console.log(data);
+    
+
     return data;
   } catch (err) {
     console.log("Error al obtener los Planes:", err);
