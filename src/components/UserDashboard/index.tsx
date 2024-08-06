@@ -6,6 +6,7 @@ import styles from "./UserDasboard.module.css";
 import Image from "next/image";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import imagenPerfil from "../../../public/assets/imagenPerfil.webp";
+import { IPlan } from "@/interface/plan.interface";
 
 interface Routine {
   id: string;
@@ -13,22 +14,26 @@ interface Routine {
   progress: number;
 }
 
-interface Plan {
+interface Subsciption {
+  endDate: string;
   id: string;
-  name: string;
-  price: number;
+  isActive: boolean;
+  plan: IPlan;
+  startDate: string;
+  state: boolean;
 }
 
 const UserDashboard = () => {
   const userContext = useContext(UserContext);
-  const { user, getUserRutinasYPlanes } = userContext;
+  const { user, getUserRutinasYPlanes, isLogged } = userContext;
   const [avatar, setAvatar] = useState<string | null>(null);
   const [purchasedRoutines, setPurchasedRoutines] = useState<Routine[]>([]);
-  const [purchasedPlans, setPurchasedPlans] = useState<Plan[]>([]);
+  const [purchasedPlans, setPurchasedPlans] = useState<IPlan[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [hasFetchedData, setHasFetchedData] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user?.sub) {
+    if (user?.sub && !hasFetchedData) {
       getUserRutinasYPlanes(user.sub)
         .then((data) => {
           if (data) {
@@ -40,31 +45,39 @@ const UserDashboard = () => {
                 }))
               : [];
 
-            const mappedPlans = Array.isArray(data.plan)
-              ? data.plan.map((plan) => ({
-                  id: plan.id,
-                  name: plan.name,
-                  price: plan.price,
+            // Mapeo de suscripciones
+            const mappedPlans = Array.isArray(data.subsciption)
+              ? data.subsciption.map((subsciption: any) => ({
+                  id: subsciption.plan.id,
+                  name: subsciption.plan.name,
+                  description: subsciption.plan.description,
+                  isActive: subsciption.isActive,
+                  price: subsciption.plan.price,
+                  imgUrl: subsciption.plan.imgUrl,
                 }))
               : [];
 
             setPurchasedRoutines(mappedRoutines);
             setPurchasedPlans(mappedPlans);
-            setError(null); // Limpiar el error si todo está bien
+            setError(null);
           } else {
             setPurchasedRoutines([]);
             setPurchasedPlans([]);
             setError("No se encontraron rutinas ni planes.");
           }
+          setHasFetchedData(true);
         })
         .catch((error) => {
           console.error("Error fetching routines and plans:", error);
           setPurchasedRoutines([]);
           setPurchasedPlans([]);
           setError("Error al obtener rutinas y planes.");
+          setHasFetchedData(true);
         });
     }
-  }, [user, getUserRutinasYPlanes]);
+  }, [user, getUserRutinasYPlanes, hasFetchedData]);
+
+  if (!isLogged) return <p>Debes estar logueado para acceder al dashboard.</p>;
 
   if (!user) return <p>Loading...</p>;
 
@@ -90,14 +103,14 @@ const UserDashboard = () => {
         <div
           className={
             styles.dashboard +
-            " flex-col items-center justify-center border-r border-1 w-[400px] "
+            " flex-col items-center justify-center border-r border-1 w-[400px]"
           }
         >
           <Image
             src={avatar || imagenPerfil}
             alt="Avatar"
-            width={500}
-            height={80}
+            width={100} // Ajusta el tamaño si es necesario
+            height={100}
             className="rounded-full object-cover"
           />
           <label
@@ -106,7 +119,6 @@ const UserDashboard = () => {
           >
             <PencilIcon className="w-6 h-6 text-white bg-[#FF3E1A] rounded-full p-1" />
           </label>
-
           <input
             id="file-input"
             type="file"
@@ -114,12 +126,12 @@ const UserDashboard = () => {
             onChange={handleImageChange}
             className="hidden"
           />
-
           <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
-          <p>nombre: {user.name}</p>
-          <p>Email: {user.role}</p>
+          <p>Nombre: {user.name}</p>
+          <p>Email: {user.role}</p>{" "}
+          {/* Asegúrate de que `user.email` esté disponible */}
         </div>
-        <div className="flex justify-evenly items-center text-[#97D6DF]">
+        <div className="flex flex-col items-center text-[#97D6DF] flex-grow">
           <div className="flex flex-col items-center">
             <h3 className="m-5 text-lg text-center">Rutinas Compradas</h3>
             <ul>
@@ -128,7 +140,9 @@ const UserDashboard = () => {
               ) : purchasedRoutines.length > 0 ? (
                 purchasedRoutines.map((routine) => (
                   <li key={routine.id}>
-                    <Link href={`/routines/${routine.id}`}>{routine.name}</Link>
+                    <Link href={`/routines/${routine.id}`}>
+                      <a>{routine.name}</a>
+                    </Link>
                     <p>Progreso: {routine.progress || 0}%</p>
                   </li>
                 ))
@@ -137,16 +151,21 @@ const UserDashboard = () => {
               )}
             </ul>
           </div>
-          <div className="flex flex-col items-center">
-            <h3 className="m-5 text-lg text-center">Planes Comprados</h3>
+          <br />
+          <div className="flex flex-col items-center m-4">
+            <h3 className="mt-4 text-lg text-center">Planes Comprados</h3>
             <ul>
               {error ? (
                 <p>{error}</p>
               ) : purchasedPlans.length > 0 ? (
                 purchasedPlans.map((plan) => (
-                  <li key={plan.id}>
-                    <Link href={`/plans/${plan.id}`}>{plan.name}</Link>
+                  <li
+                    key={plan.id}
+                    className="flex gap-4 items-center mt-4 bg-[#97D6DF]/10 p-4 rounded-lg"
+                  >
+                    <h1 className="text-lg font-bold">{plan.name}</h1>
                     <p>Precio: ${plan.price}</p>
+                    <p>Estado: {plan.isActive ? "Activo" : "Inactivo"}</p>
                   </li>
                 ))
               ) : (

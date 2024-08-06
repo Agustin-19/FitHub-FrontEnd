@@ -14,22 +14,22 @@ interface ICreatePlan {
   description: string;
   location: string;
   difficultyLevel: string;
-  imgUrl: string[]
+  imgUrl: string[];
 }
 
 interface IPlan {
+  id: string;
   name: string;
   description: string;
-  location: string;
-  difficultyLevel: string;
-  admin: IUser;
-  category: ICategory[];
-  id: string;
-  check: boolean;
-  date: string;
+  location?: string;
+  difficultyLevel?: string;
+  admin?: string;
+  category?: string[];
+  check?: boolean;
+  date?: string;
   isActive: boolean;
-  price: number;
-  imgUrl: string;
+  price: string;
+  imgUrl?: string;
 }
 
 interface ICategory {
@@ -40,7 +40,7 @@ interface ICategory {
 interface IGetRutYPlan {
   id: string;
   rutinas: IRutina[];
-  plan: IPlan[];
+  subsciption: IPlan[];
 }
 
 interface IRutinaContextProps {

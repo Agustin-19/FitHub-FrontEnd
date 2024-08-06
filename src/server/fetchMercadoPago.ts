@@ -33,7 +33,7 @@ export const createPlanOrder = async (planData: {
   planId: string;
   title: string | undefined;
   quantity: number;
-  unit_price: number;
+  unit_price: number | undefined;
 }) => {
   try {
     const response = await fetch(`${API}/plan/create-order`, {

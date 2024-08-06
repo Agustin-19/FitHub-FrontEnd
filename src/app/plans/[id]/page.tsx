@@ -84,7 +84,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
         planId: id,
         title: plan?.name,
         quantity: 1,
-        unit_price: plan?.price || 100,
+        unit_price: Number(plan?.price),
       };
 
       console.log(planData);
@@ -117,7 +117,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
             </h2>
             <div className="relative object-contain w-40 h-40 rounded-t-lg">
               <Image
-                src={plan?.imgUrl[0] || imgDefect}
+                src={plan?.imgUrl || imgDefect}
                 alt={plan?.name || "imagen por defecto"}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -136,7 +136,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
             <p className="mb-2">
               <span className="font-bold">Categorías:</span>
               {Array.isArray(plan?.category)
-                ? plan.category.map((cat) => cat.name).join(", ")
+                ? plan.category.map((cat) => cat).join(", ")
                 : "No especificado"}
             </p>
             <p className="mb-2">
