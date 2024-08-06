@@ -24,6 +24,9 @@ export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
     }
     const data = await response.json();
 
+    console.log(data);
+    
+
     return data;
   } catch (err) {
     console.log("Error al obtener los Planes:", err);
@@ -53,7 +56,10 @@ export const get_Category = async () => {
 
 export const createPlan = async (plan: ICreatePlan, token: string): Promise<Response> => {
   try {
-    const response = await fetch("http://localhost:3001/plan", {
+    console.log("Enviando datos a:", `${API}/plan`);
+    console.log("Datos del plan:", plan);
+    
+    const response = await fetch(`${API}/plan`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,10 +67,17 @@ export const createPlan = async (plan: ICreatePlan, token: string): Promise<Resp
       },
       body: JSON.stringify(plan),
     });
+    
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log("Respuesta del servidor:", data);
 
     return response;
   } catch (error) {
-    console.error("Error creating plan:", error);
+    console.error("Error en createPlan:", error);
     throw new Error("Error creating plan");
   }
 };

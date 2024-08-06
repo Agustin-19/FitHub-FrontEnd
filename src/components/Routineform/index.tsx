@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useContext } from "react";
 import styles from "./routine.module.css";
+import { uploaFile } from "@/server/fetchFile";
 
 const CreateRutina: React.FC = () => {
   const router = useRouter();
@@ -74,6 +75,17 @@ const CreateRutina: React.FC = () => {
     }));
   };
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, files } = e.target;
+    if (files && files.length > 0) {
+      if (id === "imageFile") {
+        setImageFile(files[0]);
+      }
+    }
+  };
+
   const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
     event
   ) => {
@@ -97,7 +109,6 @@ const CreateRutina: React.FC = () => {
       difficultyLevel,
       category,
       price,
-      imgUrl,
     } = rutina;
 
     if (!name) {
@@ -128,24 +139,29 @@ const CreateRutina: React.FC = () => {
       alert("Por favor ingresa un precio.");
       return;
     }
-    if (!imgUrl) {
-      alert("Por favor ingresa una imagen.");
+    if (!imageFile) {
+      alert("Por favor selecciona una imagen primero.");
       return;
     }
 
-    const data = {
-      name,
-      description: descripcion,
-      imgURL: "url",
-      exercise,
-      difficultyLevel,
-      category,
-      price: parseFloat(rutina.price),
-      admin: "5061e26f-3375-41a2-bebf-bea3a9ba49f5", // El ID del administrador de la app
-    };
-
-    // console.log(data);
     try {
+
+
+      const imageUrls: string[] = await uploaFile(imageFile);
+
+      const data = {
+        name,
+        description: descripcion,
+        imgUrl: imageUrls,
+        exercise,
+        difficultyLevel,
+        category,
+        price: parseFloat(rutina.price),
+        admin: "5061e26f-3375-41a2-bebf-bea3a9ba49f5", // El ID del administrador de la app
+      };
+
+      console.log(data);
+
       await create_Rutina(data); // Usa la función modularizada
       alert("Rutina creada exitosamente");
       router.push("/dashboard");
@@ -253,13 +269,13 @@ const CreateRutina: React.FC = () => {
           </div>
           <br></br>
           <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
-            Sube Una Imagen Para El Plan:
+            Sube Una Imagen Para La Rutina:
           </label>
           <input
             className={styles.input}
             type="file"
-            id="imgUrl"
-            onChange={handleChange}
+            id="imageFile"
+            onChange={handleFileChange}
           />
           <div className="flex justify-center">
             <button type="submit" className={styles.button}>
