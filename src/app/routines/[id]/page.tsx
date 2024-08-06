@@ -41,7 +41,9 @@ const Routine = ({ params }: IRoutineProps) => {
   useEffect(() => {
     const fetchRutinaID = async () => {
       try {
-        const routine = await get_RutinaById(id);
+        const routine: IRutina = await get_RutinaById(id);
+        console.log(routine);
+        
         setRutina(routine);
       } catch (err) {
         setError("Error al obtener las rutinas");
@@ -125,7 +127,7 @@ const Routine = ({ params }: IRoutineProps) => {
               </h2>
               <div className="relative object-contain w-40 h-40 rounded-t-lg">
                 <Image
-                  src={routine?.imgUrl || imgDefect}
+                  src={getImageSrc(routine?.imgUrl)}
                   alt={routine?.name || "imagen por defecto"}
                   fill={true}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

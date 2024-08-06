@@ -146,7 +146,6 @@ const CreateRutina: React.FC = () => {
 
     try {
 
-
       const imageUrls: string[] = await uploaFile(imageFile);
 
       const data = {

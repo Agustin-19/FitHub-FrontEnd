@@ -30,7 +30,7 @@ export const get_Rutinas = async (
       throw new Error("Error al obtener las rutinas");
     }
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     return data;
   } catch (err) {
