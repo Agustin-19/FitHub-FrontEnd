@@ -116,7 +116,7 @@ interface IRutinaEjercicio {
   titulo: string;
   descripcion: string;
   imgUrl: string[] | null;
-  videoUrl: string| null;
+  videoUrl: string | null;
 }
 
 interface ICreateRutinaDpto {
@@ -201,5 +201,5 @@ export type {
   IErrorsRegister,
   IRutinaListProps,
   IFilters,
-  IRegister3ros
+  IRegister3ros,
 };
