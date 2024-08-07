@@ -39,7 +39,9 @@ const Routine = ({ params }: IRoutineProps) => {
   useEffect(() => {
     const fetchRutinaID = async () => {
       try {
-        const routine = await get_RutinaById(id);
+        const routine: IRutina = await get_RutinaById(id);
+        console.log(routine);
+        
         setRutina(routine);
       } catch (err) {
         setError("Error al obtener las rutinas");

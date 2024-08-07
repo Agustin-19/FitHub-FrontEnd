@@ -1,4 +1,4 @@
-import { IRegisterUser } from "@/interface/interface";
+import { IRegisterUser, IUser } from "@/interface/interface";
 import { API } from "@/helpers/helper";
 
 export const postSigupCoach = async (user: IRegisterUser) => {
@@ -27,3 +27,28 @@ export const postSigupCoach = async (user: IRegisterUser) => {
         throw error;
     }
 };
+
+export const getCoach = async (): Promise<IUser[]> => {
+    try {
+        const response = await fetch(`${API}/users`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const users: IUser[] = await response.json();
+
+        // Filtra los usuarios con el rol "entrenador"
+        const coaches = users.filter((user: IUser) => user.role === "entrenador");
+
+        return coaches;
+    } catch (error) {
+        console.error("Error en getCoach:", error);
+        throw error;
+    }
+}
