@@ -2,7 +2,7 @@
 import { useContext, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
-import CoachDashboard from "@/components/CoachDashboard";
+import CoachDashboard from "@/components/Coach/CoachDashboard";
 import UserDashboard from "@/components/UserDashboard";
 
 export default function Dashboard() {
