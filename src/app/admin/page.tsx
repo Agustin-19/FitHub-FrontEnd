@@ -1,6 +1,6 @@
 "use client";
 
-import CoachList from "../../components/CoachList/index";
+import CoachList from "../../components/Coach/CoachList/index";
 import { useContext, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";

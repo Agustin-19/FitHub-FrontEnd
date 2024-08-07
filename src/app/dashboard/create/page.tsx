@@ -4,6 +4,7 @@ import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import CoachDashboard from "@/components/Coach/CoachDashboard";
 import UserDashboard from "@/components/UserDashboard";
+import Create from "@/components/Coach/Cards/create";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -24,13 +25,7 @@ export default function Dashboard() {
 
   return (
     <div className="z-10 relative">
-      {role === "user" ? (
-        <UserDashboard />
-      ) : role === "entrenador" ? (
-        <CoachDashboard />
-      ) : (
-        <p>Rol no reconocido.</p>
-      )}
+      {role === "entrenador" ? <Create /> : <p>Rol no reconocido.</p>}
     </div>
   );
 }

@@ -15,6 +15,7 @@
     "@splinetool/react-spline": "^4.0.0",
     "@splinetool/runtime": "^1.9.3",
     "aos": "^2.3.4",
+    "chart.js": "^2.9.4",
     "framer-motion": "^11.3.19",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
@@ -22,11 +23,13 @@
     "next-video": "^1.1.1",
     "react": "^18",
     "react-dom": "^18",
+    "recharts": "^2.12.7",
     "tw-elements": "^2.0.0",
     "tw-elements-react": "^1.0.0-alpha-end"
   },
   "devDependencies": {
     "@types/aos": "^3.0.7",
+    "@types/chart.js": "^2.9.41",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
