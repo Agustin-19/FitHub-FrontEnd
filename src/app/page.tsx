@@ -1,6 +1,6 @@
 import { Carousel } from "@/components/Carousel";
 import SummaryStats from "@/components/SummaryStats";
-import CoachList from "@/components/CoachList";
+import CoachList from "@/components/Coach/CoachList";
 import Link from "next/link";
 import LoginLogout from "@/components/Login-Logout";
 import SearchRutina from "@/components/SearchRutina";
