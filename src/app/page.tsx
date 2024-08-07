@@ -1,9 +1,9 @@
 import { Carousel } from "@/components/Carousel";
 import SummaryStats from "@/components/SummaryStats";
-import Programs from "@/components/Programs";
 import CoachList from "@/components/CoachList";
 import Link from "next/link";
 import LoginLogout from "@/components/Login-Logout";
+import SearchRutina from "@/components/SearchRutina";
 
 export default function LandingPage() {
   return (
@@ -27,7 +27,7 @@ export default function LandingPage() {
         <SummaryStats />
       </section>
       <section id="programs" className="mb-10">
-        <Programs />
+        <SearchRutina />
       </section>
       <section id="coaches" className="mb-10">
         <CoachList />

@@ -1,25 +1,13 @@
 import React from "react";
 import Image from "next/image";
-
-interface IUser {
-  name: string;
-  email: string;
-  address: string;
-  city: string;
-  telefono: string;
-  fotosPerfil?: string;
-  role?: string;
-  rutinas?: number[];
-  actividades?: number[];
-  rating?: number; // La calificación es opcional
-}
+import { IUser } from "@/interface/interface";
 
 interface CoachCardProps {
   user: IUser;
 }
 
 const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
-  const rating = user.rating ?? 0; // Si la calificación es undefined, usar 0
+  // const rating = user.rating ?? 0; // Si la calificación es undefined, usar 0 (Descomenta si tienes un campo de calificación)
 
   return (
     <div
@@ -46,12 +34,9 @@ const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
           <p className="text-[#97D6DF] text-sm">Email: {user.email}</p>
           <p className="text-[#97D6DF] text-sm">Address: {user.address}</p>
           <p className="text-[#97D6DF] text-sm">City: {user.city}</p>
-          <p className="text-[#97D6DF] text-sm">Telefono: {user.telefono}</p>
-          {user.role && (
-            <p className="text-[#97D6DF] text-sm mt-2">Role: {user.role}</p>
-          )}
+          <p className="text-[#97D6DF] text-sm">Phone: {user.phone}</p>
 
-          {/* Calificación */}
+          {/* Calificación (Descomenta si tienes un campo de calificación)
           <div className="mt-2 flex items-center">
             <span className="flex">
               {[...Array(5)].map((_, i) => (
@@ -71,6 +56,7 @@ const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
               {rating !== undefined ? `${Math.floor(rating)}/5` : "No rating"}
             </span>
           </div>
+          */}
         </div>
       </div>
     </div>
