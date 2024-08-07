@@ -1,21 +1,14 @@
 "use client";
-import Image from "next/image";
+
+import { IRutinaEjercicio } from "@/interface/interface";
 import { useState, useContext, useEffect } from "react";
-import ExerciseVideo from "@/components/ExerciseVideo";
-import { IRutina, IRutinaEjercicio } from "@/interface/interface";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+import { IRutina } from "@/interface/interface";
 import { get_RutinaById } from "@/server/fetchRoutines";
-import { createRutineOrder } from "@/server/fetchMercadoPago";
 import Link from "next/link";
-
-// Declarar globalmente el tipo Window para incluir checkoutButton
-declare global {
-  interface Window {
-    checkoutButton: any;
-  }
-}
+import Image from "next/image";
+import ExerciseVideo from "@/components/ExerciseVideo";
 
 interface IRoutineProps {
   params: {
@@ -23,73 +16,39 @@ interface IRoutineProps {
   };
 }
 
-const Routine = ({ params }: IRoutineProps) => {
+const RutinaComprada = ({ params }: IRoutineProps) => {
   const [selectedEjercicio, setSelectedEjercicio] =
     useState<IRutinaEjercicio | null>(null);
-  const { isLogged, user } = useContext(UserContext);
-
-  const id = params.id;
+  const { isLogged } = useContext(UserContext);
   const [routine, setRutina] = useState<IRutina | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
   const router = useRouter();
-  const [preferenceId, setPreferenceId] = useState<string | null>(null);
+  const id = params.id;
 
+  // Redirigir si el usuario no está logueado
   useEffect(() => {
-    const fetchRutinaID = async () => {
-      try {
-        const routine = await get_RutinaById(id);
-        setRutina(routine);
-      } catch (err) {
-        setError("Error al obtener las rutinas");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRutinaID();
-  }, [id]);
-
-  useEffect(() => {
-    initMercadoPago("APP_USR-170df093-20f9-45fb-9bb2-11eb49586790", {
-      locale: "es-AR",
-    });
-  }, []);
-
-  if (loading) {
-    return <div className="text-center text-white">Cargando...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center text-red-500">Error: {error}</div>;
-  }
-
-  const handlePurchase = async () => {
     if (!isLogged) {
-      alert("Debes iniciar sesión para comprar la rutina.");
       router.push("/login");
-      return;
     }
+  }, [isLogged, router]);
 
-    try {
-      const rutinaData = {
-        id: user?.sub,
-        rutinaId: id,
-        title: routine?.name,
-        quantity: 1,
-        unit_price: Number(routine?.price),
+  // Fetch de rutina
+  useEffect(() => {
+    if (isLogged) {
+      const fetchRutinaID = async () => {
+        try {
+          const routine = await get_RutinaById(id);
+          setRutina(routine);
+        } catch (err) {
+          setError("Error al obtener las rutinas");
+        } finally {
+          setLoading(false);
+        }
       };
-
-      const preference = await createRutineOrder(rutinaData);
-      setPreferenceId(preference.id);
-    } catch (error) {
-      console.log(error);
+      fetchRutinaID();
     }
-  };
-
-  const handleBuy = async () => {
-    await handlePurchase();
-  };
+  }, [id, isLogged]);
 
   const imgDefect =
     "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
@@ -105,7 +64,7 @@ const Routine = ({ params }: IRoutineProps) => {
 
   return (
     <div>
-      <Link href="/home/homeRutinas">
+      <Link href="/dashboard">
         <button className="mt-4 relative z-10 rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
         </button>
@@ -143,29 +102,17 @@ const Routine = ({ params }: IRoutineProps) => {
               <h3 className="text-xl font-semibold mb-2">
                 Precio: ${routine?.price}
               </h3>
-              <button
-                className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-                onClick={handleBuy}
-              >
-                Comprar Rutina
-              </button>
-              {preferenceId && (
-                <Wallet
-                  initialization={{ preferenceId: preferenceId }}
-                  customization={{ texts: { valueProp: "smart_option" } }}
-                />
-              )}
             </div>
           </div>
-          <ul>
+          <ul className="flex flex-col gap-5 ">
             {routine?.exercise?.map((ejercicio) => (
               <li
                 key={ejercicio.id}
-                className="mb-4 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg"
+                className="mb-4 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg w-6/12 "
               >
-                <div className="flex gap-3 align-middle m-3">
+                <div className="flex items-center justify-evenly m-3">
                   <div className="text-center">
-                    <h4 className="font-bold text-3xl m-2">
+                    <h4 className="font-bold text-3xl my-2">
                       {ejercicio.titulo}
                     </h4>
                     <div className="relative object-contain w-40 h-40">
@@ -179,24 +126,33 @@ const Routine = ({ params }: IRoutineProps) => {
                       />
                     </div>
                   </div>
-                  <p className="flex items-center ml-24 text-2xl">
-                    Para ver el Detalle del ejercicio debes realizar la compra
-                    de la rutina: {routine?.name}
-                  </p>
+                  <div>
+                    <p className="flex items-center mx-10 text-2xl">
+                      {ejercicio.descripcion}
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      className="mt-4 relative z-10 rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
+                      onClick={() => setSelectedEjercicio(ejercicio)}
+                    >
+                      Ver Video
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}
           </ul>
-          {selectedEjercicio && (
-            <ExerciseVideo
-              ejercicio={selectedEjercicio}
-              onClose={() => setSelectedEjercicio(null)}
-            />
-          )}
         </div>
       </div>
+      {selectedEjercicio && (
+        <ExerciseVideo
+          ejercicio={selectedEjercicio}
+          onClose={() => setSelectedEjercicio(null)}
+        />
+      )}
     </div>
   );
 };
 
-export default Routine;
+export default RutinaComprada;

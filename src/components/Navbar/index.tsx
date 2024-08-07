@@ -31,30 +31,40 @@ export function Navbar() {
             </h1>
           </Link>
         </div>
+        <Link
+          href="/home/homeRutinas"
+          className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
+        >
+          Rutinas
+        </Link>
+        <Link
+          href="/home/homePlanes"
+          className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
+        >
+          Actividades
+        </Link>
 
         {isLogged ? (
           <div className="flex items-center ms-10 md:me-2">
-            <span className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 text-sm">
-              Bienvenido,{" "}
+            <span className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 text-lg">
+              Bienvenido,{"  "}
               {(user as IloginUserRegister & { email?: string })?.name ||
                 (user as IloginUserRegister & { email?: string })?.email ||
                 ""}
             </span>
-            <Link
-              href="/home"
-              className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"
-            >
-              Inicio
-            </Link>
+
             <div className="flex items-center ms-10 md:me-2">
               <Link
                 href="/dashboard"
                 className="text-[#97D6DF] dark:text-[#97D6DF] lg:px-2 hover:text-[#FF3E1A] text-sm"
               >
-                <UserIcon className="w-6 h-6 text-white" />
+                <UserIcon className="w-12 h-12 text-white" />
               </Link>
             </div>
-            <button onClick={logOut} className="text-sm text-[#FF3E1A]">
+            <button
+              onClick={logOut}
+              className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
+            >
               Cerrar Sesión
             </button>
           </div>

@@ -109,9 +109,9 @@ const PlanDetail = ({ params }: IPlanProps) => {
           Volver
         </button>
       </Link>
-      <div className="p-4 rounded-lg">
-        <div className="flex justify-center gap-5">
-          <div className="m-3">
+      <div className="p-4 rounded-lg flex flex-col items-center">
+        <div className="mb-4 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg">
+          <div className="m-3 flex flex-col items-center">
             <h2 className="text-2xl font-bold text-titulos mb-4">
               {plan?.name}
             </h2>
@@ -127,8 +127,8 @@ const PlanDetail = ({ params }: IPlanProps) => {
             </div>
           </div>
           <div className="m-5">
-            <p className="my-4">{plan?.description}</p>
             <h3 className="text-xl font-semibold mb-2">Detalles del Plan</h3>
+            <p className="my-4">{plan?.description}</p>
             <p className="mb-2">
               <span className="font-bold">Ubicación:</span>{" "}
               {plan?.location || "No especificado"}
@@ -147,18 +147,20 @@ const PlanDetail = ({ params }: IPlanProps) => {
               <span className="font-bold">Activo:</span>{" "}
               {plan?.isActive ? "Sí" : "No"}
             </p>
-            <button
-              className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-              onClick={handleBuy}
-            >
-              Comprar Plan
-            </button>
-            {preferenceId && (
-              <Wallet
-                initialization={{ preferenceId: preferenceId }}
-                customization={{ texts: { valueProp: "smart_option" } }}
-              />
-            )}
+            <div className="flex flex-col items-center">
+              <button
+                className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+                onClick={handleBuy}
+              >
+                Comprar Plan
+              </button>
+              {preferenceId && (
+                <Wallet
+                  initialization={{ preferenceId: preferenceId }}
+                  customization={{ texts: { valueProp: "smart_option" } }}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ interface IPlan {
   location?: string;
   difficultyLevel?: string;
   admin?: string;
-  category?: string[];
+  category?: ICategory[];
   check?: boolean;
   date?: string;
   isActive: boolean;
@@ -39,7 +39,7 @@ interface ICategory {
 
 interface IGetRutYPlan {
   id: string;
-  rutinas: IRutina[];
+  routine: IRutina[];
   subsciption: IPlan[];
 }
 

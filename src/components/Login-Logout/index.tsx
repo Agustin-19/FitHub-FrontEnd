@@ -108,7 +108,7 @@ const LoginLogout = () => {
               fill="#FFF"
             ></path>
           </svg>
-          <span className="ml-8">Sign in with Google</span>
+          <span className="ml-8">Ingresar con Google</span>
         </button>
       </Link>
     </div>

@@ -41,11 +41,11 @@ const PlanList: React.FC<PlanListProps> = ({ plans }) => {
             <h2 className="text-xl font-bold mb-2">{plan.name}</h2>
             <p className="text-gray-600 mb-2">{plan.description}</p>
             <p className="text-gray-700 font-semibold mb-4">{plan.location}</p>
-            <p className="mb-2">
-              <span className="font-bold">Categorías:</span>
-              {Array.isArray(plan.category)
+            <p className="text-gray-700 mb-2">
+              Categoría/s:{" "}
+              {plan.category && plan.category.length > 0
                 ? plan.category.map((cat) => cat.name).join(", ")
-                : "No especificado"}
+                : "Sin categoría"}
             </p>
             <p className="text-gray-700 font-semibold mb-4">${plan.price}</p>
             <Link
@@ -62,13 +62,3 @@ const PlanList: React.FC<PlanListProps> = ({ plans }) => {
 };
 
 export default PlanList;
-
-{
-  /* <div className="p-8">
-      <div className="plan-list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 bg-fondo">
-        {plans.map((plan) => (
-          <PlanCard key={plan.id} plan={plan} />
-        ))}
-      </div>
-    </div> */
-}

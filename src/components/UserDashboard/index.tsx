@@ -12,6 +12,7 @@ interface Routine {
   id: string;
   name: string;
   progress: number;
+  price: number;
 }
 
 interface Subsciption {
@@ -37,11 +38,12 @@ const UserDashboard = () => {
       getUserRutinasYPlanes(user.sub)
         .then((data) => {
           if (data) {
-            const mappedRoutines = Array.isArray(data.rutinas)
-              ? data.rutinas.map((rutina) => ({
-                  id: rutina.id || "",
-                  name: rutina.name,
-                  progress: 0,
+            const mappedRoutines = Array.isArray(data.routine)
+              ? data.routine.map((routine: any) => ({
+                  name: routine.name,
+                  price: routine.price,
+                  id: routine.id,
+                  progress: routine.progress,
                 }))
               : [];
 
@@ -133,17 +135,25 @@ const UserDashboard = () => {
         </div>
         <div className="flex flex-col items-center text-[#97D6DF] flex-grow">
           <div className="flex flex-col items-center">
-            <h3 className="m-5 text-lg text-center">Rutinas Compradas</h3>
+            <h3 className="m-5 text-2xl font-bold text-center">
+              Rutinas Compradas
+            </h3>
             <ul>
               {error ? (
                 <p>{error}</p>
               ) : purchasedRoutines.length > 0 ? (
                 purchasedRoutines.map((routine) => (
-                  <li key={routine.id}>
-                    <Link href={`/routines/${routine.id}`}>
-                      <a>{routine.name}</a>
+                  <li
+                    key={routine.id}
+                    className="flex gap-4 items-center justify-center mt-4 bg-[#97D6DF]/10 p-4 rounded-lg"
+                  >
+                    <h1 className="text-lg font-bold">{routine.name}</h1>
+                    <p>Precio: ${routine.price}</p>
+                    <Link href={`/rutinaComprada/${routine.id}`}>
+                      <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+                        Ver rutina
+                      </button>
                     </Link>
-                    <p>Progreso: {routine.progress || 0}%</p>
                   </li>
                 ))
               ) : (
@@ -153,7 +163,9 @@ const UserDashboard = () => {
           </div>
           <br />
           <div className="flex flex-col items-center m-4">
-            <h3 className="mt-4 text-lg text-center">Planes Comprados</h3>
+            <h3 className="m-5 text-2xl font-bold text-center">
+              Planes Comprados
+            </h3>
             <ul>
               {error ? (
                 <p>{error}</p>

@@ -40,6 +40,10 @@ const RutinaList: React.FC<RutinaListProps> = ({ rutinas }) => {
           <div className="p-3">
             <h2 className="text-xl font-bold mb-2">{rutina.name}</h2>
             <p className="text-gray-600 mb-2">{rutina.description}</p>
+            <p className="text-gray-700 mb-2">
+              Categorias:
+              {""} {rutina.category.map((cat) => cat.name).join(", ")}
+            </p>
             <p className="text-gray-700 font-semibold mb-4">${rutina.price}</p>
             <Link
               href={`/routines/${rutina.id}`}

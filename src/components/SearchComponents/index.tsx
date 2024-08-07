@@ -146,7 +146,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
         </button>
       </Link>
       <div className="text-center z-10 ">
-        <div className="flex justify-center space-x-4 mb-8">
+        <div className="flex justify-center items-center space-x-4 mb-8">
           <span
             className="text-5xl font-bold stroke-text text-[#FF3E1A] animate-fadeIn"
             data-text="Explora nuestros"
@@ -154,10 +154,10 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
             Explora nuestras
           </span>
           <span className="text-6xl font-bold text-[#97D6DF] animate-fadeIn">
-            Rutinas para
+            diversas opciones para
           </span>
           <span className="text-5xl font-bold text-[#FF3E1A] animate-fadeIn">
-            Dar forma a tu cuerpo
+            dar forma a tu cuerpo
           </span>
         </div>
       </div>
