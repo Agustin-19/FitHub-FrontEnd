@@ -8,7 +8,7 @@ interface CardStatsProps {
   statArrow?: "up" | "down";
   statPercent?: string;
   statPercentColor?: string;
-  statDescription?: string; // Corregido el nombre aquí
+  statDescription?: string;
   statIconName?: string;
   statIconColor?: string;
 }
@@ -25,13 +25,11 @@ export default function NewUsers({
 }: CardStatsProps) {
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
+      <div className="relative flex flex-col min-w-0 break-words  bg-black rounded mb-6 xl:mb-0 shadow-lg">
         <div className="flex-auto p-4">
           <div className="flex flex-wrap">
             <div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-              <h5 className="text-blueGray-400 uppercase font-bold text-xs">
-                {statSubtitle}
-              </h5>
+              <h5 className=" uppercase font-bold text-xs">{statSubtitle}</h5>
               <span className="font-semibold text-xl text-blueGray-700">
                 {statTitle}
               </span>
@@ -47,7 +45,7 @@ export default function NewUsers({
               </div>
             </div>
           </div>
-          <p className="text-sm text-blueGray-400 mt-4">
+          <p className="text-sm  mt-4">
             <span className={statPercentColor + " mr-2"}>
               <i
                 className={
@@ -60,7 +58,7 @@ export default function NewUsers({
               ></i>{" "}
               {statPercent}%
             </span>
-            <span className="whitespace-nowrap">{statDescription}</span>
+            <span className="whitespace-nowrap ">{statDescription}</span>
           </p>
         </div>
       </div>
@@ -68,14 +66,13 @@ export default function NewUsers({
   );
 }
 
-// Definición de las PropTypes para validación en runtime (opcional en TypeScript)
 NewUsers.propTypes = {
   statSubtitle: PropTypes.string,
   statTitle: PropTypes.string,
   statArrow: PropTypes.oneOf(["up", "down"]),
   statPercent: PropTypes.string,
   statPercentColor: PropTypes.string,
-  statDescription: PropTypes.string, // Corregido el nombre aquí
+  statDescription: PropTypes.string,
   statIconName: PropTypes.string,
   statIconColor: PropTypes.string,
 };
