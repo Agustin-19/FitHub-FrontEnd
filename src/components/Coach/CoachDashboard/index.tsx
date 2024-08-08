@@ -8,6 +8,9 @@ import CardSocialTraffic from "../Cards/socialtraffic";
 import CardStats from "../Cards/cardstates";
 import NewUsers from "../Cards/newUsers";
 import CardSales from "../Cards/sales";
+import LineChart from "../Grafic/grafic";
+import BarChart from "../Barchart";
+import CardTable from "../Cards/cardtable";
 
 // Define the Routine type
 type Routine = {
@@ -38,12 +41,7 @@ const CoachDashboard = () => {
   return (
     <div>
       <div className="flex">
-        <div className="text-center  bg-[#1A1D1A]">
-          <Link href="/home">
-            <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
-              Volver
-            </button>
-          </Link>
+        <div className="text-center  text-[#FF3E1A] bg-[#1A1D1A]">
           <Sidebar />
         </div>
 
@@ -65,6 +63,12 @@ const CoachDashboard = () => {
       <div className="text-center flex absolute  top-[500px] ml-[350px]">
         <RoutinesSales />
         <CardSocialTraffic />
+      </div>
+      <div className="text-center absolute  top-[200px] ml-[350px]">
+        <LineChart />
+      </div>
+      <div className="text-center absolute  top-[200px] ml-[950px]">
+        <BarChart />
       </div>
     </div>
   );

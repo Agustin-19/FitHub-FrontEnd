@@ -5,7 +5,7 @@ import React from "react";
 export default function RoutinesSales() {
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words text-[#FF3E1A] bg-[#1A1D1A]  mb-6 shadow-lg rounded">
+      <div className="relative flex flex-col min-w-0 break-words text-[#97D6DF] bg-black  mb-6 shadow-lg rounded">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
