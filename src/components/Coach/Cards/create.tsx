@@ -11,7 +11,7 @@ export default function Create() {
       <div className="text-center text-[#FF3E1A] bg-black">
         <Sidebar />
       </div>
-      <div className="text-[#97D6DF] flex  ml-[300px] absolute justify-between">
+      <div className="text-[#97D6DF] flex  ml-[350px] absolute justify-between">
         <div className="text-center">
           <h3 className="m-5 text-lg text-center">
             ¿Deseas crear una nueva Actividad?

@@ -2,17 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import TableDropdown from "@/components/Coach/Dropdown/tabledropdown";
+import Sidebar from "../Sidebar";
 
 type CardTableProps = {
   color: string; // specify the type of the 'color' prop
 };
 export default function CardTable({ color }: CardTableProps) {
   return (
-    <>
+    <div className="flex border ">
+      <div className="text-center text-[#FF3E1A] bg-black">
+        <Sidebar />
+      </div>
       <div
         className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
-          (color === "light" ? "bg-white" : "bg-blueGray-700 text-white")
+          "absolute  flex flex-col ml-[400px] top-5 min-w-0 break-words shadow-lg rounded " +
+          (color === "light" ? "bg-black" : "bg-blueGray-700 text-white")
         }
       >
         <div className="rounded-t mb-0 px-4 py-3 border-0">
@@ -24,7 +28,7 @@ export default function CardTable({ color }: CardTableProps) {
                   (color === "light" ? "text-blueGray-700" : "text-white")
                 }
               >
-                Card Tables
+                Alumnos Inscritos
               </h3>
             </div>
           </div>
@@ -42,7 +46,7 @@ export default function CardTable({ color }: CardTableProps) {
                       : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                   }
                 >
-                  Project
+                  Nombre
                 </th>
                 <th
                   className={
@@ -52,7 +56,7 @@ export default function CardTable({ color }: CardTableProps) {
                       : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                   }
                 >
-                  Budget
+                  suscripción
                 </th>
                 <th
                   className={
@@ -417,7 +421,7 @@ export default function CardTable({ color }: CardTableProps) {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

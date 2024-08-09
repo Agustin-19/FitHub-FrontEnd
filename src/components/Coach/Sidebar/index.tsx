@@ -119,13 +119,7 @@ export default function Sidebar() {
 
               <li className="items-center">
                 <Link href="/dashboard/tables">
-                  <i className={"fas fa-table mr-2 text-sm "}></i> Tables
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/admin/maps">
-                  <i className={"fas fa-map-marked mr-2 text-sm "}></i> Maps
+                  <i className={"fas fa-table mr-2 text-sm "}></i> Alumnos
                 </Link>
               </li>
             </ul>
@@ -134,44 +128,18 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Auth Layout Pages
+              Configuración
             </h6>
             {/* Navigation */}
-
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
-                <Link href="/auth/login">
-                  <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  Login
+                <Link href="/dashboard/chat">
+                  <i className="fas fa-user-circle text-blueGray-400 mr-2 text-sm"></i>{" "}
+                  chat
                 </Link>
               </li>
-
               <li className="items-center">
-                <Link href="/auth/register">
-                  <i className="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>{" "}
-                  Register
-                </Link>
-              </li>
-            </ul>
-
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              No Layout Pages
-            </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
-                <Link href="/landing">
-                  <i className="fas fa-newspaper text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  Landing Page
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/profile">
+                <Link href="/dashboard/profile">
                   <i className="fas fa-user-circle text-blueGray-400 mr-2 text-sm"></i>{" "}
                   Profile Page
                 </Link>

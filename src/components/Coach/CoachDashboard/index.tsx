@@ -44,8 +44,7 @@ const CoachDashboard = () => {
         <div className="text-center  text-[#FF3E1A] bg-[#1A1D1A]">
           <Sidebar />
         </div>
-
-        <div className=" flex justify-between ml-[100px] p-5 gap-4">
+        <div className=" flex justify-center ml-[200px] p-5 gap-4">
           <div>
             <CardStats />
           </div>
@@ -55,12 +54,9 @@ const CoachDashboard = () => {
           <div>
             <CardSales />
           </div>
-          <div>
-            <CardSales />
-          </div>
         </div>
       </div>
-      <div className="text-center flex absolute  top-[500px] ml-[350px]">
+      <div className="text-center flex absolute  top-[470px] ml-[350px]">
         <RoutinesSales />
         <CardSocialTraffic />
       </div>
