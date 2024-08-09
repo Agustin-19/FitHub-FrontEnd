@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Link from "next/link";
 import { createPlanOrder } from "@/server/fetchMercadoPago";
+import Maps from "@/components/Maps/map";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -102,6 +103,19 @@ const PlanDetail = ({ params }: IPlanProps) => {
   const imgDefect =
     "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
 
+  const handleMapChange = (lat: number, lng: number) => {
+    setPlan((prevState) => {
+      if (!prevState) return prevState;
+
+      return {
+        ...prevState,
+        latitude: Number(lat),
+        longitude: Number(lng),
+      };
+    });
+  };
+  console.log("category", plan);
+
   return (
     <div className="relative z-10">
       <Link href="/home/homePlanes">
@@ -117,7 +131,11 @@ const PlanDetail = ({ params }: IPlanProps) => {
             </h2>
             <div className="relative object-contain w-40 h-40 rounded-t-lg">
               <Image
-                src={plan?.imgUrl || imgDefect}
+                src={
+                  Array.isArray(plan?.imgUrl) && plan.imgUrl.length > 0
+                    ? plan.imgUrl[0][0]
+                    : imgDefect
+                }
                 alt={plan?.name || "imagen por defecto"}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -134,10 +152,12 @@ const PlanDetail = ({ params }: IPlanProps) => {
               {plan?.location || "No especificado"}
             </p>
             <p className="mb-2">
-              <span className="font-bold">Categorías:</span>
-              {Array.isArray(plan?.category)
-                ? plan.category.map((cat) => cat).join(", ")
-                : "No especificado"}
+              <span className="font-bold">Categorías:</span>{" "}
+              {plan?.category &&
+              Array.isArray(plan.category) &&
+              plan.category.length > 0
+                ? plan.category.map((cat) => cat.name).join(", ")
+                : "Sin categoría"}
             </p>
             <p className="mb-2">
               <span className="font-bold">Precio:</span> $
@@ -147,6 +167,28 @@ const PlanDetail = ({ params }: IPlanProps) => {
               <span className="font-bold">Activo:</span>{" "}
               {plan?.isActive ? "Sí" : "No"}
             </p>
+            <div
+              style={{
+                height: "30vh",
+                width: "30vh",
+                border: "5px solid #97D6DF",
+                display: "flex",
+                flexDirection: "column",
+                position: "relative",
+                margin: "20px auto",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {plan && (
+                <Maps
+                  latitude={parseFloat(plan.latitude.toString()) || 0}
+                  longitude={parseFloat(plan.longitude.toString()) || 0}
+                  onMarkerClick={(lat, lng) => handleMapChange(lat, lng)}
+                  onCameraChange={(lat, lng) => handleMapChange(lat, lng)}
+                />
+              )}
+            </div>
             <div className="flex flex-col items-center">
               <button
                 className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"

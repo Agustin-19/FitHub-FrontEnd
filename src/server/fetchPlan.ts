@@ -25,7 +25,6 @@ export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
     const data = await response.json();
 
     console.log(data);
-    
 
     return data;
   } catch (err) {
@@ -54,11 +53,14 @@ export const get_Category = async () => {
   }
 };
 
-export const createPlan = async (plan: ICreatePlan, token: string): Promise<Response> => {
+export const createPlan = async (
+  plan: ICreatePlan,
+  token: string
+): Promise<Response> => {
   try {
     console.log("Enviando datos a:", `${API}/plan`);
     console.log("Datos del plan:", plan);
-    
+
     const response = await fetch(`${API}/plan`, {
       method: "POST",
       headers: {
@@ -67,7 +69,7 @@ export const createPlan = async (plan: ICreatePlan, token: string): Promise<Resp
       },
       body: JSON.stringify(plan),
     });
-    
+
     if (!response.ok) {
       throw new Error(`Error en la solicitud: ${response.statusText}`);
     }

@@ -1,5 +1,4 @@
 import { IPlan } from "@/interface/plan.interface";
-import PlanCard from "../PlanCard";
 import Image from "next/image";
 import Link from "next/link";
 interface PlanListProps {
@@ -29,7 +28,11 @@ const PlanList: React.FC<PlanListProps> = ({ plans }) => {
         >
           <div className="relative w-full h-48">
             <Image
-              src={plan.imgUrl || imgDefect}
+              src={
+                Array.isArray(plan?.imgUrl) && plan.imgUrl.length > 0
+                  ? plan.imgUrl[0][0]
+                  : imgDefect
+              }
               alt={plan.name}
               fill={true}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -17,7 +17,7 @@ export function Carousel() {
   }, []);
 
   return (
-    <div className="relative  overflow-hidden z-10">
+    <div className="relative  overflow-hidden z-10 h-auto">
       <div
         className={`daisy-carousel-item relative w-full transition-transform duration-500 ease-in-out ${
           currentSlide === 1 ? "block" : "hidden"
