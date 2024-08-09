@@ -18,6 +18,7 @@ interface IUser {
   role?: string;
   password: string;
   rutinas?: IRutina[];
+  solicitud: string;
   actividades?: number[];
   id: number;
   borradologico: boolean;

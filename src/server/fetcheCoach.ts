@@ -28,6 +28,37 @@ export const postSigupCoach = async (user: IRegisterUser) => {
     }
 };
 
+interface IRegisterCoach {
+    cvvideo: string,
+    cvpdf: string
+}
+
+export const postCoach = async (parans: IRegisterCoach) => {
+    try {
+
+        const response = await fetch(`${API}/users/solictud`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${typeof window !== "undefined" && localStorage.getItem("token")}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(parans),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("Respuesta del servidor:", data);
+
+        return data;
+    } catch (error) {
+        console.error("Error en postCoach:", error);
+        throw error;
+    }
+};
+
 export const getCoach = async (): Promise<IUser[]> => {
     try {
         const response = await fetch(`${API}/users`, {
@@ -52,3 +83,4 @@ export const getCoach = async (): Promise<IUser[]> => {
         throw error;
     }
 }
+
