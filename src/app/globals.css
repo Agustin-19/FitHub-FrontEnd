@@ -43,7 +43,7 @@ body::before {
   right: 0;
   bottom: 0;
   background: rgba(26, 29, 26, 0.765);
-  z-index: 1;
+  z-index: 0;
   /* Asegúrate de que este z-index sea menor */
 }
 
@@ -69,4 +69,24 @@ ul {
 
 .boton {
   @apply rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19];
+}
+
+.navbar {
+  @apply fixed top-36 mx-0 left-0 right-0 z-50 bg-[--fondo] border-2 border-[#97D6DF];
+}
+.navbar-boton {
+  @apply mx-1 p-2;
+}
+
+.navbar-boton:hover {
+  @apply bg-gray-500 text-white;
+}
+
+.active {
+  @apply bg-gray-400 text-[--titulos];
+}
+
+.sticky {
+  @apply top-0 left-0 right-0;
+  position: fixed;
 }
