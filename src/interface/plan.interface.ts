@@ -13,23 +13,28 @@ interface ICreatePlan {
   category: string[];
   description: string;
   location: string;
+  latitude: number;
+  longitude: number;
   difficultyLevel: string;
   imgUrl: string[];
+  price: number;
 }
 
 interface IPlan {
   id: string;
   name: string;
   description: string;
-  location?: string;
+  location: string;
+  latitude: number;
+  longitude: number;
   difficultyLevel?: string;
   admin?: string;
-  category?: ICategory[];
+  category: ICategory[];
   check?: boolean;
   date?: string;
   isActive: boolean;
   price: string;
-  imgUrl?: string;
+  imgUrl: string;
 }
 
 interface ICategory {
