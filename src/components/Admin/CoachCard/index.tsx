@@ -1,35 +1,48 @@
+import { useState } from "react";
 import { IUser } from "@/interface/interface";
 import Image from "next/image";
+import CvCoach from "@/components/Admin/CvCoach";  // Asegúrate de que la ruta es correcta
+import { ICoach } from "@/interface/admin.interface";
 
 interface AdminCardCoachProps {
-    coaches: IUser[];
+    coaches: ICoach[];
 }
 
 export default function AdminCardCoach({ coaches }: AdminCardCoachProps) {
+    const [selectedCoach, setSelectedCoach] = useState<ICoach | null>(null);
+
+    const handleDetailsClick = (coach: ICoach) => {
+        setSelectedCoach(coach);
+    };
+
+    const handleClose = () => {
+        setSelectedCoach(null);
+    };
+
     return (
         <div>
             <div className="overflow-x-auto z-10">
                 <table className="daisy-table">
                     {/* head */}
-                    <thead>
+                    <thead className="text-white">
                         <tr>
                             <th>
                                 <label>
-                                    <input type="checkbox" className="daisy-checkbox" />
+                                    Aprobar
                                 </label>
                             </th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Solicitud</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {coaches.map((coach) => (
+                        {Array.isArray(coaches) && coaches.map((coach) => (
                             <tr key={coach.id}>
                                 <th>
                                     <label>
-                                        <input type="checkbox" className="daisy-checkbox" />
+                                        <input type="checkbox" className="daisy-checkbox border-white" />
                                     </label>
                                 </th>
                                 <td>
@@ -55,30 +68,40 @@ export default function AdminCardCoach({ coaches }: AdminCardCoachProps) {
                                     </div>
                                 </td>
                                 <td>
-                                    {coach.address}
+                                    {coach.email}
                                     <br />
                                     <span className="daisy-badge daisy-badge-ghost daisy-badge-sm">
                                         {coach.role}
                                     </span>
                                 </td>
-                                <td>{coach.phone}</td>
+                                <td>{coach.solicitud}</td>
                                 <th>
-                                    <button className="daisy-btn daisy-btn-ghost daisy-btn-xs">details</button>
+                                    <button
+                                        className="daisy-btn daisy-btn-ghost daisy-btn-xs"
+                                        onClick={() => handleDetailsClick(coach)}
+                                    >
+                                        Detalles
+                                    </button>
                                 </th>
                             </tr>
                         ))}
                     </tbody>
-                    <tfoot>
+                    <tfoot className="text-white">
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Solicitud</th>
                             <th></th>
                         </tr>
                     </tfoot>
                 </table>
             </div>
+
+            {/* Ventana emergente */}
+            {selectedCoach && (
+                <CvCoach coach={selectedCoach} onClose={handleClose} />
+            )}
         </div>
     );
 }
