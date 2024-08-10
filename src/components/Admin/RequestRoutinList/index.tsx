@@ -11,7 +11,7 @@ export default function RequestRoutineList() {
         const fetchData = async () => {
             try {
                 const data: ISolicitudes = await getSolicitudes();
-                // console.log("Datos recibidos:", data.rutinas);  
+                console.log("Rutinas:", data.rutinas);  
 
                 setRoutines(data.rutinas);
             } catch (error) {

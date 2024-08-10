@@ -30,20 +30,22 @@ export const getSolicitudes = async (): Promise<ISolicitudes> => {
 
 
 export const postSolicitudes = async (parans: ISolicitudRes, estado: resEnum): Promise<ISolicitudes> => {
-
-    const res = estado
-    const arg = `respuesta=${res}`
+    const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+    console.log(JSON.stringify(parans))
 
     try {
-        const response = await fetch(`${API}/admin/solicitudCoach?${arg}`, {
+        const response = await fetch(`${API}/admin/solicitudCoach?respuesta=${estado}`, {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${typeof window !== "undefined" && localStorage.getItem("token")}`,
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(parans),
         });
 
         if (!response.ok) {
+            const errores = await response.text
+            console.log("Error ", errores);
             throw new Error("Error al enviar los Id");
         }
 

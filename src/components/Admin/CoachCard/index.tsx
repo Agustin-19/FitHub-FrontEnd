@@ -27,11 +27,15 @@ export default function AdminCardCoach({ coaches }: AdminCardCoachProps) {
 
 
     const handleAprobar = async () => {
+        
         const solicitudes = {
             coach: selectedIds,
             plan: [],
             rutina: []
         };
+
+        console.log(solicitudes);
+        
 
         try {
             const response = await postSolicitudes(solicitudes, resEnum.ACEPTAR);
