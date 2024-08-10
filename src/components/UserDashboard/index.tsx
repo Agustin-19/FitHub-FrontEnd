@@ -1,4 +1,3 @@
-"use client";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import Link from "next/link";
@@ -15,7 +14,7 @@ interface Routine {
   price: number;
 }
 
-interface Subsciption {
+interface Subscription {
   endDate: string;
   id: string;
   isActive: boolean;
@@ -49,13 +48,22 @@ const UserDashboard = () => {
 
             // Mapeo de suscripciones
             const mappedPlans = Array.isArray(data.subsciption)
-              ? data.subsciption.map((subsciption: any) => ({
-                  id: subsciption.plan.id,
-                  name: subsciption.plan.name,
-                  description: subsciption.plan.description,
-                  isActive: subsciption.isActive,
-                  price: subsciption.plan.price,
-                  imgUrl: subsciption.plan.imgUrl,
+              ? data.subsciption.map((subscription: any) => ({
+                  id: subscription.plan.id,
+                  name: subscription.plan.name,
+                  description: subscription.plan.description,
+                  isActive: subscription.isActive,
+                  price: subscription.plan.price,
+                  imgUrl: subscription.plan.imgUrl,
+                  location: subscription.plan.location || "Unknown location",
+                  latitude: subscription.plan.latitude || 0,
+                  longitude: subscription.plan.longitude || 0,
+                  category: subscription.plan.category || [],
+                  difficultyLevel:
+                    subscription.plan.difficultyLevel || "Medium",
+                  admin: subscription.plan.admin || "Not assigned",
+                  check: subscription.plan.check || false,
+                  date: subscription.plan.date || new Date().toISOString(),
                 }))
               : [];
 
@@ -97,7 +105,7 @@ const UserDashboard = () => {
   return (
     <div>
       <Link href="/home">
-        <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+        <button className="m-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
         </button>
       </Link>

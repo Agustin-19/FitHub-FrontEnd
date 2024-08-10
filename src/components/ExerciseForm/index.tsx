@@ -11,8 +11,8 @@ export default function ExerciseForm() {
   const [ejercicio, setEjercicio] = useState({
     titulo: "",
     descripcion: "",
-    imgUrl: [""], 
-    videoUrl: ""
+    imgUrl: [""],
+    videoUrl: "",
   });
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -54,7 +54,7 @@ export default function ExerciseForm() {
       alert("Por favor selecciona una imagen primero.");
       return;
     }
-    
+
     try {
       let videoUrl = "";
       if (videoFile) {
@@ -86,11 +86,6 @@ export default function ExerciseForm() {
 
   return (
     <div>
-      <Link href="/dashboard">
-        <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
-          Volver
-        </button>
-      </Link>
       <div className={styles.container}>
         <form className={styles.form} onSubmit={handleSubmit}>
           <h1
@@ -109,7 +104,11 @@ export default function ExerciseForm() {
             value={ejercicio.titulo}
             onChange={handleChange}
           />
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="descripcion">
+          <label
+            id="login-lable"
+            className="text-[#97D6DF] "
+            htmlFor="descripcion"
+          >
             Descripción:
           </label>
           <input
@@ -119,7 +118,11 @@ export default function ExerciseForm() {
             value={ejercicio.descripcion}
             onChange={handleChange}
           />
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="videoFile">
+          <label
+            id="login-lable"
+            className="text-[#97D6DF] "
+            htmlFor="videoFile"
+          >
             Sube Tu Video Aqui (opcional):
           </label>
           <input
@@ -128,7 +131,11 @@ export default function ExerciseForm() {
             id="videoFile"
             onChange={handleFileChange}
           />
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="imageFile">
+          <label
+            id="login-lable"
+            className="text-[#97D6DF] "
+            htmlFor="imageFile"
+          >
             Sube Tu Imagen Aqui:
           </label>
           <input

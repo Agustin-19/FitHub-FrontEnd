@@ -1,108 +1,107 @@
 .container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(26, 29, 26, 0.4);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 29, 26, 0.4);
 }
 
 .escogiendo {
-    position: absolute;
-    margin-top: -30px;
-    z-index: 1;
+  position: absolute;
+  margin-top: 120px;
+  z-index: 1;
 }
 
 .image-container {
-    position: relative;
+  position: relative;
 }
 
 .image {
-    filter: brightness(0.5);
-    /* Oscurece la imagen */
-    transition: filter 0.3s ease;
-    /* Transición suave */
+  filter: brightness(0.5);
+  /* Oscurece la imagen */
+  transition: filter 0.3s ease;
+  /* Transición suave */
 }
 
 .image-container:hover .image {
-    filter: brightness(1);
-    /* Ilumina la imagen al pasar el mouse */
+  filter: brightness(1);
+  /* Ilumina la imagen al pasar el mouse */
 }
 
 .card {
-    width: 195px;
-    height: 285px;
-    background: #313131;
-    border-radius: 20px;
-    ;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    transition: 0.2s ease-in-out;
+  width: 195px;
+  height: 285px;
+  background: #313131;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: 0.2s ease-in-out;
 }
 
 .img {
-    height: 30%;
-    position: absolute;
-    transition: 0.2s ease-in-out;
-    z-index: 1;
+  height: 30%;
+  position: absolute;
+  transition: 0.2s ease-in-out;
+  z-index: 1;
 }
 
 .textBox {
-    opacity: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    transition: 0.2s ease-in-out;
-    z-index: 2;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  transition: 0.2s ease-in-out;
+  z-index: 2;
 }
 
-.textBox>.text {
-    font-weight: bold;
+.textBox > .text {
+  font-weight: bold;
 }
 
-.textBox>.head {
-    font-size: 20px;
+.textBox > .head {
+  font-size: 20px;
 }
 
-.textBox>.price {
-    font-size: 17px;
+.textBox > .price {
+  font-size: 17px;
 }
 
-.textBox>span {
-    font-size: 12px;
-    color: lightgrey;
+.textBox > span {
+  font-size: 12px;
+  color: lightgrey;
 }
 
-.card:hover>.textBox {
-    opacity: 1;
+.card:hover > .textBox {
+  opacity: 1;
 }
 
-.card:hover>.img {
-    height: 65%;
-    filter: blur(7px);
-    animation: anim 3s infinite;
+.card:hover > .img {
+  height: 65%;
+  filter: blur(7px);
+  animation: anim 3s infinite;
 }
 
 @keyframes anim {
-    0% {
-        transform: translateY(0);
-    }
+  0% {
+    transform: translateY(0);
+  }
 
-    50% {
-        transform: translateY(-20px);
-    }
+  50% {
+    transform: translateY(-20px);
+  }
 
-    100% {
-        transform: translateY(0);
-    }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .card:hover {
-    transform: scale(1.04) rotate(-1deg);
+  transform: scale(1.04) rotate(-1deg);
 }

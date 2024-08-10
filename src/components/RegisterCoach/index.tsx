@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/userContext";
 import { uploaFile, uploaFilePdf } from "@/server/fetchFile";
 import { postCoach } from "@/server/fetcheCoach";
+import styles from "../../components/PlanForm/planform.module.css";
 
 export function RegisterCoachComponent() {
   const router = useRouter();
@@ -25,7 +26,10 @@ export function RegisterCoachComponent() {
 
   const role = user?.role;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: string
+  ) => {
     if (e.target.files) {
       if (type === "pdf") {
         setPdfFile(e.target.files[0]);
@@ -45,18 +49,15 @@ export function RegisterCoachComponent() {
     }
 
     console.log(videoFile);
-    
 
     try {
-    //   // Subir video
+      //   // Subir video
       const videoResponse = await uploaFile(videoFile);
 
       console.log(videoResponse);
-      
 
       // Subir PDF
       const pdfResponse = await uploaFilePdf(pdfFile);
-      
 
       const coachData = {
         cvvideo: videoResponse[0],
@@ -77,19 +78,18 @@ export function RegisterCoachComponent() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-900">
-      <form
-        onSubmit={handleSubmit}
-        className="z-10 flex flex-col gap-4 bg-[#1A1D1A] p-8 rounded-lg w-full max-w-md"
-      >
-        <h1 className="text-[#FF3E1A] text-2xl mb-4 text-center">Registrar Entrenador</h1>
+    <div id="Container" className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <h1 className="text-5xl text-[#FF3E1A] font-extrabold text-center mb-10">
+          Registro de Entrenador
+        </h1>
         <label htmlFor="pdfFile" className="text-[#97D6DF]">
           Por favor, carga tu CV en PDF:
           <input
             type="file"
             id="pdfFile"
             onChange={(e) => handleFileChange(e, "pdf")}
-            className="mt-2 p-2 rounded border border-[#447988] bg-transparent text-[#97D6DF] w-full"
+            className={styles.input}
           />
         </label>
         <label htmlFor="videoFile" className="text-[#97D6DF]">
@@ -98,15 +98,14 @@ export function RegisterCoachComponent() {
             type="file"
             id="videoFile"
             onChange={(e) => handleFileChange(e, "video")}
-            className="mt-2 p-2 rounded border border-[#447988] bg-transparent text-[#97D6DF] w-full"
+            className={styles.input}
           />
         </label>
-        <button
-          type="submit"
-          className="mt-4 bg-[#FF3E1A] text-white rounded py-2 hover:bg-[#FF5722] transition duration-150"
-        >
-          Guardar cambios
-        </button>
+        <div className="flex justify-center">
+          <button type="submit" className={styles.button}>
+            Guardar cambios
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -9,6 +9,7 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { get_RutinaById } from "@/server/fetchRoutines";
 import { createRutineOrder } from "@/server/fetchMercadoPago";
 import Link from "next/link";
+import ComentariosCard from "@/components/ComentariosCard";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -24,8 +25,10 @@ interface IRoutineProps {
 }
 
 const Routine = ({ params }: IRoutineProps) => {
-  const [selectedEjercicio, setSelectedEjercicio] =
-    useState<IRutinaEjercicio | null>(null);
+  const [
+    selectedEjercicio,
+    setSelectedEjercicio,
+  ] = useState<IRutinaEjercicio | null>(null);
   const { isLogged, user } = useContext(UserContext);
 
   const id = params.id;
@@ -41,7 +44,7 @@ const Routine = ({ params }: IRoutineProps) => {
       try {
         const routine: IRutina = await get_RutinaById(id);
         console.log(routine);
-        
+
         setRutina(routine);
       } catch (err) {
         setError("Error al obtener las rutinas");
@@ -108,7 +111,7 @@ const Routine = ({ params }: IRoutineProps) => {
   return (
     <div>
       <Link href="/home/homeRutinas">
-        <button className="mt-4 relative z-10 rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+        <button className="m-4 relative z-10 rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
         </button>
       </Link>
@@ -163,7 +166,7 @@ const Routine = ({ params }: IRoutineProps) => {
             {routine?.exercise?.map((ejercicio) => (
               <li
                 key={ejercicio.id}
-                className="mb-4 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg"
+                className="mx-40 my-5 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg"
               >
                 <div className="flex gap-3 align-middle m-3">
                   <div className="text-center">
@@ -195,6 +198,11 @@ const Routine = ({ params }: IRoutineProps) => {
               onClose={() => setSelectedEjercicio(null)}
             />
           )}
+        </div>
+        <div className="mx-80 my-10 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg">
+          <h3 className="text-4xl font-semibold mb-2">Opiniones destacadas</h3>
+
+          <ComentariosCard />
         </div>
       </div>
     </div>
