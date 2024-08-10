@@ -4,11 +4,12 @@ import AdminCardCoach from '@/components/Admin/CoachCard';
 import { IUser } from '@/interface/interface'; // Ajusta la ruta según tu estructura de carpetas
 import { getCoach } from '@/server/fetcheCoach';
 import { useState, useEffect } from 'react';
+import { ICoach } from '@/interface/admin.interface';
 
 
 
 export default function AdminCoach() {
-    const [coaches, setCoaches] = useState<IUser[]>([]);
+    const [coaches, setCoaches] = useState<ICoach[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {

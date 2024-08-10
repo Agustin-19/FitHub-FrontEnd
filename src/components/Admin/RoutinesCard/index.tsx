@@ -3,6 +3,7 @@ import { IRutina } from "@/interface/interface";
 import { postSolicitudes } from "@/server/fetchAmin";
 import Image from "next/image";
 import { useState } from "react";
+import RoutineDetails from "../RoutinesDetails";
 
 interface AdminRoutineCardProps {
     routines: IRutina[];
@@ -10,6 +11,7 @@ interface AdminRoutineCardProps {
 
 export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [selectedRoutine, setSelectedRoutine] = useState<IRutina | null>(null);
 
     const imgDefect = "https://img.daisyui.com/images/profile/demo/2@94.webp";
     const getImageSrc = (image: string | string[] | null | undefined) => {
@@ -46,8 +48,19 @@ export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
         }
     };
 
+    const handleDetailsClick = (routine: IRutina) => {
+        setSelectedRoutine(routine);
+    };
+
+    const handleCloseDetails = () => {
+        setSelectedRoutine(null);
+    };
+
     return (
         <div className="flex flex-col gap-6">
+            {selectedRoutine && (
+                <RoutineDetails routine={selectedRoutine} onClose={handleCloseDetails} />
+            )}
             <div className="flex justify-center">
                 <button type="submit" onClick={handleAprobar} className='boton'>
                     Aprobar
@@ -116,7 +129,12 @@ export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
                                     ${rutina.price}
                                 </td>
                                 <th>
-                                    <button className="daisy-btn daisy-btn-ghost daisy-btn-xs">Detalles</button>
+                                    <button
+                                        className="daisy-btn daisy-btn-ghost daisy-btn-xs"
+                                        onClick={() => handleDetailsClick(rutina)}
+                                    >
+                                        Detalles
+                                    </button>
                                 </th>
                             </tr>
                         ))}

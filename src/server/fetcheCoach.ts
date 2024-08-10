@@ -1,5 +1,6 @@
 import { IRegisterUser, IUser } from "@/interface/interface";
 import { API } from "@/helpers/helper";
+import { ICoach } from "@/interface/admin.interface";
 
 export const postSigupCoach = async (user: IRegisterUser) => {
     try {
@@ -59,7 +60,7 @@ export const postCoach = async (parans: IRegisterCoach) => {
     }
 };
 
-export const getCoach = async (): Promise<IUser[]> => {
+export const getCoach = async (): Promise<ICoach[]> => {
     try {
         const response = await fetch(`${API}/users`, {
             method: "GET",
@@ -72,7 +73,7 @@ export const getCoach = async (): Promise<IUser[]> => {
             throw new Error('Network response was not ok');
         }
 
-        const users: IUser[] = await response.json();
+        const users: ICoach[] = await response.json();
 
         // Filtra los usuarios con el rol "entrenador"
         const coaches = users.filter((user: IUser) => user.role === "entrenador");

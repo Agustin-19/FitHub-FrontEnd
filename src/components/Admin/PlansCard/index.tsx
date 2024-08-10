@@ -3,6 +3,7 @@ import { IPlan } from "@/interface/plan.interface";
 import { postSolicitudes } from "@/server/fetchAmin";
 import Image from "next/image";
 import { useState } from "react";
+import { Dificultad } from '../../../../../FitHub/src/Dto/Dificultad.Dto';
 
 
 interface AdminPlanCardProps {
@@ -10,7 +11,7 @@ interface AdminPlanCardProps {
 }
 
 export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
-    const [selectedPlanIds, setSelectedPlanIds] = useState<string[]>([]);
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
 
     const imgDefect = "https://img.daisyui.com/images/profile/demo/2@94.webp";
@@ -25,17 +26,17 @@ export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
     };
 
     const handleCheckboxChange = (planId: string) => {
-        setSelectedPlanIds(prevSelectedPlanIds =>
-            prevSelectedPlanIds.includes(planId)
-                ? prevSelectedPlanIds.filter(id => id !== planId)
-                : [...prevSelectedPlanIds, planId]
+        setSelectedIds(prevSelectedIds =>
+            prevSelectedIds.includes(planId)
+                ? prevSelectedIds.filter(id => id !== planId)
+                : [...prevSelectedIds, planId]
         );
     };
 
     const handleAprobar = async () => {
         const solicitudes = {
             coach: [],
-            plan: selectedPlanIds,
+            plan: selectedIds,
             rutina: []
         };
 
@@ -46,7 +47,7 @@ export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
             console.error("Error al aprobar los planes:", error);
         }
     };
-    
+
     return (
         <div className="flex flex-col gap-6">
             <div className="flex justify-center">
@@ -58,16 +59,13 @@ export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
                 <table className="daisy-table">
                     <thead className="text-white">
                         <tr>
-                            <th>
-                                <label>
-                                    <input type="checkbox" className="daisy-checkbox" />
-                                </label>
-                            </th>
-                            <th>Plan</th>
-                            <th>Categoría y Dificultad</th>
-                            <th>Precio</th>
-                            <th>Locación</th>
                             <th></th>
+                            <th>Plan</th>
+                            <th>Descripción</th> 
+                            <th>Categoría</th>
+                            <th>Locación</th>
+                            <th>Dificultad</th>
+                            <th>Precio</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,19 +73,19 @@ export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
                             <tr key={plan.id}>
                                 <th>
                                     <label>
-                                        <input 
-                                        type="checkbox" 
-                                        className="daisy-checkbox" 
-                                        checked={selectedPlanIds.includes(plan.id)}
-                                        onChange={() => handleCheckboxChange(plan.id)}
+                                        <input
+                                            type="checkbox"
+                                            className="daisy-checkbox border-white"
+                                            checked={selectedIds.includes(plan.id)}
+                                            onChange={() => handleCheckboxChange(plan.id)}
                                         />
                                     </label>
                                 </th>
                                 <td>
                                     <div className="flex items-center gap-3">
                                         <div className="daisy-avatar">
-                                            <div className="daisy-mask daisy-mask-squircle h-12 w-12">
-                                                <div className="relative object-contain w-12 h-12 rounded-t-lg">
+                                            <div className="daisy-mask daisy-mask-squircle h-40 w-40">
+                                                <div className="relative object-contain w-40 h-40 rounded-t-lg">
                                                     <Image
                                                         src={getImageSrc(plan.imgUrl)}
                                                         alt={plan.name}
@@ -105,23 +103,28 @@ export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
                                     </div>
                                 </td>
                                 <td>
-                                    <div>
+                                    <div className="font-bold">{plan.description}</div> {/* Descripción del plan */}
+                                </td>
+                                <td>
+                                    <div className="flex flex-col">
                                         {plan.category?.map((cat, index) => (
                                             <span key={index} className="daisy-badge daisy-badge-ghost daisy-badge-sm">
                                                 {cat.name}
                                             </span>
                                         ))}
-                                        <div className="text-sm opacity-50">{plan.difficultyLevel}</div>
                                     </div>
                                 </td>
                                 <td>
-                                    ${plan.price}
+                                    <div>
+                                        {plan.location} {/* Locación */}
+                                    </div>
                                 </td>
                                 <td>
-                                    {plan.location} {/* Nueva celda que muestra la locación */}
+                                    <div className="text-sm opacity-50">{plan.difficultyLevel}</div>
                                 </td>
                                 <th>
-                                    <button className="daisy-btn daisy-btn-ghost daisy-btn-xs">Detalles</button>
+                                    ${plan.price}
+                                    <div className="text-sm opacity-50">{plan.check}</div> {/* Verificación */}
                                 </th>
                             </tr>
                         ))}
@@ -130,10 +133,11 @@ export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
                         <tr>
                             <th></th>
                             <th>Plan</th>
-                            <th>Categoría y Dificultad</th>
-                            <th>Precio</th>
+                            <th>Descripción</th> {/* Nueva columna */}
+                            <th>Categoría</th>
                             <th>Locación</th>
-                            <th></th>
+                            <th>Dificultad</th>
+                            <th>Precio</th>
                         </tr>
                     </tfoot>
                 </table>
