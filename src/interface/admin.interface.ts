@@ -13,7 +13,20 @@ interface ISolicitudes {
     rutinas: IRutina[]
 }
 
+interface ISolicitudRes{
+    coach: string[]| null,
+    plan: string[] | null,
+    rutina: string[]| null
+}
+
+export enum resEnum {
+    ACEPTAR= "aceptar",
+    CORREGIR='corregir',
+    DENEGAR= 'denegar',
+}
+
 export type {
     ICoach,
-    ISolicitudes
+    ISolicitudes,
+    ISolicitudRes
 }

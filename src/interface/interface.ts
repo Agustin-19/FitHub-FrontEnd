@@ -20,7 +20,7 @@ interface IUser {
   rutinas?: IRutina[];
   solicitud: string;
   actividades?: number[];
-  id: number;
+  id: string;
   borradologico: boolean;
 }
 
@@ -82,7 +82,7 @@ interface IUserConext {
 // Rutinas
 
 interface IRutina {
-  id?: string;
+  id: string;
   name: string;
   description: string;
   price?: number;
