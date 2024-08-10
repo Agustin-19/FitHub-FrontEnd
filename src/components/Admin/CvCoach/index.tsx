@@ -1,3 +1,4 @@
+import PdfViewer from "@/components/ViewPdf";
 import { ICoach } from "@/interface/admin.interface";
 
 interface IParans {
@@ -16,7 +17,7 @@ const CvCoach = ({ coach, onClose }: IParans) => {
     const pdfSrc = coach.cvpdf ? coach.cvpdf : pdfDefect;
 
     return (
-        <div className="fixed inset-0 top-10 flex items-center justify-center bg-black bg-opacity-75 z-50">
+        <div className="fixed inset-0 top-14 flex items-center justify-center bg-black z-50">
             <div className="relative rounded-lg w-3/4 max-w-3xl p-6 overflow-y-auto max-h-screen">
                 <button className="absolute right-2 top-2" onClick={onClose}>
                     <svg
@@ -49,14 +50,9 @@ const CvCoach = ({ coach, onClose }: IParans) => {
                     ></iframe>
                 </div>
                 <div className="mt-4">
-                    <iframe
-                        className="w-full h-[500px]"
-                        src={pdfSrc}
-                        title={`${coach.name}'s CV`}
-                        referrerPolicy="strict-origin-when-cross-origin"
-                    ></iframe>
+                    <PdfViewer pdfUrl={pdfSrc} />
                 </div>
-                
+
             </div>
         </div>
     );
