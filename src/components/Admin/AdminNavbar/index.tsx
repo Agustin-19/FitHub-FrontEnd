@@ -60,10 +60,10 @@ const AdminNavbar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/admin/exercises"
-                                className={`navbar-boton ${activeButton === '/admin/exercises' ? 'active' : ''}`} 
-                                onClick={() => handleButtonClick('/admin/exercises')}>
-                                Ejercicios
+                            <Link href="/admin/dashboard"
+                                className={`navbar-boton ${activeButton === '/admin/dashboard' ? 'active' : ''}`} 
+                                onClick={() => handleButtonClick('/admin/dashboard')}>
+                                Categorias
                             </Link>
                         </li>
                     </ul>

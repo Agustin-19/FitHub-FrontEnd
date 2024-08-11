@@ -22,9 +22,9 @@ export default function RoutineDetails({ routine, onClose }: RoutineDetailsProps
     };
 
     return (
-        <div className="daisy-modal daisy-modal-open">
-            <div className="daisy-modal-box max-w-5xl">
-                <button className="daisy-btn daisy-btn-sm daisy-btn-error float-right" onClick={onClose}>
+        <div className="daisy-modal top-10 daisy-modal-open bg-black">
+            <div className="daisy-modal-box max-w-5xl bg-black overflow-hidden">
+                <button className="daisy-btn daisy-btn-sm float-right" onClick={onClose}>
                     Cerrar
                 </button>
                 <div className="relative rounded-lg w-3/4 max-w-3xl p-6 overflow-y-auto max-h-screen">
@@ -72,10 +72,14 @@ export default function RoutineDetails({ routine, onClose }: RoutineDetailsProps
                                 ))}
                                 {exercise.videoUrl && (
                                     <div className="mt-2">
-                                        <video controls width="600">
-                                            <source src={exercise.videoUrl} type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
+                                        <iframe
+                                            className="w-full h-[340px]"
+                                            src={exercise.videoUrl}
+                                            title={exercise.titulo}
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            allowFullScreen
+                                        ></iframe>
                                     </div>
                                 )}
                             </div>

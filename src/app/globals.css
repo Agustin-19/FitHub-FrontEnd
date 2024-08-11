@@ -10,6 +10,9 @@
   --titulos: #97D6DF;
   --subTitulos: #447988;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 
 * {
 
@@ -32,6 +35,7 @@ body {
   color: #447988;
   overflow-x: hidden;
   position: relative;
+
   /* Asegúrate de que el body tenga posición relativa */
 }
 

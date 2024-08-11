@@ -1,5 +1,6 @@
 import { API } from "@/helpers/helper";
 import { ICoach, ISolicitudes, ISolicitudRes, resEnum } from "@/interface/admin.interface";
+import { ICategory } from "@/interface/plan.interface";
 
 
 
@@ -58,3 +59,24 @@ export const postSolicitudes = async (parans: ISolicitudRes, estado: resEnum): P
         throw err;
     }
 };
+
+
+export const createCategory = async (cat: {name:string}) => {
+    const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+    console.log(cat)
+    try{
+        
+        const response = await fetch(`${API}/categorias`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                
+            },
+            body: JSON.stringify(cat),
+        });        
+    }
+    catch(err){
+        console.log("Error al crear categoria:", err);
+        throw err;
+    }
+}

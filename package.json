@@ -32,6 +32,7 @@
     "react-chatbot-kit": "^2.2.2",
     "react-dom": "^18",
     "react-simple-chatbot": "^0.6.1",
+    "recharts": "^2.12.7",
     "tw-elements": "^2.0.0",
     "tw-elements-react": "^1.0.0-alpha-end"
   },
@@ -41,6 +42,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/recharts": "^1.8.29",
     "daisyui": "^4.12.10",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
