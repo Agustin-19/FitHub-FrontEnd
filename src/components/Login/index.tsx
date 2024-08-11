@@ -81,11 +81,7 @@ export function LoginComponet({ token, setToken }: any) {
             placeholder="Email"
             onChange={handleInputChange}
           />
-          {errors.email && (
-            <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-              {errors.email}
-            </p>
-          )}
+          {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
 
         {/* Entrada de contraseña */}
@@ -102,9 +98,7 @@ export function LoginComponet({ token, setToken }: any) {
             onChange={handleInputChange}
           />
           {errors.password && (
-            <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-              {errors.password}
-            </p>
+            <p className="error-message">{errors.password}</p>
           )}
         </div>
         {/* Botón de enviar */}

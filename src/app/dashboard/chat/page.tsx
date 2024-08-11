@@ -4,6 +4,7 @@ import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import ChatbotComponent from "@/components/Chatbot/";
 import Sidebar from "@/components/Coach/Sidebar";
+import SidebarUser from "@/components/UserDashboard/SidebarUser";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -24,11 +25,15 @@ export default function Dashboard() {
 
   return (
     <div className="flex relative z-20">
-      <div className="text-center text-[#FF3E1A] bg-black">
-        <Sidebar />
+      <div className="text-center  bg-black">
+        {user && user.role === "entrenador" ? (
+          <Sidebar />
+        ) : (
+          user && user.role === "user" && <SidebarUser />
+        )}
       </div>
       <div>
-        {role === "entrenador" ? (
+        {role === "entrenador" || role === "user" ? (
           <ChatbotComponent />
         ) : (
           <p>Rol no reconocido.</p>
