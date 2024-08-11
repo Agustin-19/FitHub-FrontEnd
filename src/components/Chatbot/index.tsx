@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Sidebar from "../Coach/Sidebar";
 
 const ChatBot: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);

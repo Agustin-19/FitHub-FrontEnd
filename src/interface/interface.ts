@@ -59,6 +59,7 @@ interface IloginUserRegister {
   role: string;
   user: Partial<IUser> | null;
   sub: string;
+  email ?: string;
 }
 
 interface IUserConext {

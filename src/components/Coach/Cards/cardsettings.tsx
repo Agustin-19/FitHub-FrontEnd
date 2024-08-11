@@ -1,12 +1,8 @@
 "use client";
-import Sidebar from "../Sidebar";
 
 export default function CardSettings() {
   return (
     <div className="flex items-center">
-      <div className="text-center text-[#FF3E1A] bg-black">
-        <Sidebar />
-      </div>
       <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
         <form>
           <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">

@@ -74,6 +74,7 @@ ul {
 .navbar {
   @apply fixed top-36 mx-0 left-0 right-0 z-50 bg-[--fondo] border-2 border-[#97D6DF];
 }
+
 .navbar-boton {
   @apply mx-1 p-2;
 }
@@ -89,4 +90,9 @@ ul {
 .sticky {
   @apply top-0 left-0 right-0;
   position: fixed;
+}
+
+/* Aumentar el tamaño de los mensajes de error */
+p.error-message {
+  font-size: 14px;
 }
