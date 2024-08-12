@@ -4,7 +4,8 @@ import styles from "./exerciseform.module.css";
 import { useRouter } from "next/navigation";
 import { uploaFile } from "@/server/fetchFile";
 import { createExercise } from "../../server/fetchRoutines";
-import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ExerciseForm() {
   const router = useRouter();
@@ -43,15 +44,42 @@ export default function ExerciseForm() {
     const { titulo, descripcion } = ejercicio;
 
     if (!titulo) {
-      alert("Por favor ingresa un título.");
+      toast.error("Por favor ingresa un título.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
     if (!descripcion) {
-      alert("Por favor ingresa una descripción.");
+      toast.error("Por favor ingresa una descripción.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
     if (!imageFile) {
-      alert("Por favor selecciona una imagen primero.");
+      toast.error("Por favor selecciona una imagen primero.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
 
@@ -78,8 +106,32 @@ export default function ExerciseForm() {
 
       // Luego, crea el ejercicio con la URL del archivo
       await createExercise(ejercicioData);
-      router.push("/dashboard");
+
+      toast.success("Ejercicio creado exitosamente", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      setTimeout(() => {
+        router.push("/dashboard/create");
+      }, 3500);
     } catch (error) {
+      toast.error("Error al subir el archivo", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.error("Error al subir el archivo", error);
     }
   };
@@ -151,6 +203,7 @@ export default function ExerciseForm() {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

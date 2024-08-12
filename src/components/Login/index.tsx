@@ -12,6 +12,8 @@ import mujer from "../../../public/assets/loginyregister/mujerderecha.png";
 import hombre from "../../../public/assets/loginyregister/hombreizquierda.png";
 import { motion } from "framer-motion";
 import LoginLogout from "../Login-Logout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function LoginComponet({ token, setToken }: any) {
   const { signIn, setUser } = useContext(UserContext);
@@ -41,15 +43,37 @@ export function LoginComponet({ token, setToken }: any) {
 
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Submitted credentials:", userDate);
-    const success = await signIn(userDate);
-    if (success) {
-      console.log("Login successful");
-      setTimeout(() => {
-        router.push("/home");
-      }, 0); // Este retraso puede ayudar a evitar problemas de renderizado.
-    } else {
-      console.log("Invalid login");
+    try {
+      console.log("Submitted credentials:", userDate);
+      const success = await signIn(userDate);
+      if (success) {
+        toast.success("Inicio de sesión exitoso", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          router.push("/home");
+        }, 3500);
+      } else {
+        throw new Error("Credenciales inválidas.");
+      }
+    } catch (error) {
+      toast.error(`Error en el inicio de sesión !! ${error}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -129,6 +153,7 @@ export function LoginComponet({ token, setToken }: any) {
           height={700}
         />
       </div>
+      <ToastContainer />
     </section>
   );
 }

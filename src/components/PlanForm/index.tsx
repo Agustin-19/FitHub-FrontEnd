@@ -4,9 +4,10 @@ import styles from "./planform.module.css";
 import { ICategory } from "@/interface/plan.interface";
 import { useRouter } from "next/navigation";
 import { createPlan, get_Category } from "@/server/fetchPlan";
-import Link from "next/link";
 import { uploaFile } from "@/server/fetchFile";
 import Maps from "../Maps/map";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Plan() {
   const router = useRouter();
@@ -78,18 +79,100 @@ export default function Plan() {
       price,
     } = plan;
 
-    if (
-      !name ||
-      !descripcion ||
-      !location ||
-      !latitude ||
-      !longitude ||
-      !difficultyLevel ||
-      !category ||
-      !price ||
-      !file
-    ) {
-      alert("Por favor, completa todos los campos y sube una imagen.");
+    if (!name) {
+      toast.error("Por favor ingresa un nombre.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+    if (!descripcion) {
+      toast.error("Por favor ingresa una descripción.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+    if (!location) {
+      toast.error("Por favor ingresa una ubicación.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+    if (!difficultyLevel) {
+      toast.error("Por favor ingresa un nivel de dificultad.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+    if (!category) {
+      toast.error("Por favor selecciona una categoría.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+    if (!price) {
+      toast.error("Por favor ingresa un precio.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return;
+    }
+
+    if (!file) {
+      toast.error("Por favor selecciona una imagen primero.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
 
@@ -111,14 +194,43 @@ export default function Plan() {
 
       const response = await createPlan(Data, token);
       if (response.ok) {
-        alert("Actividad creada exitosamente");
-        router.push("/dashboard");
+        toast.success("Ejercicio creado exitosamente", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          router.push("/dashboard/create");
+        }, 3500);
       } else {
-        alert("Error al crear la actividad");
+        toast.error("Error al subir el archivo", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         console.error("Error:", response.text);
       }
     } catch (error) {
-      alert("Error al crear la actividad");
+      toast.error("Error al subir el archivo", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.error("Error:", error);
     }
   };
@@ -297,6 +409,7 @@ export default function Plan() {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

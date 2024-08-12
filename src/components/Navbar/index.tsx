@@ -7,9 +7,29 @@ import logo from "../../../public/assets/navbar/logo.png";
 import { UserContext } from "@/context/userContext";
 import { UserIcon } from "@heroicons/react/24/outline";
 import { IloginUserRegister } from "@/interface/interface";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 export function Navbar() {
   const { isLogged, user, logOut } = useContext(UserContext);
+
+  const handleLogout = () => {
+    confirmAlert({
+      title: "Confirmar cierre de sesión",
+      message: "¿Estás seguro de que quieres cerrar sesión?",
+
+      buttons: [
+        {
+          label: "Sí",
+          onClick: logOut,
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
 
   return (
     <div className="relative z-10 backdrop-blur-lg border-4 border-[#97D6DF] flex w-full flex-nowrap items-center justify-between py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
@@ -62,7 +82,7 @@ export function Navbar() {
               </Link>
             </div>
             <button
-              onClick={logOut}
+              onClick={handleLogout}
               className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
             >
               Cerrar Sesión

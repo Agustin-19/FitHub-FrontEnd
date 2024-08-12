@@ -1,5 +1,4 @@
 "use client";
-
 import { IRutinaEjercicio } from "@/interface/interface";
 import { Dificultad, ICategory } from "@/interface/plan.interface";
 import { get_Category } from "@/server/fetchPlan";
@@ -9,6 +8,8 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useContext } from "react";
 import styles from "./routine.module.css";
 import { uploaFile } from "@/server/fetchFile";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateRutina: React.FC = () => {
   const router = useRouter();
@@ -44,7 +45,6 @@ const CreateRutina: React.FC = () => {
     const fetchEjercicios = async () => {
       try {
         const data = await get_Ejercicios();
-
         setEjercicio(data);
       } catch (error) {
         console.error("Error fetching ejercicios:", error);
@@ -89,9 +89,6 @@ const CreateRutina: React.FC = () => {
   const handleChangeSelect: React.ChangeEventHandler<HTMLSelectElement> = (
     event
   ) => {
-    // Aquí puedes acceder al valor seleccionado
-    console.log(event.target.value);
-
     const { id, value } = event.target;
     setRutina((prevState) => ({
       ...prevState,
@@ -123,10 +120,6 @@ const CreateRutina: React.FC = () => {
       alert("Por favor selecciona al menos un ejercicio.");
       return;
     }
-    if (!location) {
-      alert("Por favor ingresa una ubicación.");
-      return;
-    }
     if (!difficultyLevel) {
       alert("Por favor ingresa un nivel de dificultad.");
       return;
@@ -155,16 +148,35 @@ const CreateRutina: React.FC = () => {
         difficultyLevel,
         category,
         price: parseFloat(rutina.price),
-        admin: "5061e26f-3375-41a2-bebf-bea3a9ba49f5", // El ID del administrador de la app
+        admin: "5061e26f-3375-41a2-bebf-bea3a9ba49f5",
       };
 
-      console.log(data);
+      await create_Rutina(data);
+      toast.success("Rutina creada exitosamente", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
 
-      await create_Rutina(data); // Usa la función modularizada
-      alert("Rutina creada exitosamente");
-      router.push("/dashboard");
+      setTimeout(() => {
+        router.push("/dashboard/create");
+      }, 3500);
     } catch (error) {
-      alert("Error al crear la rutina");
+      toast.error("Error al crear la rutina", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       console.error("Error al crear la rutina:", error);
     }
   };
@@ -256,9 +268,6 @@ const CreateRutina: React.FC = () => {
               className="daisy-select daisy-select-bordered w-full max-w-xs form-content bg-transparent  border-[#97D6DF] mb-5 mt-3"
               multiple
             >
-              <option value="" disabled>
-                Seleccionar Categoría
-              </option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -266,23 +275,24 @@ const CreateRutina: React.FC = () => {
               ))}
             </select>
           </div>
-          <br></br>
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
-            Sube Una Imagen Para La Rutina:
-          </label>
-          <input
-            className={styles.input}
-            type="file"
-            id="imageFile"
-            onChange={handleFileChange}
-          />
+          <div className="flex flex-col  justify-center items-center">
+            <label htmlFor="imageFile">Imagen:</label>
+            <input
+              className={styles.input}
+              type="file"
+              id="imageFile"
+              onChange={handleFileChange}
+            />
+          </div>
+
           <div className="flex justify-center">
-            <button type="submit" className={styles.button}>
-              Enviar
+            <button className={styles.button} type="submit">
+              Cargar rutina
             </button>
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

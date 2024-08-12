@@ -5,6 +5,7 @@ import Link from "next/link";
 import LoginLogout from "@/components/Login-Logout";
 import SearchRutina from "@/components/SearchRutina";
 import { InfoLandingComponent } from "./indexInfo";
+import PlanList from "@/components/PlanList";
 
 export default function LandingPage() {
   return (
