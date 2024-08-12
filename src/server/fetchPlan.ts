@@ -1,5 +1,10 @@
 import { API } from "@/helpers/helper";
-import { ICategory, ICreatePlan, IPlan, ISearch } from "@/interface/plan.interface";
+import {
+  ICategory,
+  ICreatePlan,
+  IPlan,
+  ISearch,
+} from "@/interface/plan.interface";
 
 export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
   const lim = queryString?.limit || 8;
@@ -83,5 +88,24 @@ export const createPlan = async (
   } catch (error) {
     console.error("Error en createPlan:", error);
     throw new Error("Error creating plan");
+  }
+};
+
+export const get_PlanById = async (id: string): Promise<IPlan> => {
+  try {
+    const response = await fetch(`${API}/plan/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Error al obtener la rutina");
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("Error al obtener la rutina:", err);
+    throw err;
   }
 };

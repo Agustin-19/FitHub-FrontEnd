@@ -187,15 +187,33 @@ interface IErrorsRegister {
 
 //Comentarios
 
-interface IComentario {
-  id: number;
-  descripcion: string;
+interface IAllComentarios {
+  description: string;
+  score: number;
+  routine: string;
+  id: string;
+  isActive: boolean;
+  date: string;
+}
+
+interface IComentarioRutina {
+  routine: string;
+  description: string;
+  score: number;
+  isActive: boolean;
+}
+
+interface IComentarioPlan {
+  planId: string;
+  description: string;
   score: number;
   isActive: boolean;
 }
 
 export type {
-  IComentario,
+  IAllComentarios,
+  IComentarioPlan,
+  IComentarioRutina,
   IUser,
   ILogin,
   IloginUserRegister,

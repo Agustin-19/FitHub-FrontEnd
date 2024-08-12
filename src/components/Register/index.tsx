@@ -12,6 +12,8 @@ import register1 from "../../../public/assets/loginyregister/register1.png";
 import { motion } from "framer-motion";
 import register2 from "../../../public/assets/loginyregister/register2.png";
 import LoginLogout from "../Login-Logout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function RegisterComponet({ token, setToken }: any) {
   const { signUp } = useContext(UserContext);
@@ -105,9 +107,30 @@ export function RegisterComponet({ token, setToken }: any) {
       const success = await signUp(userDataToSubmit);
 
       if (success) {
-        router.push("/login");
+        toast.success("Registro exitoso", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          router.push("/login");
+        }, 3500);
       } else {
-        console.log("Ingreso invalido");
+        toast.error("Error en el registro", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     }
   };
@@ -156,7 +179,7 @@ export function RegisterComponet({ token, setToken }: any) {
               Nombre y Apellido
             </label>
             {errors.name && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.name}
               </p>
             )}
@@ -187,7 +210,7 @@ export function RegisterComponet({ token, setToken }: any) {
               Correo
             </label>
             {errors.email && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.email}
               </p>
             )}
@@ -218,7 +241,7 @@ export function RegisterComponet({ token, setToken }: any) {
               DNI
             </label>
             {errors.dni && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.dni}
               </p>
             )}
@@ -249,7 +272,7 @@ export function RegisterComponet({ token, setToken }: any) {
               Dirección
             </label>
             {errors.address && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.address}
               </p>
             )}
@@ -280,7 +303,7 @@ export function RegisterComponet({ token, setToken }: any) {
               País
             </label>
             {errors.country && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "0px" }}>
                 {errors.country}
               </p>
             )}
@@ -308,7 +331,7 @@ export function RegisterComponet({ token, setToken }: any) {
               Ciudad
             </label>
             {errors.city && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.city}
               </p>
             )}
@@ -339,7 +362,7 @@ export function RegisterComponet({ token, setToken }: any) {
               Celular
             </label>
             {errors.phone && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.phone}
               </p>
             )}
@@ -370,7 +393,7 @@ export function RegisterComponet({ token, setToken }: any) {
               Contraseña
             </label>
             {errors.password && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.password}
               </p>
             )}
@@ -401,7 +424,7 @@ export function RegisterComponet({ token, setToken }: any) {
               Repita su Contraseña
             </label>
             {errors.passwordConfirm && (
-              <p style={{ color: "red", fontSize: "10px", marginTop: "10px" }}>
+              <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.passwordConfirm}
               </p>
             )}
@@ -412,7 +435,7 @@ export function RegisterComponet({ token, setToken }: any) {
             <p
               style={{
                 color: "red",
-                fontSize: "10px",
+                fontSize: "12px",
                 marginTop: "10px",
                 marginBottom: "10px",
                 textShadow: "1px 1px 1px black",
@@ -447,6 +470,7 @@ export function RegisterComponet({ token, setToken }: any) {
           height={900}
         />
       </div>
+      <ToastContainer />
     </section>
   );
 }

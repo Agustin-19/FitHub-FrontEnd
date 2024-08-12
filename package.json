@@ -30,8 +30,10 @@
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-chatbot-kit": "^2.2.2",
+    "react-confirm-alert": "^3.0.6",
     "react-dom": "^18",
     "react-simple-chatbot": "^0.6.1",
+    "react-toastify": "^10.0.5",
     "recharts": "^2.12.7",
     "tw-elements": "^2.0.0",
     "tw-elements-react": "^1.0.0-alpha-end"
