@@ -34,7 +34,7 @@ export default function AdminPlans() {
 
     return (
         <div className='z-10'>
-            <AdminPlanCard plans={plans} />
+            <AdminPlanCard plans={plans}/>
         </div>
     );
 }

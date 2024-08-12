@@ -1,5 +1,5 @@
 import { API } from "@/helpers/helper";
-import { ICreatePlan, IPlan, ISearch } from "@/interface/plan.interface";
+import { ICategory, ICreatePlan, IPlan, ISearch } from "@/interface/plan.interface";
 
 export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
   const lim = queryString?.limit || 8;
@@ -33,7 +33,7 @@ export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
   }
 };
 
-export const get_Category = async () => {
+export const get_Category = async (): Promise<ICategory[]> => {
   try {
     const response = await fetch(`${API}/categorias`, {
       method: "GET",
@@ -45,7 +45,9 @@ export const get_Category = async () => {
     if (!response.ok) {
       throw new Error("Error al obtener las Categorías ");
     }
-    const data = await response.json();
+    const data: ICategory[] = await response.json();
+
+    data.sort((a, b) => a.name.localeCompare(b.name));
     return data;
   } catch (err) {
     console.log("Error al obtener las Categorías:", err);

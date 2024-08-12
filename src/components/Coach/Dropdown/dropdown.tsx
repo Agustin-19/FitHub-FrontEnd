@@ -4,18 +4,18 @@ import { createPopper } from "@popperjs/core";
 const NotificationDropdown = () => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
+  const btnDropdownRef = React.createRef<HTMLAnchorElement>();
+  const popoverDropdownRef = React.createRef<HTMLDivElement>();
+
   const openDropdownPopover = () => {
-    createPopper(
-      btnDropdownRef.current as Element | VirtualElement,
-      popoverDropdownRef.current,
-      {
+    if (btnDropdownRef.current && popoverDropdownRef.current) {
+      createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
         placement: "bottom-start",
-      }
-    );
-    setDropdownPopoverShow(true);
+      });
+      setDropdownPopoverShow(true);
+    }
   };
+  
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };

@@ -4,6 +4,8 @@ import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import CoachDashboard from "@/components/Coach/CoachDashboard";
 import UserDashboard from "@/components/UserDashboard";
+import SidebarUser from "@/components/UserDashboard/SidebarUser";
+import Sidebar from "@/components/Coach/Sidebar";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -25,9 +27,15 @@ export default function Dashboard() {
   return (
     <div className="z-10 relative">
       {role === "user" ? (
-        <UserDashboard />
+        <div className="flex relative text-center z-20">
+          <SidebarUser />
+          <UserDashboard />
+        </div>
       ) : role === "entrenador" ? (
-        <CoachDashboard />
+        <>
+          <CoachDashboard />
+          <Sidebar />
+        </>
       ) : (
         <p>Rol no reconocido.</p>
       )}

@@ -21,19 +21,16 @@ interface IUserConext {
     email: string;
     address: string;
     city: string;
-    role?: string;
   } | null;
 }
 
-export default function Sidebar() {
+export default function SidebarUser() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [avatar, setAvatar] = useState<string | null>(null);
   const userContext = useContext(UserContext) as IUserConext;
   const { user } = userContext;
 
   if (!user) return <p>Loading...</p>;
-
-  if (user.role !== "entrenador") return null;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -48,10 +45,10 @@ export default function Sidebar() {
 
   return (
     <>
-      <nav className=" text-[#FF3E1A] md:left-0 md:block m md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between  md:w-64  py-4 px-6 bg-black ">
+      <nav className="text-[#97D6DF] md:left-0 md:block m md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between  md:w-64  py-4 px-6 bg-black ">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           <Link href="/home">
-            <button className="m-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+            <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
               Volver
             </button>
           </Link>
@@ -78,10 +75,9 @@ export default function Sidebar() {
             className="hidden"
           />
           <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
-          <p>nombre: {user.name}</p>
+
           <p>Email: {user.email}</p>
-          <p>Dirección: {user.address}</p>
-          <p>Ciudad: {user.city}</p>
+
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
             <li className="inline-block relative">
@@ -110,19 +106,6 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link href="/dashboard">
                   <i className={"fas fa-tv mr-2 text-sm "}></i> Dashboard
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/dashboard/create">
-                  <i className={"fas fa-tools mr-2 text-sm "}></i> Crear
-                  Rutinas, Planes y Actividades
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/dashboard/tables">
-                  <i className={"fas fa-table mr-2 text-sm "}></i> Alumnos
                 </Link>
               </li>
             </ul>

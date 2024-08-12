@@ -32,9 +32,9 @@ const AdminNavbar = () => {
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row rtl:space-x-reverse md:mt-0 md:border-0">
                         <li>
-                            <Link href="/admin/dashboard"
-                                className={`navbar-boton ${activeButton === '/admin/dashboard' ? 'active' : ''}`} 
-                                onClick={() => handleButtonClick('/admin/dashboard')}>
+                            <Link href="/admin"
+                                className={`navbar-boton ${activeButton === '/admin' ? 'active' : ''}`} 
+                                onClick={() => handleButtonClick('/admin')}>
                                 Inicio
                             </Link>
                         </li>
@@ -60,10 +60,10 @@ const AdminNavbar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/admin/exercises"
-                                className={`navbar-boton ${activeButton === '/admin/exercises' ? 'active' : ''}`} 
-                                onClick={() => handleButtonClick('/admin/exercises')}>
-                                Ejercicios
+                            <Link href="/admin/dashboard"
+                                className={`navbar-boton ${activeButton === '/admin/dashboard' ? 'active' : ''}`} 
+                                onClick={() => handleButtonClick('/admin/dashboard')}>
+                                Categorias
                             </Link>
                         </li>
                     </ul>

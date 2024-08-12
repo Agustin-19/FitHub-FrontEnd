@@ -13,7 +13,7 @@ export default function RequestCoachList() {
         const fetchData = async () => {
             try {
                 const data: ISolicitudes = await getSolicitudes();
-                console.log("Datos recibidos:", data.coachs);  
+                // console.log("Datos recibidos:", data.coachs);  
 
                 setCoaches(data.coachs);
             } catch (error) {

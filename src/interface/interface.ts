@@ -20,7 +20,7 @@ interface IUser {
   rutinas?: IRutina[];
   solicitud: string;
   actividades?: number[];
-  id: number;
+  id: string;
   borradologico: boolean;
 }
 
@@ -59,6 +59,7 @@ interface IloginUserRegister {
   role: string;
   user: Partial<IUser> | null;
   sub: string;
+  email ?: string;
 }
 
 interface IUserConext {
@@ -82,7 +83,7 @@ interface IUserConext {
 // Rutinas
 
 interface IRutina {
-  id?: string;
+  id: string;
   name: string;
   description: string;
   price?: number;

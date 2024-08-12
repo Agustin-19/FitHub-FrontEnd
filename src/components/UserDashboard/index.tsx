@@ -6,6 +6,7 @@ import Image from "next/image";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import imagenPerfil from "../../../public/assets/imagenPerfil.webp";
 import { IPlan } from "@/interface/plan.interface";
+import Sidebar from "./SidebarUser";
 
 interface Routine {
   id: string;
@@ -146,31 +147,43 @@ const UserDashboard = () => {
             <h3 className="m-5 text-2xl font-bold text-center">
               Rutinas Compradas
             </h3>
-            <ul>
-              {error ? (
-                <p>{error}</p>
-              ) : purchasedRoutines.length > 0 ? (
-                purchasedRoutines.map((routine) => (
-                  <li
-                    key={routine.id}
-                    className="flex gap-4 items-center justify-center mt-4 bg-[#97D6DF]/10 p-4 rounded-lg"
-                  >
-                    <h1 className="text-lg font-bold">{routine.name}</h1>
-                    <p>Precio: ${routine.price}</p>
-                    <Link href={`/rutinaComprada/${routine.id}`}>
-                      <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
-                        Ver rutina
-                      </button>
-                    </Link>
-                  </li>
-                ))
-              ) : (
-                <p>No has comprado ninguna rutina.</p>
-              )}
-            </ul>
+            <table className="items-center  w-full bg-transparent border-collapse">
+              <thead>
+                <tr>
+                  <th className="px-6 text-center text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold ">
+                    Rutina
+                  </th>
+                  <th className="px-6 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                    Precio
+                  </th>
+                  <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                    Más
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchasedRoutines.map((routine) => (
+                  <tr key={routine.id}>
+                    <td className="border-t-0 px-6 align-middle  border-l-0 border-r-0 text-xs whitespace-nowrap text-center p-4">
+                      {routine.name}
+                    </td>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-center p-4">
+                      ${routine.price}
+                    </td>
+                    <td className="border-t-0 text-center px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      <Link href={`/rutinaComprada/${routine.id}`}>
+                        <button className="m-4  relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+                          Ver rutina
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
           <br />
-          <div className="flex flex-col items-center m-4">
+          <div className="flex flex-col items-center  bg-black text-xl ">
             <h3 className="m-5 text-2xl font-bold text-center">
               Planes Comprados
             </h3>
