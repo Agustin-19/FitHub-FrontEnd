@@ -1,17 +1,27 @@
 import React from "react";
-import { IComentario } from "../../interface/interface";
-import comentariosData from "../../../public/ComentariosData";
+import { IAllComentarios } from "../../interface/interface";
+import { fetchAllComents } from "@/server/fethComent";
 import star from "../../../public/star-svgrepo-com.svg";
 
 export default function ComentariosCard() {
-  const [comentarios, setComentarios] = React.useState<IComentario[]>([]);
+  const [comentarios, setComentarios] = React.useState<IAllComentarios[]>([]);
   const [activeComentarios, setActiveComentarios] = React.useState<
-    IComentario[]
+    IAllComentarios[]
   >([]);
+
   React.useEffect(() => {
-    setComentarios(comentariosData);
-    setActiveComentarios(comentariosData);
+    const fetchComents = async () => {
+      try {
+        const allComents = await fetchAllComents();
+        setComentarios(allComents);
+        setActiveComentarios(allComents);
+      } catch (err) {
+        console.error("Error al cargar comentarios:", err);
+      }
+    };
+    fetchComents();
   }, []);
+
   return (
     <div className="flex flex-col gap-5 p-5">
       {activeComentarios.map((comentario) => (
@@ -29,7 +39,7 @@ export default function ComentariosCard() {
               />
             ))}
           </div>
-          <p>{comentario.descripcion}</p>
+          <p>{comentario.description}</p>
         </div>
       ))}
     </div>

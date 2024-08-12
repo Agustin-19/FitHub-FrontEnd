@@ -77,7 +77,7 @@ const PlanComprado = ({ params }: IPlanProps) => {
     const newComment = {
       descripcion,
       score,
-      id,
+      planId: id,
       isActive: true,
     };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { IRutinaEjercicio } from "@/interface/interface";
+import { IRutinaEjercicio, IComentarioRutina } from "@/interface/interface";
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
@@ -76,21 +76,20 @@ const RutinaComprada = ({ params }: IRoutineProps) => {
       return;
     }
 
-    const newComment = {
-      descripcion,
+    const newCommentRutina: IComentarioRutina = {
+      description: descripcion,
       score,
-      id,
+      routine: id,
       isActive: true,
     };
 
-    const token = user?.token || "";
-
-    postComents(newComment, token, id)
+    postComents(newCommentRutina)
       .then((data) => {
         if (data) {
           setSubmitMessage("Comentario y puntuación enviados con éxito.");
           setdescripcion("");
           setscore(0);
+          alert("Comentario y puntuación enviados con exito.");
         }
       })
       .catch((error) => {
@@ -100,7 +99,6 @@ const RutinaComprada = ({ params }: IRoutineProps) => {
         console.error(error);
       });
   };
-
   return (
     <div>
       <Link href="/dashboard">
