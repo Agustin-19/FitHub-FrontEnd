@@ -1,4 +1,3 @@
-"use client";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import Link from "next/link";
@@ -16,7 +15,7 @@ interface Routine {
   price: number;
 }
 
-interface Subsciption {
+interface Subscription {
   endDate: string;
   id: string;
   isActive: boolean;
@@ -50,13 +49,22 @@ const UserDashboard = () => {
 
             // Mapeo de suscripciones
             const mappedPlans = Array.isArray(data.subsciption)
-              ? data.subsciption.map((subsciption: any) => ({
-                  id: subsciption.plan.id,
-                  name: subsciption.plan.name,
-                  description: subsciption.plan.description,
-                  isActive: subsciption.isActive,
-                  price: subsciption.plan.price,
-                  imgUrl: subsciption.plan.imgUrl,
+              ? data.subsciption.map((subscription: any) => ({
+                  id: subscription.plan.id,
+                  name: subscription.plan.name,
+                  description: subscription.plan.description,
+                  isActive: subscription.isActive,
+                  price: subscription.plan.price,
+                  imgUrl: subscription.plan.imgUrl,
+                  location: subscription.plan.location || "Unknown location",
+                  latitude: subscription.plan.latitude || 0,
+                  longitude: subscription.plan.longitude || 0,
+                  category: subscription.plan.category || [],
+                  difficultyLevel:
+                    subscription.plan.difficultyLevel || "Medium",
+                  admin: subscription.plan.admin || "Not assigned",
+                  check: subscription.plan.check || false,
+                  date: subscription.plan.date || new Date().toISOString(),
                 }))
               : [];
 
@@ -96,10 +104,46 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className=" ml-[400px]">
-      <div className="flex  border-1 m-5">
-        <div className="flex flex-col items-center mt-[200px] text-[#97D6DF] text-xl flex-grow">
-          <div className="flex flex-col items-center  bg-black text-xl ">
+    <div>
+      <Link href="/home">
+        <button className="m-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+          Volver
+        </button>
+      </Link>
+      <div className="flex border border-1 m-5">
+        <div
+          className={
+            styles.dashboard +
+            " flex-col items-center justify-center border-r border-1 w-[400px]"
+          }
+        >
+          <Image
+            src={avatar || imagenPerfil}
+            alt="Avatar"
+            width={100} // Ajusta el tamaño si es necesario
+            height={100}
+            className="rounded-full object-cover"
+          />
+          <label
+            htmlFor="file-input"
+            className="pencil-icon cursor-pointer mt-4"
+          >
+            <PencilIcon className="w-6 h-6 text-white bg-[#FF3E1A] rounded-full p-1" />
+          </label>
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+          <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
+          <p>Nombre: {user.name}</p>
+          <p>Email: {user.role}</p>{" "}
+          {/* Asegúrate de que `user.email` esté disponible */}
+        </div>
+        <div className="flex flex-col items-center text-[#97D6DF] flex-grow">
+          <div className="flex flex-col items-center">
             <h3 className="m-5 text-2xl font-bold text-center">
               Rutinas Compradas
             </h3>

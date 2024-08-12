@@ -185,7 +185,17 @@ interface IErrorsRegister {
   delete?: boolean;
 }
 
+//Comentarios
+
+interface IComentario {
+  id: number;
+  descripcion: string;
+  score: number;
+  isActive: boolean;
+}
+
 export type {
+  IComentario,
   IUser,
   ILogin,
   IloginUserRegister,

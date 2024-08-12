@@ -1,9 +1,8 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import CoachCard from "../CoachCard";
 import { IUser } from "@/interface/interface";
 import { getCoach } from "@/server/fetcheCoach";
-
 
 const CoachList: React.FC = () => {
   const [coaches, setCoaches] = useState<IUser[]>([]);
@@ -21,9 +20,9 @@ const CoachList: React.FC = () => {
     fetchData();
   }, []);
   return (
-    <div className="p-4 relative z-10 min-h-screen">
+    <div className="p-4 relative z-10">
       <h1 className="text-center text-[#FF3E1A] text-5xl font-extrabold leading-tight bg-clip-text  text-centertext-transparent bg-gradient-to-r from-[#FF3E1A] via-[#FF6F3E] to-[#FF9E3E] shadow-lg mb-12">
-        Coaches
+        Nuestros Entrenadores
       </h1>
       <div className="flex flex-wrap justify-center">
         {coaches.map((coach, index) => (
