@@ -38,7 +38,6 @@ export const UserContext = createContext<IUserConext>({
   getActividades: () => {},
   setIsLogged: () => {},
   getUserRutinasYPlanes: async () => null,
-
 });
 export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -49,8 +48,8 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signUp = async (user: IRegisterUser) => {
     try {
-      // const data = await postSigup(user);
-      const data = await postSigupCoach(user);
+      const data = await postSigup(user);
+      // const data = await postSigupCoach(user);
       return data;
     } catch (error) {
       console.log(error);
@@ -61,26 +60,28 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const loginAuth0 = async (credencials: IRegister3ros) => {
     try {
       const data = await post_LoginAuth0(credencials); // Envía las credenciales
-      
+
       if (!data.token) {
         throw new Error("Invalid Token");
       }
 
-      const decodedToken: any = jwtDecode(data.token); 
+      const decodedToken: any = jwtDecode(data.token);
       console.log("Decoded Token:", decodedToken);
       // Guarda datos del usuario
-      setUser({...decodedToken, token: data.token });
+      setUser({ ...decodedToken, token: data.token });
 
-      (typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(decodedToken))); // Guarda el usuario en localStorage
-      (typeof window !== "undefined" && localStorage.setItem("token", data.token))
+      typeof window !== "undefined" &&
+        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
+      typeof window !== "undefined" &&
+        localStorage.setItem("token", data.token);
 
       setIsLogged(true);
       return true;
     } catch (error) {
-      console.log('auth0 fallo',error);
+      console.log("auth0 fallo", error);
       return false;
     }
-  }
+  };
 
   const signIn = async (credentials: ILogin) => {
     try {
@@ -96,8 +97,10 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       // Guarda el rol y otros datos del usuario
       setUser({ ...decodedToken, token: data.token });
 
-      typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
-      typeof window !== "undefined" && localStorage.setItem("token", data.token); // Almacena el token
+      typeof window !== "undefined" &&
+        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
+      typeof window !== "undefined" &&
+        localStorage.setItem("token", data.token); // Almacena el token
 
       setIsLogged(true);
       return true;

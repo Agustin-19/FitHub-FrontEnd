@@ -188,7 +188,7 @@ interface IErrorsRegister {
 //Comentarios
 
 interface IComentario {
-  id: number;
+  id: string;
   descripcion: string;
   score: number;
   isActive: boolean;
