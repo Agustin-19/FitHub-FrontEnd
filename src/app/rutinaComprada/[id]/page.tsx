@@ -10,6 +10,8 @@ import Link from "next/link";
 import Image from "next/image";
 import ExerciseVideo from "@/components/ExerciseVideo";
 import { postComents } from "@/server/fethComent";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IRoutineProps {
   params: {
@@ -86,19 +88,38 @@ const RutinaComprada = ({ params }: IRoutineProps) => {
     postComents(newCommentRutina)
       .then((data) => {
         if (data) {
-          setSubmitMessage("Comentario y puntuación enviados con éxito.");
+          toast.success("Comentario y puntuación enviados con éxito.", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
           setdescripcion("");
           setscore(0);
-          alert("Comentario y puntuación enviados con exito.");
         }
       })
       .catch((error) => {
-        setSubmitMessage(
-          "Hubo un error al enviar tu comentario. Por favor, inténtalo de nuevo."
+        toast.error(
+          "Hubo un error al enviar tu comentario. Por favor, inténtalo de nuevo.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
         );
         console.error(error);
       });
   };
+
   return (
     <div>
       <Link href="/dashboard">
@@ -225,11 +246,6 @@ const RutinaComprada = ({ params }: IRoutineProps) => {
                 Enviar
               </button>
             </form>
-            {submitMessage && (
-              <p className="mt-4 text-lg font-semibold text-red-500">
-                {submitMessage}
-              </p>
-            )}
           </div>
           {selectedEjercicio && (
             <ExerciseVideo
@@ -239,6 +255,7 @@ const RutinaComprada = ({ params }: IRoutineProps) => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
