@@ -3,36 +3,40 @@ import { IPlan } from "@/interface/plan.interface";
 import { postSolicitudes } from "@/server/fetchAmin";
 import Image from "next/image";
 import { useState } from "react";
-import { Dificultad } from '../../../../../FitHub/src/Dto/Dificultad.Dto';
-
 
 interface AdminPlanCardProps {
-    plans: IPlan[];
+  plans: IPlan[];
 }
 
 export default function AdminPlanCard({ plans }: AdminPlanCardProps) {
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
+  const imgDefect = "https://img.daisyui.com/images/profile/demo/2@94.webp";
+  const getImageSrc = (image: string | string[] | null | undefined) => {
+    if (typeof image === "string") {
+      return image;
+    } else if (Array.isArray(image) && image.length > 0) {
+      return image[0][0];
+    } else {
+      return imgDefect;
+    }
+  };
 
-    const imgDefect = "https://img.daisyui.com/images/profile/demo/2@94.webp";
-    const getImageSrc = (image: string | string[] | null | undefined) => {
-        if (typeof image === "string") {
-            return image;
-        } else if (Array.isArray(image) && image.length > 0) {
-            return image[0][0];
-        } else {
-            return imgDefect;
-        }
+  const handleCheckboxChange = (planId: string) => {
+    setSelectedIds((prevSelectedIds) =>
+      prevSelectedIds.includes(planId)
+        ? prevSelectedIds.filter((id) => id !== planId)
+        : [...prevSelectedIds, planId]
+    );
+  };
+
+  const handleAprobar = async () => {
+    const solicitudes = {
+      coach: [],
+      plan: selectedIds,
+      rutina: [],
     };
-
-    const handleCheckboxChange = (planId: string) => {
-        setSelectedIds(prevSelectedIds =>
-            prevSelectedIds.includes(planId)
-                ? prevSelectedIds.filter(id => id !== planId)
-                : [...prevSelectedIds, planId]
-        );
-    };
-
+    
     const handleAprobar = async (condicion: resEnum) => {
         const solicitudes = {
             coach: [],

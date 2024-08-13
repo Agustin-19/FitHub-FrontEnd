@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { IRutina, IUser } from "./interface";
+import { IRutina, IRutinaEjercicio, IUser } from "./interface";
 
 enum Dificultad {
   INICIAL = "inicial",
@@ -48,6 +48,13 @@ interface IGetRutYPlan {
   subsciption: IPlan[];
 }
 
+interface IGetCouchRutYPlan {
+  id: string;
+  routineAdmin: IRutina[];
+  planAdmin: IPlan[];
+  exercise: IRutinaEjercicio[];
+}
+
 interface IRutinaContextProps {
   rutinas: IRutina[];
   setRutinas: (rutinas: IRutina[]) => void;
@@ -66,7 +73,7 @@ interface IPlanContextProps {
 
 interface ISearch {
   limit?: string;
-  page: string;
+  page?: string;
   category?: string;
   location?: string;
   difficultyLevel?: string;
@@ -74,6 +81,7 @@ interface ISearch {
 }
 
 export type {
+  IGetCouchRutYPlan,
   IGetRutYPlan,
   ICreatePlan,
   IPlan,

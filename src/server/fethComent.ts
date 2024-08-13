@@ -1,5 +1,9 @@
 import { API } from "@/helpers/helper";
-import { IAllComentarios, IComentarioRutina } from "@/interface/interface";
+import {
+  IAllComentarios,
+  IComentarioPlan,
+  IComentarioRutina,
+} from "@/interface/interface";
 
 export const fetchAllComents = async (): Promise<IAllComentarios[]> => {
   try {
@@ -25,7 +29,9 @@ export const fetchAllComents = async (): Promise<IAllComentarios[]> => {
   }
 };
 
-export const postComents = async (comment: IComentarioRutina) => {
+export const postComents = async (
+  comment: IComentarioRutina | IComentarioPlan
+) => {
   const response = await fetch(`${API}/comentarios/rutina`, {
     method: "POST",
     headers: {

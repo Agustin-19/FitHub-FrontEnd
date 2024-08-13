@@ -170,8 +170,8 @@ const PlanDetail = ({ params }: IPlanProps) => {
             </p>
             <div
               style={{
-                height: "30vh",
-                width: "30vh",
+                height: "40vh",
+                width: "40vh",
                 border: "5px solid #97D6DF",
                 display: "flex",
                 flexDirection: "column",

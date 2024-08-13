@@ -86,6 +86,7 @@ const Routine = ({ params }: IRoutineProps) => {
       };
 
       const preference = await createRutineOrder(rutinaData);
+      console.log("Preferencia creada:", preference);
       setPreferenceId(preference.id);
     } catch (error) {
       console.log(error);
