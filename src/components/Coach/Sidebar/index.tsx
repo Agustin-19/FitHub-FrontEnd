@@ -129,12 +129,6 @@ export default function Sidebar() {
                   Chat Bot
                 </Link>
               </li>
-              <li className="items-center">
-                <Link href="/dashboard/profile">
-                  <i className="fas fa-user-circle text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  Profile Page
-                </Link>
-              </li>
             </ul>
           </div>
         </div>
