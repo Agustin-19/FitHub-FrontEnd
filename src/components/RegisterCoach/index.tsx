@@ -6,6 +6,8 @@ import { UserContext } from "@/context/userContext";
 import { uploaFile, uploaFilePdf } from "@/server/fetchFile";
 import { postCoach } from "@/server/fetcheCoach";
 import styles from "../../components/PlanForm/planform.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function RegisterCoachComponent() {
   const router = useRouter();
@@ -67,11 +69,31 @@ export function RegisterCoachComponent() {
       // Usar postCoach para la última solicitud
       const response = await postCoach(coachData);
 
-      if (response) {
-        alert("Role actualizado a coach.");
-      } else {
-        alert("Error al actualizar el role.");
+      if (response.ok) {
+        toast.success("Tus archivos fueron enviados, se te enviara un email", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        router.push("/home");
+      }else{
+        toast.error("Error, Revisa los archivos e intentalo nuevamente", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
+      
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }
@@ -107,6 +129,7 @@ export function RegisterCoachComponent() {
           </button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }

@@ -1,15 +1,37 @@
 'use client';
 
+import { ISolicitudes } from "@/interface/admin.interface";
+import { getSolicitudes } from "@/server/fetchAmin";
 import Link from "next/link";
 import React, { useEffect, useState } from 'react';
 
 const AdminNavbar = () => {
     const [activeButton, setActiveButton] = useState('/admin');
     const [navbarSticky, setNavbarSticky] = useState(false);
+    const [solicitudes, setSolicitudes] = useState<ISolicitudes | null>(null);
+    const [loading, setLoading] = useState(true);
 
     const handleButtonClick = (path: string) => {
         setActiveButton(path);
     };
+
+    useEffect(() => {
+        const fetchSolicitudes = async () => {
+            try {
+                const data = await getSolicitudes();
+                console.log(data);
+                
+                setSolicitudes(data);
+            } catch (error) {
+                console.error('Error al obtener solicitudes:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchSolicitudes();
+    }, []);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -32,32 +54,25 @@ const AdminNavbar = () => {
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row rtl:space-x-reverse md:mt-0 md:border-0">
                         <li>
-                            <Link href="/admin"
-                                className={`navbar-boton ${activeButton === '/admin' ? 'active' : ''}`} 
-                                onClick={() => handleButtonClick('/admin')}>
-                                Inicio
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/admin/coachs"
-                                className={`navbar-boton ${activeButton === '/admin/coachs' ? 'active' : ''}`} 
+                        <Link href="/admin/coachs"
+                                className={`navbar-boton ${activeButton === '/admin/coachs' ? 'active' : ''}`}
                                 onClick={() => handleButtonClick('/admin/coachs')}>
-                                Entrenadores
+                                {`Entrenadores (${solicitudes?.coachs.length})`}
                             </Link>
                         </li>
                         <li>
                             <Link href="/admin/routines"
                                 className={`navbar-boton ${activeButton === '/admin/routines' ? 'active' : ''}`} 
                                 onClick={() => handleButtonClick('/admin/routines')}>
-                                Rutinas
+                                Rutinas {`(${solicitudes?.rutinas.length})`}
                             </Link>
                         </li>
                         <li>
                             <Link href="/admin/plans"
                                 className={`navbar-boton ${activeButton === '/admin/plans' ? 'active' : ''}`} 
                                 onClick={() => handleButtonClick('/admin/plans')}>
-                                Actividades
-                            </Link>
+                                Actividades {`(${solicitudes?.planes.length})`}
+                                </Link>
                         </li>
                         <li>
                             <Link href="/admin/dashboard"

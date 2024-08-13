@@ -14,10 +14,13 @@ const CrearCategoria = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // enviar categoria al backend
 
         try {
             const response = await createCategory(cat);
+
+            alert("Actividad creada correctamente");
+            setCat({ name: '' });
+            window.location.href = "/admin/dashboard";
         } catch (error) {
             alert("Error al crear la actividad");
             console.error("Error:", error);

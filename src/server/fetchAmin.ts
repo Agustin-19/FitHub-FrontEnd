@@ -1,6 +1,5 @@
 import { API } from "@/helpers/helper";
-import { ICoach, ISolicitudes, ISolicitudRes, resEnum } from "@/interface/admin.interface";
-import { ICategory } from "@/interface/plan.interface";
+import { ISolicitudes, ISolicitudRes, resEnum } from "@/interface/admin.interface";
 
 
 
@@ -30,7 +29,7 @@ export const getSolicitudes = async (): Promise<ISolicitudes> => {
 };
 
 
-export const postSolicitudes = async (parans: ISolicitudRes, estado: resEnum): Promise<ISolicitudes> => {
+export const postSolicitudes = async (parans: ISolicitudRes, estado: resEnum)=> {
     const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
     console.log(JSON.stringify(parans))
 
@@ -50,7 +49,7 @@ export const postSolicitudes = async (parans: ISolicitudRes, estado: resEnum): P
             throw new Error("Error al enviar los Id");
         }
 
-        const data = await response.json();
+        const data = await response;
         console.log(data);
 
         return data;
@@ -74,6 +73,10 @@ export const createCategory = async (cat: {name:string}) => {
             },
             body: JSON.stringify(cat),
         });        
+        if (!response.ok) {
+            throw new Error("Error al crear categoria");
+        }
+        return await response;
     }
     catch(err){
         console.log("Error al crear categoria:", err);

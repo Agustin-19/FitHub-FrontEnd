@@ -50,7 +50,7 @@ export const postCoach = async (parans: IRegisterCoach) => {
             throw new Error(`Error en la solicitud: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const data = await response;
         console.log("Respuesta del servidor:", data);
 
         return data;
@@ -62,7 +62,7 @@ export const postCoach = async (parans: IRegisterCoach) => {
 
 export const getCoach = async (): Promise<ICoach[]> => {
     try {
-        const response = await fetch(`${API}/users`, {
+        const response = await fetch(`${API}/users/coach`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -73,10 +73,7 @@ export const getCoach = async (): Promise<ICoach[]> => {
             throw new Error('Network response was not ok');
         }
 
-        const users: ICoach[] = await response.json();
-
-        // Filtra los usuarios con el rol "entrenador"
-        const coaches = users.filter((user: IUser) => user.role === "entrenador");
+        const coaches: ICoach[] = await response.json();
 
         return coaches;
     } catch (error) {
