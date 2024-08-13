@@ -33,7 +33,7 @@ export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
         );
     };
 
-    const handleAprobar = async () => {
+    const handleAprobar = async (condicion: resEnum) => {
         const solicitudes = {
             coach: [],
             plan: [],
@@ -41,7 +41,7 @@ export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
         };
 
         try {
-            const response = await postSolicitudes(solicitudes, resEnum.ACEPTAR);
+            const response = await postSolicitudes(solicitudes, condicion);
             console.log("Respuesta de la aprobación:", response);
         } catch (error) {
             console.error("Error al aprobar los planes:", error);
@@ -62,9 +62,17 @@ export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
                 <RoutineDetails routine={selectedRoutine} onClose={handleCloseDetails} />
             )}
             <div className="flex justify-center">
-                <button type="submit" onClick={handleAprobar} className='boton'>
+            <div className="flex justify-center gap-3">
+                <button type="submit" onClick={ ()=> handleAprobar(resEnum.ACEPTAR)} className='boton-aprobar'>
                     Aprobar
                 </button>
+                <button type="submit" onClick={ ()=> handleAprobar(resEnum.CORREGIR)} className='boton-corregir'>
+                    Corregir
+                </button>
+                <button type="submit" onClick={ ()=> handleAprobar(resEnum.DENEGAR)} className='boton-denegar'>
+                    Rechazar
+                </button>
+            </div>
             </div>
             <div className="overflow-x-auto z-10">
                 <table className="daisy-table">
