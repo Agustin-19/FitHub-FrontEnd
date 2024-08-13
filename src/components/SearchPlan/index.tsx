@@ -1,3 +1,4 @@
+"use client";
 import { PlanContext } from "@/context/planContext";
 import { useContext } from "react";
 import PlanList from "../PlanList";

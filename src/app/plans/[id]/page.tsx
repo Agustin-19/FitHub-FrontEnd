@@ -9,6 +9,7 @@ import Link from "next/link";
 import { createPlanOrder } from "@/server/fetchMercadoPago";
 import Maps from "@/components/Maps/map";
 import ComentariosCard from "@/components/ComentariosCard";
+import { API } from "@/helpers/helper";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -38,7 +39,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
   useEffect(() => {
     const fetchPlanID = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/plan/${id}`, {
+        const response = await fetch(`${API}/plan/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -88,8 +89,6 @@ const PlanDetail = ({ params }: IPlanProps) => {
         quantity: 1,
         unit_price: Number(plan?.price),
       };
-
-      console.log(planData);
       const preference = await createPlanOrder(planData);
       setPreferenceId(preference.id);
     } catch (error) {
@@ -115,7 +114,6 @@ const PlanDetail = ({ params }: IPlanProps) => {
       };
     });
   };
-  console.log("category", plan);
 
   return (
     <div className="relative z-10">
@@ -170,8 +168,8 @@ const PlanDetail = ({ params }: IPlanProps) => {
             </p>
             <div
               style={{
-                height: "30vh",
-                width: "30vh",
+                height: "40vh",
+                width: "40vh",
                 border: "5px solid #97D6DF",
                 display: "flex",
                 flexDirection: "column",

@@ -78,20 +78,9 @@ export default function Sidebar() {
             className="hidden"
           />
           <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
-          <p>nombre: {user.name}</p>
           <p>Email: {user.email}</p>
-          <p>Dirección: {user.address}</p>
-          <p>Ciudad: {user.city}</p>
           {/* User */}
-          <ul className="md:hidden items-center flex flex-wrap list-none">
-            <li className="inline-block relative">
-              <NotificationDropdown />
-            </li>
-            <li className="inline-block relative">
-              <UserDropdown />
-            </li>
-          </ul>
-          {/* Collapse */}
+
           <div
             className={
               "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +
@@ -104,29 +93,20 @@ export default function Sidebar() {
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               Admin Layout Pages
             </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
-                <Link href="/dashboard">
-                  <i className={"fas fa-tv mr-2 text-sm "}></i> Dashboard
-                </Link>
-              </li>
-
+            <ul className="md:flex-col md:min-w-full flex flex-col list-none gap-2">
               <li className="items-center">
                 <Link href="/dashboard/create">
                   <i className={"fas fa-tools mr-2 text-sm "}></i> Crear
                   Rutinas, Planes y Actividades
                 </Link>
               </li>
-
               <li className="items-center">
-                <Link href="/dashboard/tables">
-                  <i className={"fas fa-table mr-2 text-sm "}></i> Alumnos
+                <Link href="/dashboard">
+                  <i className={"fas fa-tools mr-2 text-sm "}></i> Mis
+                  ACtividades
                 </Link>
               </li>
             </ul>
-
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
@@ -134,17 +114,11 @@ export default function Sidebar() {
               Configuración
             </h6>
             {/* Navigation */}
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4 gap-2">
               <li className="items-center">
                 <Link href="/dashboard/chat">
                   <i className="fas fa-user-circle text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  chat
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link href="/dashboard/profile">
-                  <i className="fas fa-user-circle text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  Profile Page
+                  Chat Bot
                 </Link>
               </li>
             </ul>

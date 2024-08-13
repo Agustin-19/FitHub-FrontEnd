@@ -102,8 +102,6 @@ export default function ExerciseForm() {
         videoUrl,
       };
 
-      console.log(ejercicioData);
-
       // Luego, crea el ejercicio con la URL del archivo
       await createExercise(ejercicioData);
 

@@ -50,8 +50,6 @@ export function RegisterCoachComponent() {
       return;
     }
 
-    console.log(videoFile);
-
     try {
       //   // Subir video
       const videoResponse = await uploaFile(videoFile);
@@ -81,7 +79,7 @@ export function RegisterCoachComponent() {
           theme: "light",
         });
         router.push("/home");
-      }else{
+      } else {
         toast.error("Error, Revisa los archivos e intentalo nuevamente", {
           position: "top-right",
           autoClose: 3000,
@@ -93,7 +91,6 @@ export function RegisterCoachComponent() {
           theme: "light",
         });
       }
-      
     } catch (error) {
       console.error("Error al enviar los datos:", error);
     }

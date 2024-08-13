@@ -8,6 +8,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { postComents } from "@/server/fethComent";
 import Maps from "@/components/Maps/map";
+import { IComentarioPlan } from "@/interface/interface";
+import { API } from "@/helpers/helper";
 
 interface IPlanProps {
   params: {
@@ -35,7 +37,7 @@ const PlanComprado = ({ params }: IPlanProps) => {
   useEffect(() => {
     const fetchPlanID = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/plan/${id}`, {
+        const response = await fetch(`${API}/plan/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -74,8 +76,8 @@ const PlanComprado = ({ params }: IPlanProps) => {
       setSubmitMessage("Por favor, inicia sesión para comentar.");
       return;
     }
-    const newComment = {
-      descripcion,
+    const newCommentPlan: IComentarioPlan = {
+      description: descripcion,
       score,
       planId: id,
       isActive: true,
@@ -83,7 +85,7 @@ const PlanComprado = ({ params }: IPlanProps) => {
 
     const token = user?.token || "";
 
-    postComents(newComment, token, id)
+    postComents(newCommentPlan)
       .then((data) => {
         if (data) {
           setSubmitMessage("Comentario guardado");

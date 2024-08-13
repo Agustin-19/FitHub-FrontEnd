@@ -102,8 +102,6 @@ export function RegisterComponet({ token, setToken }: any) {
         delete: false,
       };
 
-      console.log(userDataToSubmit);
-
       const success = await signUp(userDataToSubmit);
 
       if (success) {

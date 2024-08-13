@@ -34,7 +34,6 @@ export default function Dashboard() {
       ) : role === "entrenador" ? (
         <>
           <CoachDashboard />
-          <Sidebar />
         </>
       ) : (
         <p>Rol no reconocido.</p>

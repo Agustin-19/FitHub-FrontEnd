@@ -24,24 +24,30 @@ export default function ComentariosCard() {
 
   return (
     <div className="flex flex-col gap-5 p-5">
-      {activeComentarios.map((comentario) => (
-        <div
-          key={comentario.id}
-          className="flex flex-col gap-4 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/20 rounded-lg text-white"
-        >
-          <div className="flex items-center justify-end">
-            {Array.from({ length: comentario.score }).map((_, index) => (
-              <img
-                key={index}
-                src={star.src}
-                alt={`Estrella ${index + 1}`}
-                className="w-6 h-6"
-              />
-            ))}
+      {activeComentarios.length === 0 ? (
+        <p className="text-center text-lg font-semibold text-gray-600">
+          No hay comentarios disponibles.
+        </p>
+      ) : (
+        activeComentarios.map((comentario) => (
+          <div
+            key={comentario.id}
+            className="flex flex-col gap-4 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/20 rounded-lg text-white"
+          >
+            <div className="flex items-center justify-end">
+              {Array.from({ length: comentario.score }).map((_, index) => (
+                <img
+                  key={index}
+                  src={star.src}
+                  alt={`Estrella ${index + 1}`}
+                  className="w-6 h-6"
+                />
+              ))}
+            </div>
+            <p>{comentario.description}</p>
           </div>
-          <p>{comentario.description}</p>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 }
