@@ -101,7 +101,7 @@ const UserDashboard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5 text-[#97D6DF] flex-grow">
+    <div className="flex flex-col items-center gap-5 text-[#97D6DF] flex-grow mb-5">
       <div className="flex flex-col items-center w-full max-w-4xl">
         <h3 className="m-5 text-2xl font-bold text-center">
           Rutinas Compradas
@@ -143,7 +143,11 @@ const UserDashboard = () => {
               ))}
             </tbody>
           </table>
-        ) : null}
+        ) : (
+          <p className="text-red-500">
+            Aun no has comprado ninguna de nuestras Rutinas.
+          </p>
+        )}
       </div>
       <br />
       <div className="flex flex-col items-center w-full max-w-4xl">
@@ -191,7 +195,11 @@ const UserDashboard = () => {
               ))}
             </tbody>
           </table>
-        ) : null}
+        ) : (
+          <p className="text-red-500">
+            Aun no has comprado ninguno de nuestros Planes.
+          </p>
+        )}
       </div>
     </div>
   );
