@@ -140,16 +140,13 @@ export const getUserRutinasYPlanes = async (
     const token: string =
       (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
-    const response = await fetch(
-      `http://localhost:3001/users/userpyr/${userId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${API}/users/userpyr/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!response.ok) {
       const errorText = await response.text(); // Obtener el mensaje de error

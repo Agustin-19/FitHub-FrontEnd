@@ -9,6 +9,7 @@ import Link from "next/link";
 import { createPlanOrder } from "@/server/fetchMercadoPago";
 import Maps from "@/components/Maps/map";
 import ComentariosCard from "@/components/ComentariosCard";
+import { API } from "@/helpers/helper";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -38,7 +39,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
   useEffect(() => {
     const fetchPlanID = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/plan/${id}`, {
+        const response = await fetch(`${API}/plan/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

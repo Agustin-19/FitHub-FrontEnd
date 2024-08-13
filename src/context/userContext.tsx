@@ -21,6 +21,7 @@ import { jwtDecode } from "jwt-decode";
 // import { users } from "../../public/data/user.data";
 import { useRouter } from "next/navigation";
 import { IGetCouchRutYPlan, IGetRutYPlan } from "@/interface/plan.interface";
+import { API } from "@/helpers/helper";
 
 export const UserContext = createContext<IUserConext>({
   user: null,
@@ -142,16 +143,13 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
       console.log("Token:", token);
-      const response = await fetch(
-        `http://localhost:3001/users/userpyr/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API}/users/userpyr/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Error al obtener las rutinas y planes");
@@ -178,16 +176,13 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
       console.log("Token:", token);
-      const response = await fetch(
-        `http://localhost:3001/users/entrenadorpyr/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${API}/users/entrenadorpyr/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("response:", response);
 
       if (!response.ok) {

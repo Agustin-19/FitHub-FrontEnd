@@ -7,14 +7,14 @@ export const post_LoginAuth0 = async (user: IRegister3ros) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   });
   const data = await response.json();
   // const data = "usuario creado";
   console.log(data);
 
   return data;
-}
+};
 
 export const postSigup = async (user: IRegisterUser) => {
   const response = await fetch(`${API}/auth/signupuser`, {
@@ -24,8 +24,8 @@ export const postSigup = async (user: IRegisterUser) => {
     },
     body: JSON.stringify(user),
   });
-  const data = await response.json();
-  // const data = "usuario creado";
+  // const data = await response.json();
+  const data = "usuario creado";
   console.log(data);
 
   return data;

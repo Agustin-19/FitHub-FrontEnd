@@ -9,6 +9,7 @@ import Image from "next/image";
 import { postComents } from "@/server/fethComent";
 import Maps from "@/components/Maps/map";
 import { IComentarioPlan } from "@/interface/interface";
+import { API } from "@/helpers/helper";
 
 interface IPlanProps {
   params: {
@@ -36,7 +37,7 @@ const PlanComprado = ({ params }: IPlanProps) => {
   useEffect(() => {
     const fetchPlanID = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/plan/${id}`, {
+        const response = await fetch(`${API}/plan/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
