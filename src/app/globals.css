@@ -100,6 +100,18 @@ ul {
   @apply bg-gray-500 text-white;
 }
 
+.count.red {
+  color: red; /* Color cuando el número es mayor a cero */
+}
+
+.count.hidden {
+  display: none; /* Oculta el número cuando es cero */
+}
+
+.count {
+  color: #000; /* Color por defecto */
+}
+
 .active {
   @apply bg-gray-400 text-[--titulos];
 }

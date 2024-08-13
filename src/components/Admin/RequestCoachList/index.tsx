@@ -1,20 +1,22 @@
+// RequestCoachList.tsx
 'use client'
 import AdminCardCoach from '@/components/Admin/CoachCard';
 import { useState, useEffect } from 'react';
-import { getSolicitudes } from '@/server/fetchAmin';
-import { ICoach, ISolicitudes } from '@/interface/admin.interface';
-
-
+import { getSolicitudes, postSolicitudes } from '@/server/fetchAmin';
+import { ICoach, ISolicitudes, resEnum } from '@/interface/admin.interface';
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RequestCoachList() {
+    const router = useRouter();
     const [coaches, setCoaches] = useState<ICoach[]>([]);
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data: ISolicitudes = await getSolicitudes();
-                // console.log("Datos recibidos:", data.coachs);  
-
                 setCoaches(data.coachs);
             } catch (error) {
                 console.error("Error fetching coaches:", error);
@@ -24,10 +26,66 @@ export default function RequestCoachList() {
         fetchData();
     }, []);
 
+    const handleAprobar = async (condicion: resEnum) => {
+        const solicitudes = {
+            coach: selectedIds,
+            plan: [],
+            rutina: []
+        };
+
+        try {
+            const response = await postSolicitudes(solicitudes, condicion);
+            console.log("Respuesta de la aprobación:", response);
+            setSelectedIds([]);
+            
+            if (response.ok) {
+                toast.success("Correcto", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                router.push("/admin/coachs");
+            } else {
+                toast.error("Error", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+        } catch (error) {
+            console.error("Error al aprobar los coaches:", error);
+        }
+    };
+
     return (
         <div>
-            <AdminCardCoach coaches={coaches} />
+            <div className="flex justify-center gap-3 mb-4">
+                <button type="submit" onClick={() => handleAprobar(resEnum.ACEPTAR)} className='boton-aprobar'>
+                    Aprobar
+                </button>
+                <button type="submit" onClick={() => handleAprobar(resEnum.CORREGIR)} className='boton-corregir'>
+                    Corregir
+                </button>
+                <button type="submit" onClick={() => handleAprobar(resEnum.DENEGAR)} className='boton-denegar'>
+                    Rechazar
+                </button>
+            </div>
+            <AdminCardCoach
+                coaches={coaches}
+                selectedIds={selectedIds}
+                setSelectedIds={setSelectedIds}
+            />
+            <ToastContainer />
         </div>
     );
 }
-

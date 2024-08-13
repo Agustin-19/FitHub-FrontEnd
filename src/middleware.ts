@@ -7,7 +7,7 @@ interface DecodedToken {
 }
 
 export function middleware(request: NextRequest) {
-    const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+    const token = request.cookies.get("token")?.value || "";
 
     if (!token) {
         const loginUrl = new URL("/", request.url);

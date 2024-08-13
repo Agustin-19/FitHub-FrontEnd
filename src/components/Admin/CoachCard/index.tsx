@@ -1,16 +1,16 @@
+// AdminCardCoach.tsx
 import { useState } from "react";
-import { IUser } from "@/interface/interface";
+import { ICoach } from "@/interface/admin.interface";
 import Image from "next/image";
-import CvCoach from "@/components/Admin/CvCoach";  // Asegúrate de que la ruta es correcta
-import { ICoach, resEnum } from "@/interface/admin.interface";
-import { postSolicitudes } from "@/server/fetchAmin";
+import CvCoach from "@/components/Admin/CvCoach"; 
 
 interface AdminCardCoachProps {
     coaches: ICoach[];
+    selectedIds: string[];
+    setSelectedIds: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export default function AdminCardCoach({ coaches }: AdminCardCoachProps) {
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+export default function AdminCardCoach({ coaches, selectedIds, setSelectedIds }: AdminCardCoachProps) {
     const [selectedCoach, setSelectedCoach] = useState<ICoach | null>(null);
 
     const handleDetailsClick = (coach: ICoach) => {
@@ -25,43 +25,17 @@ export default function AdminCardCoach({ coaches }: AdminCardCoachProps) {
         );
     };
 
-
-    const handleAprobar = async (condicion: resEnum) => {
-        
-        const solicitudes = {
-            coach: selectedIds,
-            plan: [],
-            rutina: []
-        };
-
-        console.log(solicitudes);
-        
-
-        try {
-            const response = await postSolicitudes(solicitudes, condicion);
-            console.log("Respuesta de la aprobación:", response);
-        } catch (error) {
-            console.error("Error al aprobar los planes:", error);
-        }
-    };
-
     const handleClose = () => {
         setSelectedCoach(null);
     };
 
+    if (!Array.isArray(selectedIds)) {
+        console.error("selectedIds no es un array");
+        return null;
+    }
+
     return (
         <div className="flex flex-col gap-6">
-            <div className="flex justify-center gap-3">
-                <button type="submit" onClick={ ()=> handleAprobar(resEnum.ACEPTAR)} className='boton-aprobar'>
-                    Aprobar
-                </button>
-                <button type="submit" onClick={ ()=> handleAprobar(resEnum.CORREGIR)} className='boton-corregir'>
-                    Corregir
-                </button>
-                <button type="submit" onClick={ ()=> handleAprobar(resEnum.DENEGAR)} className='boton-denegar'>
-                    Rechazar
-                </button>
-            </div>
             <div>
                 <div className="overflow-x-auto z-10">
                     <table className="daisy-table">
