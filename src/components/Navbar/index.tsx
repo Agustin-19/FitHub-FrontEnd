@@ -25,11 +25,13 @@ export function Navbar() {
         },
         {
           label: "No",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
   };
+
+  const isAdmin = user?.role === "admin";
 
   return (
     <div className="relative z-10 backdrop-blur-lg border-4 border-[#97D6DF] flex w-full flex-nowrap items-center justify-between py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:flex-wrap lg:justify-start lg:py-4 rounded-lg">
@@ -81,6 +83,16 @@ export function Navbar() {
                 <UserIcon className="w-12 h-12 text-white" />
               </Link>
             </div>
+            {isAdmin && (
+              <div className="flex items-center ms-10 md:me-2">
+                <Link
+                  href="/admin/coachs"
+                  className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
+                >
+                  Admin
+                </Link>
+              </div>
+            )}
             <button
               onClick={handleLogout}
               className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
