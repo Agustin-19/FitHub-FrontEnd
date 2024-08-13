@@ -131,7 +131,6 @@ const CouchDashboard = () => {
           label: "Sí",
           onClick: async () => {
             try {
-              console.log("Plan ID to delete:", planId);
               await delete_Plan(planId);
 
               setPurchasedPlans((prevPlans) =>
@@ -182,7 +181,6 @@ const CouchDashboard = () => {
         {
           label: "No",
           onClick: () => {
-            // Acción a tomar si el usuario decide no eliminar el plan
             console.log("Rutina deletion canceled");
           },
         },

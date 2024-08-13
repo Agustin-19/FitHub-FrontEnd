@@ -80,15 +80,7 @@ export default function Sidebar() {
           <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
           <p>Email: {user.email}</p>
           {/* User */}
-          <ul className="md:hidden items-center flex flex-wrap list-none">
-            <li className="inline-block relative">
-              <NotificationDropdown />
-            </li>
-            <li className="inline-block relative">
-              <UserDropdown />
-            </li>
-          </ul>
-          {/* Collapse */}
+
           <div
             className={
               "md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded " +

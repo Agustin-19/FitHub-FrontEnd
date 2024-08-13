@@ -19,8 +19,6 @@ const LoginLogout = () => {
         email: user.email,
       };
 
-      console.log(user);
-
       // Llamada a la función auth0 una sola vez cuando el usuario esté disponible
       loginAuth0(userData);
     }

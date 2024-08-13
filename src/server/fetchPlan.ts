@@ -29,8 +29,6 @@ export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
     }
     const data = await response.json();
 
-    console.log(data);
-
     return data;
   } catch (err) {
     console.log("Error al obtener los Planes:", err);
@@ -65,9 +63,6 @@ export const createPlan = async (
   token: string
 ): Promise<Response> => {
   try {
-    console.log("Enviando datos a:", `${API}/plan`);
-    console.log("Datos del plan:", plan);
-
     const response = await fetch(`${API}/plan`, {
       method: "POST",
       headers: {

@@ -43,7 +43,6 @@ const Routine = ({ params }: IRoutineProps) => {
     const fetchRutinaID = async () => {
       try {
         const routine: IRutina = await get_RutinaById(id);
-        console.log(routine);
 
         setRutina(routine);
       } catch (err) {
@@ -86,7 +85,6 @@ const Routine = ({ params }: IRoutineProps) => {
       };
 
       const preference = await createRutineOrder(rutinaData);
-      console.log("Preferencia creada:", preference);
       setPreferenceId(preference.id);
     } catch (error) {
       console.log(error);

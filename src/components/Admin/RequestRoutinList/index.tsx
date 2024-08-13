@@ -5,26 +5,25 @@ import { getSolicitudes } from "@/server/fetchAmin";
 import { useState, useEffect } from "react";
 
 export default function RequestRoutineList() {
-    const[routines, setRoutines] = useState<IRutina[]>([]);
+  const [routines, setRoutines] = useState<IRutina[]>([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data: ISolicitudes = await getSolicitudes();
-                console.log("Rutinas:", data.rutinas);  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data: ISolicitudes = await getSolicitudes();
 
-                setRoutines(data.rutinas);
-            } catch (error) {
-                console.error("Error fetching coaches:", error);
-            }
-        };
+        setRoutines(data.rutinas);
+      } catch (error) {
+        console.error("Error fetching coaches:", error);
+      }
+    };
 
-        fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
-    return (
-        <div>
-            <AdminRoutinesCard routines={routines}  />
-        </div>
-    );
+  return (
+    <div>
+      <AdminRoutinesCard routines={routines} />
+    </div>
+  );
 }

@@ -20,7 +20,6 @@ export const fetchAllComents = async (): Promise<IAllComentarios[]> => {
     }
 
     const data = await response.json();
-    // console.log(data);
 
     return data;
   } catch (err) {

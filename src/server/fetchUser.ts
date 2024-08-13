@@ -11,7 +11,6 @@ export const post_LoginAuth0 = async (user: IRegister3ros) => {
   });
   const data = await response.json();
   // const data = "usuario creado";
-  console.log(data);
 
   return data;
 };
@@ -26,7 +25,6 @@ export const postSigup = async (user: IRegisterUser) => {
   });
   // const data = await response.json();
   const data = "usuario creado";
-  console.log(data);
 
   return data;
 };
@@ -41,7 +39,6 @@ export const postSigupCoach = async (user: IRegisterUser) => {
   });
   // const data = await response.json();
   const data = "usuario creado";
-  console.log(data);
 
   return data;
 };

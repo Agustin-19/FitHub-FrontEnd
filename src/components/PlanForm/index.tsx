@@ -235,8 +235,8 @@ export default function Plan() {
     }
   };
 
-  const [latitude, setLatitude] = useState("-26,234187519666648");
-  const [longitude, setLongitude] = useState("-63,336605336144686");
+  const [latitude, setLatitude] = useState("-34.608576");
+  const [longitude, setLongitude] = useState("-58.373641");
   const [
     markerPosition,
     setMarkerPosition,

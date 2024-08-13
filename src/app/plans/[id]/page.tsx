@@ -89,8 +89,6 @@ const PlanDetail = ({ params }: IPlanProps) => {
         quantity: 1,
         unit_price: Number(plan?.price),
       };
-
-      console.log(planData);
       const preference = await createPlanOrder(planData);
       setPreferenceId(preference.id);
     } catch (error) {
@@ -116,7 +114,6 @@ const PlanDetail = ({ params }: IPlanProps) => {
       };
     });
   };
-  console.log("category", plan);
 
   return (
     <div className="relative z-10">

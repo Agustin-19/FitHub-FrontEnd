@@ -30,7 +30,6 @@ export const get_Rutinas = async (
       throw new Error("Error al obtener las rutinas");
     }
     const data = await response.json();
-    // console.log(data);
 
     return data;
   } catch (err) {
@@ -54,7 +53,7 @@ export const createExercise = async (ejercicio: IRutinaEjercicio) => {
     if (!response.ok) {
       throw new Error("Error al crear el ejercicio");
     }
-    console.log("Ejercicio creado correctamente");
+
     return response.json();
   } catch {
     console.log("Error al crear el ejercicio:");
@@ -78,7 +77,6 @@ export const get_Ejercicios = async (): Promise<IRutinaEjercicio[]> => {
     }
 
     const data = await response.json();
-    console.log(data);
 
     return data;
   } catch (err) {
@@ -104,8 +102,6 @@ export const create_Rutina = async (data: ICreateRutina): Promise<void> => {
     if (!response.ok) {
       throw new Error("Error al crear la rutina");
     }
-
-    // console.log('Rutina creada correctamente');
   } catch (err) {
     console.error("Error al crear la rutina:", err);
     throw err;
@@ -124,7 +120,6 @@ export const get_RutinaById = async (id: string): Promise<IRutina> => {
       throw new Error("Error al obtener la rutina");
     }
     const data = await response.json();
-    // console.log(data);
 
     return data;
   } catch (err) {
@@ -177,7 +172,6 @@ export const get_EntreRyPlan = async (id: string): Promise<IGetRutYPlan> => {
       throw new Error("Error al obtener la rutina");
     }
     const data = await response.json();
-    // console.log(data);
 
     return data;
   } catch (err) {

@@ -137,12 +137,9 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const getUserRutinasYPlanes = async (
     userId: string
   ): Promise<IGetRutYPlan | null> => {
-    console.log("userId:", userId);
-
     try {
       const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
-      console.log("Token:", token);
       const response = await fetch(`${API}/users/userpyr/${userId}`, {
         method: "GET",
         headers: {
@@ -156,7 +153,6 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await response.json();
-      console.log("Data:", data);
 
       setRutinas(data.rutinas);
       setActividades(data.subscriptcion);
@@ -171,11 +167,10 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const getCouchRutinasYPlanes = async (
     userId: string
   ): Promise<IGetCouchRutYPlan | null> => {
-    console.log("userId:", userId);
     try {
       const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
-      console.log("Token:", token);
+
       const response = await fetch(`${API}/users/entrenadorpyr/${userId}`, {
         method: "GET",
         headers: {
@@ -183,14 +178,12 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("response:", response);
 
       if (!response.ok) {
         throw new Error("Error al obtener las rutinas y planes");
       }
 
       const data = await response.json();
-      console.log("Data:", data);
 
       setRutinas(data.routineAdmin);
       setActividades(data.planAdmin);
