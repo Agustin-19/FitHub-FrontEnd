@@ -2,8 +2,7 @@
 import { useContext, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
-import CoachDashboard from "@/components/Coach/CoachDashboard";
-import UserDashboard from "@/components/UserDashboard";
+
 import Create from "@/components/Coach/Cards/create";
 import CardStats from "@/components/Coach/Cards/cardstates";
 import NewUsers from "@/components/Coach/Cards/newUsers";

@@ -3,9 +3,8 @@ import SummaryStats from "@/components/SummaryStats";
 import CoachList from "@/components/Coach/CoachList";
 import Link from "next/link";
 import LoginLogout from "@/components/Login-Logout";
-import SearchRutina from "@/components/SearchRutina";
 import { InfoLandingComponent } from "./indexInfo";
-import PlanList from "@/components/PlanList";
+import RutinaListLanding from "@/components/RoutinesList/indexLanding";
 
 export default function LandingPage() {
   return (
@@ -28,20 +27,26 @@ export default function LandingPage() {
         </Link>
       </div>
       <div>
-        <section id="carousel" className="mb-10">
+        <section id="carousel" className="mb-5">
           <Carousel />
         </section>
       </div>
 
-      <div className="my-60">
+      <div id="info" className="mb-5">
         <InfoLandingComponent />
       </div>
-      <section id="programs" className="mb-10">
-        <SearchRutina />
+      <section id="programs" className="mb-5">
+        <div>
+          <h1 className="text-center relative z-[2] text-[#FF3E1A] text-5xl font-extrabold leading-tight bg-clip-text  text-centertext-transparent bg-gradient-to-r from-[#FF3E1A] via-[#FF6F3E] to-[#FF9E3E] shadow-lg mb-12">
+            Algunas de Nuestras Mejores Rutinas
+          </h1>
+          <RutinaListLanding />
+        </div>
       </section>
       <section id="coaches">
         <CoachList />
       </section>
+
       <section>
         <SummaryStats />
       </section>

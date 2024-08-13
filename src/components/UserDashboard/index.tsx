@@ -1,12 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import Link from "next/link";
-import styles from "./UserDasboard.module.css";
-import Image from "next/image";
-import { PencilIcon } from "@heroicons/react/24/outline";
-import imagenPerfil from "../../../public/assets/imagenPerfil.webp";
 import { IPlan } from "@/interface/plan.interface";
-import Sidebar from "./SidebarUser";
 
 interface Routine {
   id: string;
@@ -30,7 +25,8 @@ const UserDashboard = () => {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [purchasedRoutines, setPurchasedRoutines] = useState<Routine[]>([]);
   const [purchasedPlans, setPurchasedPlans] = useState<IPlan[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [errorPlan, setErrorPlan] = useState<string | null>(null);
+  const [errorRutina, setErrorRutina] = useState<string | null>(null);
   const [hasFetchedData, setHasFetchedData] = useState<boolean>(false);
 
   useEffect(() => {
@@ -70,11 +66,12 @@ const UserDashboard = () => {
 
             setPurchasedRoutines(mappedRoutines);
             setPurchasedPlans(mappedPlans);
-            setError(null);
+            setErrorPlan(null);
           } else {
             setPurchasedRoutines([]);
             setPurchasedPlans([]);
-            setError("No se encontraron rutinas ni planes.");
+            setErrorPlan("Aun no has adquirido ninguno de nuestros planes.");
+            setErrorRutina("Aun no has adquirido ninguna de nuestras rutinas.");
           }
           setHasFetchedData(true);
         })
@@ -82,7 +79,7 @@ const UserDashboard = () => {
           console.error("Error fetching routines and plans:", error);
           setPurchasedRoutines([]);
           setPurchasedPlans([]);
-          setError("Error al obtener rutinas y planes.");
+          setErrorRutina("Aun no has adquirido ninguna de nuestras rutinas.");
           setHasFetchedData(true);
         });
     }
@@ -109,46 +106,50 @@ const UserDashboard = () => {
         <h3 className="m-5 text-2xl font-bold text-center">
           Rutinas Compradas
         </h3>
-        <table className="w-full bg-transparent border-collapse">
-          <thead>
-            <tr>
-              <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
-                Rutina
-              </th>
-              <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
-                Precio
-              </th>
-              <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
-                Más
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {purchasedRoutines.map((routine) => (
-              <tr key={routine.id} className="bg-[#97D6DF]/10">
-                <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                  {routine.name}
-                </td>
-                <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                  ${routine.price}
-                </td>
-                <td className="p-4 text-lg text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                  <Link href={`/rutinaComprada/${routine.id}`}>
-                    <button className="relative z-[2] px-6 py-2 m-4 font-bold text-white uppercase transition duration-150 ease-in-out rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
-                      Ver rutina
-                    </button>
-                  </Link>
-                </td>
+        {errorRutina ? (
+          <p className="text-red-500">{errorRutina}</p>
+        ) : purchasedRoutines.length > 0 ? (
+          <table className="w-full bg-transparent border-collapse">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Rutina
+                </th>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Precio
+                </th>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Más
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {purchasedRoutines.map((routine) => (
+                <tr key={routine.id} className="bg-[#97D6DF]/10">
+                  <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    {routine.name}
+                  </td>
+                  <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    ${routine.price}
+                  </td>
+                  <td className="p-4 text-lg text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    <Link href={`/rutinaComprada/${routine.id}`}>
+                      <button className="relative z-[2] px-6 py-2 m-4 font-bold text-white uppercase transition duration-150 ease-in-out rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+                        Ver rutina
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : null}
       </div>
       <br />
       <div className="flex flex-col items-center w-full max-w-4xl">
         <h3 className="m-5 text-2xl font-bold text-center">Planes Comprados</h3>
-        {error ? (
-          <p className="text-red-500">{error}</p>
+        {errorPlan ? (
+          <p className="text-red-500">{errorPlan}</p>
         ) : purchasedPlans.length > 0 ? (
           <table className="w-full bg-transparent border-collapse">
             <thead>
@@ -190,9 +191,7 @@ const UserDashboard = () => {
               ))}
             </tbody>
           </table>
-        ) : (
-          <p className="p-4 text-center">No has comprado ningún plan.</p>
-        )}
+        ) : null}
       </div>
     </div>
   );

@@ -5,24 +5,22 @@ import {
   postSigup,
   getUserRutinas,
   getUserActividades,
-  postSigupCoach,
   post_LoginAuth0,
 } from "../server/fetchUser";
 import {
   IUserConext,
   IloginUserRegister,
-  ICreateRutinaDpto,
   ICreateActividadDpto,
-  IUser,
   ILogin,
   IRutina,
   IRegisterUser,
   IRegister3ros,
+  IRutinaEjercicio,
 } from "../interface/interface";
 import { jwtDecode } from "jwt-decode";
 // import { users } from "../../public/data/user.data";
 import { useRouter } from "next/navigation";
-import { IGetRutYPlan } from "@/interface/plan.interface";
+import { IGetCouchRutYPlan, IGetRutYPlan } from "@/interface/plan.interface";
 
 export const UserContext = createContext<IUserConext>({
   user: null,
@@ -33,11 +31,13 @@ export const UserContext = createContext<IUserConext>({
   signUp: async () => false,
   rutinas: [],
   actividades: [],
+  ejercicios: [],
   logOut: () => {},
   getRutinas: () => {},
   getActividades: () => {},
   setIsLogged: () => {},
   getUserRutinasYPlanes: async () => null,
+  getCouchRutinasYPlanes: async () => null,
 });
 export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -45,6 +45,7 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [rutinas, setRutinas] = useState<IRutina[]>([]);
   const [actividades, setActividades] = useState<ICreateActividadDpto[]>([]);
+  const [ejercicios, setEjercicios] = useState<IRutinaEjercicio[]>([]);
 
   const signUp = async (user: IRegisterUser) => {
     try {
@@ -169,6 +170,44 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const getCouchRutinasYPlanes = async (
+    userId: string
+  ): Promise<IGetCouchRutYPlan | null> => {
+    console.log("userId:", userId);
+    try {
+      const token: string =
+        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+      console.log("Token:", token);
+      const response = await fetch(
+        `http://localhost:3001/users/entrenadorpyr/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response:", response);
+
+      if (!response.ok) {
+        throw new Error("Error al obtener las rutinas y planes");
+      }
+
+      const data = await response.json();
+      console.log("Data:", data);
+
+      setRutinas(data.routineAdmin);
+      setActividades(data.planAdmin);
+      setEjercicios(data.exercise);
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const logOut = () => {
     typeof window !== "undefined" && localStorage.removeItem("user");
     typeof window !== "undefined" && localStorage.removeItem("token");
@@ -208,8 +247,10 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLogged,
         rutinas,
         actividades,
+        ejercicios,
         loginAuth0,
         getUserRutinasYPlanes,
+        getCouchRutinasYPlanes,
       }}
     >
       {children}

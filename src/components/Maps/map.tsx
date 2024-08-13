@@ -28,8 +28,10 @@ const Maps: React.FC<MapsProps> = ({
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<Root | null>(null);
   const [locations, setLocations] = useState(initialLocations);
-  const [markerPosition, setMarkerPosition] =
-    useState<google.maps.LatLngLiteral | null>(null);
+  const [
+    markerPosition,
+    setMarkerPosition,
+  ] = useState<google.maps.LatLngLiteral | null>(null);
 
   useEffect(() => {
     if (mapContainerRef.current && !rootRef.current) {
@@ -125,7 +127,7 @@ const MapsComponent: React.FC<MapsComponentProps> = ({
     >
       <Map
         mapId="a1ad806cecbfeee1"
-        defaultZoom={3}
+        defaultZoom={15}
         defaultCenter={{ lat: latitude, lng: longitude }}
         onCameraChanged={(ev: MapCameraChangedEvent) => {
           const { lat, lng } = ev.detail.center;

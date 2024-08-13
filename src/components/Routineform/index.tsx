@@ -148,7 +148,6 @@ const CreateRutina: React.FC = () => {
         difficultyLevel,
         category,
         price: parseFloat(rutina.price),
-        admin: "5061e26f-3375-41a2-bebf-bea3a9ba49f5",
       };
 
       await create_Rutina(data);
