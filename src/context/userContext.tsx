@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, createContext } from "react";
+import Cookie from 'js-cookie';
 import {
   postSignin,
   postSigup,
@@ -72,6 +73,7 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       // Guarda datos del usuario
       setUser({ ...decodedToken, token: data.token });
 
+      Cookie.set("token", data.token, { expires: 7 }); 
       typeof window !== "undefined" &&
         localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
       typeof window !== "undefined" &&
@@ -98,6 +100,7 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Guarda el rol y otros datos del usuario
       setUser({ ...decodedToken, token: data.token });
+      Cookie.set("token", data.token, { expires: 7 }); 
 
       typeof window !== "undefined" &&
         localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
@@ -199,6 +202,7 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const logOut = () => {
     typeof window !== "undefined" && localStorage.removeItem("user");
     typeof window !== "undefined" && localStorage.removeItem("token");
+    Cookie.remove("token");
     setUser(null);
     setIsLogged(false);
     router.push("/api/auth/logout/");

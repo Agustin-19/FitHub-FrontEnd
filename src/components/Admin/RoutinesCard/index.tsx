@@ -7,10 +7,12 @@ import RoutineDetails from "../RoutinesDetails";
 
 interface AdminRoutineCardProps {
     routines: IRutina[];
+    selectedIds: string[];
+    handleCheckboxChange: (planId: string) => void;
 }
 
-export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+export default function AdminRoutinesCard({ routines, selectedIds, handleCheckboxChange }: AdminRoutineCardProps) {
     const [selectedRoutine, setSelectedRoutine] = useState<IRutina | null>(null);
 
     const imgDefect = "https://img.daisyui.com/images/profile/demo/2@94.webp";
@@ -25,28 +27,6 @@ export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
     };
 
 
-    const handleCheckboxChange = (Id: string) => {
-        setSelectedIds(prevSelectedIds =>
-            prevSelectedIds.includes(Id)
-                ? prevSelectedIds.filter(id => id !== Id)
-                : [...prevSelectedIds, Id]
-        );
-    };
-
-    const handleAprobar = async (condicion: resEnum) => {
-        const solicitudes = {
-            coach: [],
-            plan: [],
-            rutina: selectedIds
-        };
-
-        try {
-            const response = await postSolicitudes(solicitudes, condicion);
-            console.log("Respuesta de la aprobación:", response);
-        } catch (error) {
-            console.error("Error al aprobar los planes:", error);
-        }
-    };
 
     const handleDetailsClick = (routine: IRutina) => {
         setSelectedRoutine(routine);
@@ -61,19 +41,6 @@ export default function AdminRoutinesCard({ routines }: AdminRoutineCardProps) {
             {selectedRoutine && (
                 <RoutineDetails routine={selectedRoutine} onClose={handleCloseDetails} />
             )}
-            <div className="flex justify-center">
-            <div className="flex justify-center gap-3">
-                <button type="submit" onClick={ ()=> handleAprobar(resEnum.ACEPTAR)} className='boton-aprobar'>
-                    Aprobar
-                </button>
-                <button type="submit" onClick={ ()=> handleAprobar(resEnum.CORREGIR)} className='boton-corregir'>
-                    Corregir
-                </button>
-                <button type="submit" onClick={ ()=> handleAprobar(resEnum.DENEGAR)} className='boton-denegar'>
-                    Rechazar
-                </button>
-            </div>
-            </div>
             <div className="overflow-x-auto z-10">
                 <table className="daisy-table">
                     <thead className="text-white">
