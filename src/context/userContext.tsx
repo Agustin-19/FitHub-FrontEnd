@@ -156,6 +156,7 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await response.json();
+      console.log("esta es la data..........", data);
 
       setRutinas(data.rutinas);
       setActividades(data.subscriptcion);

@@ -87,6 +87,8 @@ interface IPlanContextProps {
   error: string | null;
   setError: (error: string) => void;
   getAllPlanes: (params: ISearch) => Promise<IPlan[]>;
+  selectedPlanId: string | null;
+  setSelectedPlanId: (id: string | null) => void;
 }
 
 interface ISearch {

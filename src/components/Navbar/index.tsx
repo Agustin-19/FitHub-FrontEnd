@@ -6,7 +6,7 @@ import Link from "next/link";
 import logo from "../../../public/assets/navbar/logo.png";
 import { UserContext } from "@/context/userContext";
 import { UserIcon } from "@heroicons/react/24/outline";
-import { IloginUserRegister } from "@/interface/interface";
+
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
@@ -25,7 +25,7 @@ export function Navbar() {
         },
         {
           label: "No",
-          onClick: () => { },
+          onClick: () => {},
         },
       ],
     });

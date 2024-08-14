@@ -7,7 +7,8 @@ export const createRutineOrder = async (routineData: {
   quantity: number;
   unit_price: number | undefined;
 }) => {
-  const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+  const token: string =
+    (typeof window !== "undefined" && localStorage.getItem("token")) || "";
   try {
     const response = await fetch(`${API}/rutina/create-order`, {
       method: "POST",
@@ -37,7 +38,8 @@ export const createPlanOrder = async (planData: {
   quantity: number;
   unit_price: number | undefined;
 }) => {
-  const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+  const token: string =
+    (typeof window !== "undefined" && localStorage.getItem("token")) || "";
   try {
     const response = await fetch(`${API}/plan/create-order`, {
       method: "POST",

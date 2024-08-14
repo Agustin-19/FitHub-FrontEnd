@@ -6,6 +6,8 @@ import UserDropdown from "@/components/Coach/Dropdown/dropdown";
 import imagenPerfil from "../../../../public/assets/imagenPerfil.webp";
 import Image from "next/image";
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { uploadProfileAvatar } from "@/server/fetchFile";
+import { IloginUserRegister } from "@/interface/interface";
 
 type Routine = {
   id: string;
@@ -13,35 +15,47 @@ type Routine = {
   progress: number;
 };
 
-interface IUserConext {
-  user: {
-    rutinas: Routine[];
-    fotosPerfil?: string[];
-    name: string;
-    email: string;
-    address: string;
-    city: string;
-  } | null;
-}
-
 export default function SidebarUser() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const [avatar, setAvatar] = useState<string | null>(null);
-  const userContext = useContext(UserContext) as IUserConext;
-  const { user } = userContext;
+  const { user, setUser } = useContext(UserContext) as {
+    user: IloginUserRegister | null;
+    setUser: React.Dispatch<React.SetStateAction<IloginUserRegister | null>>;
+  };
+
+  console.log("______________", user);
 
   if (!user) return <p>Loading...</p>;
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+  const handleUploadAvatar = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      try {
+        const response = await uploadProfileAvatar(file);
+        console.log("Image uploaded successfully:", response.imgUrl);
+        setAvatar(response.imgUrl);
+        setUser((prevUser: any) => ({
+          ...prevUser,
+          imgUrl: response.imgUrl,
+        }));
+
+        // Actualiza la URL de la imagen en el almacenamiento local
+        if (typeof window !== "undefined") {
+          const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...currentUser, imgUrl: response.imgUrl })
+          );
+        }
+      } catch (error) {
+        console.error("Error al subir la imagen de perfil:", error);
+      }
     }
   };
+
+  const profileImage = avatar || user.imgUrl || imagenPerfil;
 
   return (
     <>
@@ -52,28 +66,29 @@ export default function SidebarUser() {
               Volver
             </button>
           </Link>
-          {/* Brand */}
-          <Image
-            src={avatar || imagenPerfil}
-            alt="Avatar"
-            width={500}
-            height={80}
-            className="rounded-full object-cover"
-          />
-          <label
-            htmlFor="file-input"
-            className="pencil-icon cursor-pointer mt-4"
-          >
-            <PencilIcon className="w-6 h-6 text-white bg-[#FF3E1A] rounded-full p-1" />
-          </label>
+          <div className="flex flex-col items-center">
+            <Image
+              src={profileImage}
+              alt="Avatar"
+              width={100}
+              height={100}
+              className="rounded-full object-cover"
+            />
+            <label
+              htmlFor="file-input"
+              className="pencil-icon cursor-pointer mt-4"
+            >
+              <PencilIcon className="w-6 h-6 text-white bg-[#FF3E1A] rounded-full p-1" />
+            </label>
 
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              onChange={handleUploadAvatar}
+              className="hidden"
+            />
+          </div>
           <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
 
           <p>Email: {user.email}</p>
