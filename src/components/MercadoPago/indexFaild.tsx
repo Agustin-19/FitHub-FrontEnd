@@ -1,6 +1,67 @@
+"use client";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useEffect } from "react";
+import { API } from "@/helpers/helper";
 
 export function MercadoPagoFaild() {
+  const searchParams = useSearchParams();
+
+  const collection_id = searchParams.get("collection_id");
+  const collection_status = searchParams.get("collection_status");
+  const payment_id = searchParams.get("payment_id");
+  const status = searchParams.get("status");
+  const external_reference = searchParams.get("external_reference");
+  const payment_type = searchParams.get("payment_type");
+  const merchant_order_id = searchParams.get("merchant_order_id");
+  const preference_id = searchParams.get("preference_id");
+  const site_id = searchParams.get("site_id");
+  const processing_mode = searchParams.get("processing_mode");
+  const merchant_account_id = searchParams.get("merchant_account_id");
+
+  const data = {
+    collection_id,
+    collection_status,
+    payment_id,
+    status,
+    external_reference,
+    payment_type,
+    merchant_order_id,
+    preference_id,
+    site_id,
+    processing_mode,
+    merchant_account_id,
+  };
+
+  useEffect(() => {
+    async function sendDataToBackend() {
+      const token: string =
+        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+      try {
+        const response = await fetch(`${API}/plan/webhook`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        console.log("Data sent to backend successfully:", data);
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const result = await response.json();
+        console.log("Data sent to backend successfully:", result);
+      } catch (error) {
+        console.error("Error sending data to backend:", error);
+      }
+    }
+
+    sendDataToBackend();
+  }, [data]);
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-black rounded-3xl my-5 mx-80">
       <svg

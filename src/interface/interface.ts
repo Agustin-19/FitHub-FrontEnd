@@ -61,6 +61,7 @@ interface IloginUserRegister {
   user: Partial<IUser> | null;
   sub: string;
   email ?: string;
+  imgUrl ?: string;
 }
 
 interface IUserConext {
@@ -190,33 +191,33 @@ interface IErrorsRegister {
 
 //Comentarios
 
-interface IAllComentarios {
-  description: string;
-  score: number;
-  routine: string;
-  id: string;
-  isActive: boolean;
-  date: string;
-}
+// interface IAllComentarios {
+//   description: string;
+//   score: number;
+//   routine: string;
+//   id: string;
+//   isActive: boolean;
+//   date: string;
+// }
 
-interface IComentarioRutina {
-  routine: string;
-  description: string;
-  score: number;
-  isActive: boolean;
-}
+// interface IComentarioRutina {
+//   routine: string;
+//   description: string;
+//   score: number;
+//   isActive: boolean;
+// }
 
-interface IComentarioPlan {
-  planId: string;
-  description: string;
-  score: number;
-  isActive: boolean;
-}
+// interface IComentarioPlan {
+//   planId: string;
+//   description: string;
+//   score: number;
+//   isActive: boolean;
+// }
 
 export type {
-  IAllComentarios,
-  IComentarioPlan,
-  IComentarioRutina,
+  // IAllComentarios,
+  // IComentarioPlan,
+  // IComentarioRutina,
   IUser,
   ILogin,
   IloginUserRegister,

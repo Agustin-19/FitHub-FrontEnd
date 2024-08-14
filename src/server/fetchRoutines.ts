@@ -149,6 +149,7 @@ export const getUserRutinasYPlanes = async (
     }
 
     const data: IGetRutYPlan = await response.json();
+    console.log(data);
 
     return data;
   } catch (error) {
@@ -171,8 +172,10 @@ export const get_EntreRyPlan = async (id: string): Promise<IGetRutYPlan> => {
     if (!response.ok) {
       throw new Error("Error al obtener la rutina");
     }
-    const data = await response.json();
+    console.log(response);
 
+    const data = await response.json();
+    console.log("esta es la data..........", data);
     return data;
   } catch (err) {
     console.log("Error al obtener la rutina:", err);
