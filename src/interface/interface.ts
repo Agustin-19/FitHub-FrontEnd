@@ -107,7 +107,7 @@ export interface ICreateRutina {
   exercise: string[];
 }
 
-export interface ICreateRutina {
+export interface ICreateRutinaDto {
   name: string;
   description: string;
   precio?: number;
