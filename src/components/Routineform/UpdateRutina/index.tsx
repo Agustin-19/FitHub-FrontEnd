@@ -132,7 +132,7 @@ const UpdateRutina: React.FC<UpdateRutinaProps> = ({ id }) => {
             const data = {
                 name,
                 description: descripcion,
-                imgUrl: imageUrls,
+                imgUrl: Array.isArray(imageUrls) ? imageUrls : [imageUrls],
                 exercise,
                 difficultyLevel,
                 category,
