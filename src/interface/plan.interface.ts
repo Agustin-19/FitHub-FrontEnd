@@ -37,6 +37,24 @@ interface IPlan {
   imgUrl: string;
 }
 
+interface IPlanUpdate {
+  id?: string;
+  name: string;
+  description: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  difficultyLevel?: string;
+  admin?: string;
+  category?: string[];
+  categoryToUpdate: string[];
+  check?: boolean;
+  date?: string;
+  isActive?: boolean;
+  price: number;
+  imgUrl: string;
+}
+
 interface ICategory {
   id: string;
   name: string;
@@ -90,4 +108,5 @@ export type {
   IRutinaContextProps,
   ISearch,
   IPlanContextProps,
+  IPlanUpdate
 };

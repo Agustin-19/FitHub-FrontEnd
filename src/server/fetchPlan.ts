@@ -3,6 +3,7 @@ import {
   ICategory,
   ICreatePlan,
   IPlan,
+  IPlanUpdate,
   ISearch,
 } from "@/interface/plan.interface";
 
@@ -76,8 +77,7 @@ export const createPlan = async (
       throw new Error(`Error en la solicitud: ${response.statusText}`);
     }
 
-    const data = await response.json();
-    console.log("Respuesta del servidor:", data);
+    console.log("Respuesta del servidor:", response);
 
     return response;
   } catch (error) {
@@ -94,14 +94,16 @@ export const get_PlanById = async (id: string): Promise<IPlan> => {
         "Content-Type": "application/json",
       },
     });
+
     if (!response.ok) {
-      throw new Error("Error al obtener la rutina");
+      throw new Error(`Error al obtener el plan: ${response.statusText}`);
     }
-    const data = await response.json();
+
+    const data: IPlan = await response.json();
     return data;
   } catch (err) {
-    console.error("Error al obtener la rutina:", err);
-    throw err;
+    console.error("Error al obtener el plan:", err);
+    throw new Error("Hubo un problema al obtener el plan, intenta nuevamente.");
   }
 };
 
@@ -128,5 +130,26 @@ export const delete_Plan = async (id: string): Promise<Response> => {
   }
 };
 
-// /rutinna
-// params de rutina Id e iniciado secion
+export const update_Plan = async (
+  id: string,
+  plan: IPlanUpdate,
+  token: string) => {
+  try {
+    const response = await fetch(`${API}/plan/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(plan),
+    });
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.statusText}`);
+    }
+
+
+    return response;
+  } catch {
+    console.error("Error en updatePlan:");
+  }
+}
