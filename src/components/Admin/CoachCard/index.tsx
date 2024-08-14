@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { ICoach } from "@/interface/admin.interface";
 import Image from "next/image";
-import CvCoach from "@/components/Admin/CvCoach"; 
+import CvCoach from "@/components/Admin/CvCoach";
 
 interface AdminCardCoachProps {
     coaches: ICoach[];
@@ -44,7 +44,7 @@ export default function AdminCardCoach({ coaches, selectedIds, setSelectedIds }:
                             <tr>
                                 <th>
                                     <label>
-                                        Aprobar
+                                        Seleccionar
                                     </label>
                                 </th>
                                 <th>Nombre</th>
@@ -58,12 +58,12 @@ export default function AdminCardCoach({ coaches, selectedIds, setSelectedIds }:
                                 <tr key={coach.id}>
                                     <th>
                                         <label>
-                                        <input
-                                            type="checkbox"
-                                            className="daisy-checkbox"
-                                            checked={selectedIds.includes(coach.id)}
-                                            onChange={() => handleCheckboxChange(coach.id)}
-                                        />
+                                            <input
+                                                type="checkbox"
+                                                className="daisy-checkbox border-white"
+                                                checked={selectedIds.includes(coach.id)}
+                                                onChange={() => handleCheckboxChange(coach.id)}
+                                            />
                                         </label>
                                     </th>
                                     <td>
@@ -109,7 +109,11 @@ export default function AdminCardCoach({ coaches, selectedIds, setSelectedIds }:
                         </tbody>
                         <tfoot className="text-white">
                             <tr>
-                                <th></th>
+                                <th>
+                                    <label>
+                                        Seleccionar
+                                    </label>
+                                </th>
                                 <th>Nombre</th>
                                 <th>Email</th>
                                 <th>Solicitud</th>

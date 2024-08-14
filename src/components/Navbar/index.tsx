@@ -43,7 +43,7 @@ export function Navbar() {
           <Image src={logo} alt="Logo" width={100} height={100} />
           <h1 className="text-3xl font-bold ms-3 text-[#FF3E1A]">-FITHUB-</h1>
         </Link>
-        <div className="flex-grow flex justify-center space-x-4 lg:space-x-8">
+        <div className="flex-grow flex justify-center lg:space-x-8">
           <Link
             href="/home/homeRutinas"
             className="relative rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:outline-none dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722]"

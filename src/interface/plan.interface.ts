@@ -16,7 +16,7 @@ interface ICreatePlan {
   latitude: number;
   longitude: number;
   difficultyLevel: string;
-  imgUrl: string[];
+  imgUrl: string;
   price: number;
 }
 

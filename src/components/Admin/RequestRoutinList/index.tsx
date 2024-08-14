@@ -3,12 +3,10 @@ import AdminRoutinesCard from "../RoutinesCard";
 import { IRutina } from "@/interface/interface";
 import { getSolicitudes, postSolicitudes } from "@/server/fetchAmin";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function RequestRoutineList() {
-    const router = useRouter();
     const [routines, setRoutines] = useState<IRutina[]>([]);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
@@ -45,6 +43,7 @@ export default function RequestRoutineList() {
         try {
             const response = await postSolicitudes(solicitudes, condicion);
             console.log("Respuesta de la aprobación:", response);
+            setSelectedIds([]); 
 
             if (response.ok) {
                 toast.success("Correcto", {
@@ -56,8 +55,8 @@ export default function RequestRoutineList() {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
+                    onClose: () => window.location.reload(),
                 });
-                router.push("/admin/routines");
             } else {
                 toast.error("Error", {
                     position: "top-right",
@@ -71,8 +70,17 @@ export default function RequestRoutineList() {
                 });
             }
 
-
         } catch (error) {
+            toast.error("Error al aprobar las rutinas", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             console.error("Error al aprobar las rutinas:", error);
         }
     };
@@ -97,6 +105,7 @@ export default function RequestRoutineList() {
                 selectedIds={selectedIds}
                 handleCheckboxChange={handleCheckboxChange}
             />
+            <ToastContainer />
         </div>
     );
 }

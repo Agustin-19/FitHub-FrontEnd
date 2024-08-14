@@ -47,7 +47,7 @@ export default function AdminRoutinesCard({ routines, selectedIds, handleCheckbo
                         <tr>
                             <th>
                                 <label>
-                                    <input type="checkbox" className="daisy-checkbox" />
+                                    Seleccionar
                                 </label>
                             </th>
                             <th>Rutina</th>
@@ -63,7 +63,7 @@ export default function AdminRoutinesCard({ routines, selectedIds, handleCheckbo
                                     <label>
                                         <input
                                             type="checkbox"
-                                            className="daisy-checkbox"
+                                            className="daisy-checkbox border-white"
                                             checked={selectedIds.includes(rutina.id)}
                                             onChange={() => handleCheckboxChange(rutina.id)}
                                         />
@@ -116,7 +116,11 @@ export default function AdminRoutinesCard({ routines, selectedIds, handleCheckbo
                     </tbody>
                     <tfoot className="text-white">
                         <tr>
-                            <th></th>
+                            <th>
+                                <label>
+                                    Seleccionar
+                                </label>
+                            </th>
                             <th>Rutina</th>
                             <th>Categoría y Dificultad</th>
                             <th>Precio</th>
