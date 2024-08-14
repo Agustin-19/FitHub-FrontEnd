@@ -76,7 +76,7 @@ ul {
 }
 
 .boton-aprobar{
-  @apply rounded-full border-2 border-[#112d31] bg-[#1fa741] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#22ffe2] focus:bg-[#1af0ff] focus:outline-none focus:ring-0 active:bg-[#37e231];
+  @apply rounded-full border-2 border-[#112d31] bg-[#22b346] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#43aa23] focus:bg-[#1af0ff] focus:outline-none focus:ring-0 active:bg-[#37e231];
 }
 
 .boton-corregir{
@@ -84,12 +84,15 @@ ul {
 }
 
 .boton-denegar{
-  @apply rounded-full border-2 border-[#112d31] bg-[#a73a1f] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#ff2d2d] focus:bg-[#ff3c1a] focus:outline-none focus:ring-0 active:bg-[#ff2121];
+  @apply rounded-full border-2 border-[#112d31] bg-[#df2a2a] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#ff2d2d] focus:bg-[#ff3c1a] focus:outline-none focus:ring-0 active:bg-[#ff2121];
 }
 
 
 .navbar {
-  @apply fixed top-36 mx-0 left-0 right-0 z-50 bg-[--fondo] border-2 border-[#97D6DF];
+  @apply fixed top-36 mx-0 left-0 right-0 z-20 bg-[--fondo] border-2 border-[#97D6DF];
+}
+.menu {
+  @apply flex flex-col items-center justify-center;
 }
 
 .navbar-boton {
@@ -100,20 +103,22 @@ ul {
   @apply bg-gray-500 text-white;
 }
 
+
+
 .count.red {
-  color: red; /* Color cuando el número es mayor a cero */
+  color: red; 
 }
 
 .count.hidden {
-  display: none; /* Oculta el número cuando es cero */
+  display: none; 
 }
 
 .count {
-  color: #000; /* Color por defecto */
+  color: #000; 
 }
 
 .active {
-  @apply bg-gray-400 text-[--titulos];
+  @apply bg-gray-400 text-[--botones];
 }
 
 .sticky {

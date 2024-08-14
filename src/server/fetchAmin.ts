@@ -84,3 +84,53 @@ export const createCategory = async (cat: { name: string }) => {
     throw err;
   }
 };
+
+
+export const create_Admin = async (email: string, token: string) => {
+
+  try {
+    const response = await fetch(`${API}/superadmin/create`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al crear admin");
+    }
+
+    return await response;
+  } catch (err) {
+    console.log("Error al crear admin:", err);
+    throw err;
+  }
+}
+
+export const delete_Admin = async (email: string, token: string) => {
+
+  try {
+    const response = await fetch(`${API}/superadmin/delete`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      console.log(response.text);
+      
+      throw new Error("Error al eliminar admin");
+    }
+
+    return await response;
+  } catch (err) {
+    console.log("Error al eliminar admin:", err);
+    throw err;
+  
+  }
+}
