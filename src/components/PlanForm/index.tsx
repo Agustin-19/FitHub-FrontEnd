@@ -189,8 +189,11 @@ export default function Plan() {
         difficultyLevel,
         category: [category],
         price: parseFloat(price),
-        imgUrl: [fileUrl],
+        imgUrl: fileUrl[0],
       };
+
+      console.log(Data);
+      
 
       const response = await createPlan(Data, token);
       if (response.ok) {

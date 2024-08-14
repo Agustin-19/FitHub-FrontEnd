@@ -1,15 +1,12 @@
-// RequestCoachList.tsx
 'use client'
 import AdminCardCoach from '@/components/Admin/CoachCard';
 import { useState, useEffect } from 'react';
 import { getSolicitudes, postSolicitudes } from '@/server/fetchAmin';
 import { ICoach, ISolicitudes, resEnum } from '@/interface/admin.interface';
-import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function RequestCoachList() {
-    const router = useRouter();
     const [coaches, setCoaches] = useState<ICoach[]>([]);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
@@ -37,7 +34,7 @@ export default function RequestCoachList() {
             const response = await postSolicitudes(solicitudes, condicion);
             console.log("Respuesta de la aprobación:", response);
             setSelectedIds([]);
-            
+
             if (response.ok) {
                 toast.success("Correcto", {
                     position: "top-right",
@@ -48,8 +45,8 @@ export default function RequestCoachList() {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
+                    onClose: () => window.location.reload(),
                 });
-                router.push("/admin/coachs");
             } else {
                 toast.error("Error", {
                     position: "top-right",

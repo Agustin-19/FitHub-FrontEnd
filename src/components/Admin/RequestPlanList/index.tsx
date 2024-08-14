@@ -44,6 +44,7 @@ export default function RequestPlanList() {
         try {
             const response = await postSolicitudes(solicitudes, condicion);
             console.log("Respuesta de la aprobación:", response);
+            setSelectedIds([]); 
 
             if (response.ok) {
                 toast.success("Correcto", {
@@ -55,8 +56,8 @@ export default function RequestPlanList() {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
+                    onClose: () => window.location.reload(),
                 });
-                router.push("/admin/plans");
             } else {
                 toast.error("Error", {
                     position: "top-right",

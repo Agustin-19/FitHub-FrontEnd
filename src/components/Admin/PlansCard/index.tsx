@@ -24,9 +24,13 @@ export default function AdminPlanCard({ plans, selectedIds, handleCheckboxChange
             <table className="daisy-table">
                 <thead className="text-white">
                     <tr>
-                        <th></th>
+                        <th>
+                            <label>
+                                Seleccionar
+                            </label>
+                        </th>
                         <th>Plan</th>
-                        <th>Descripción</th> 
+                        <th>Descripción</th>
                         <th>Categoría</th>
                         <th>Locación</th>
                         <th>Dificultad</th>
@@ -96,7 +100,11 @@ export default function AdminPlanCard({ plans, selectedIds, handleCheckboxChange
                 </tbody>
                 <tfoot className="text-white">
                     <tr>
-                        <th></th>
+                        <th>
+                            <label>
+                                Seleccionar
+                            </label>
+                        </th>
                         <th>Plan</th>
                         <th>Descripción</th>
                         <th>Categoría</th>
