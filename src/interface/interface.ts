@@ -101,7 +101,7 @@ export interface ICreateRutina {
   name: string;
   description: string;
   precio?: number;
-  imgUrl?: string;
+  imgUrl?: string[];
   category: string[];
   difficultyLevel: Dificultad;
   exercise: string[];
