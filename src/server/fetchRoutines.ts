@@ -202,3 +202,31 @@ export const delete_Rutina = async (id: string): Promise<Response> => {
     throw new Error("Error deleting rutina");
   }
 };
+
+export const put_Rutina = async (
+  id: string,
+  routine: ICreateRutina
+) => {
+  try {
+    const token: string =
+      (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+    const response = await fetch(`${API}/rutina/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(routine)
+    });
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.statusText}`);
+    }
+    const data = await response.text();
+    console.log("Respuesta del servidor:", data);
+    return response;
+  } catch (error) {
+    console.error("Error en update Rutina:", error);
+    throw new Error("Error update rutina");
+  }
+};
+
