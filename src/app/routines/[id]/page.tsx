@@ -9,6 +9,7 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { get_RutinaById } from "@/server/fetchRoutines";
 import { createRutineOrder } from "@/server/fetchMercadoPago";
 import Link from "next/link";
+import ComentariosCard from "@/components/ComentariosCard";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -24,24 +25,25 @@ interface IRoutineProps {
 }
 
 const Routine = ({ params }: IRoutineProps) => {
-  const [selectedEjercicio, setSelectedEjercicio] =
-    useState<IRutinaEjercicio | null>(null);
-  const [isPurchased, setIsPurchased] = useState(false);
+  const [
+    selectedEjercicio,
+    setSelectedEjercicio,
+  ] = useState<IRutinaEjercicio | null>(null);
   const { isLogged, user } = useContext(UserContext);
 
   const id = params.id;
-  const [routine, setRutina] = useState<IRutina>();
+  const [routine, setRutina] = useState<IRutina | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
-
   const [preferenceId, setPreferenceId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRutinaID = async () => {
       try {
-        const routine = await get_RutinaById(id);
+        const routine: IRutina = await get_RutinaById(id);
+
         setRutina(routine);
       } catch (err) {
         setError("Error al obtener las rutinas");
@@ -73,18 +75,14 @@ const Routine = ({ params }: IRoutineProps) => {
       return;
     }
 
-    //     setIsPurchased(true);
-    //     alert(`Rutina ${routine?.name} comprada!`);
-
     try {
       const rutinaData = {
         id: user?.sub,
         rutinaId: id,
         title: routine?.name,
         quantity: 1,
-        unit_price: routine?.price,
+        unit_price: Number(routine?.price),
       };
-      console.log(rutinaData);
 
       const preference = await createRutineOrder(rutinaData);
       setPreferenceId(preference.id);
@@ -112,20 +110,24 @@ const Routine = ({ params }: IRoutineProps) => {
   return (
     <div>
       <Link href="/home/homeRutinas">
-        <button className="mt-4 relative z-10 rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+        <button className="m-4 relative z-10 rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
         </button>
       </Link>
-      <div className=" relative z-10">
-        <div className=" p-4 rounded-lg ">
-          <div className=" flex justify-center gap-5">
+      <div className="relative z-10">
+        <div className="p-4 rounded-lg">
+          <div className="flex justify-center gap-5">
             <div className="m-3">
               <h2 className="text-2xl font-bold text-titulos mb-4">
                 {routine?.name}
               </h2>
               <div className="relative object-contain w-40 h-40 rounded-t-lg">
                 <Image
-                  src={routine?.imgUrl || imgDefect}
+                  src={
+                    routine?.imgUrl && routine.imgUrl.length > 0
+                      ? routine.imgUrl[0]
+                      : imgDefect
+                  }
                   alt={routine?.name || "imagen por defecto"}
                   fill={true}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -134,9 +136,14 @@ const Routine = ({ params }: IRoutineProps) => {
                 />
               </div>
             </div>
-            <div className="m-5 ">
+            <div className="m-5">
               <p className="my-4">{routine?.description}</p>
-              <h3 className="text-sm font-semibold mb-2">Ejercicios</h3>
+              <h3 className="text-sm font-semibold mb-2">
+                Categoría/s:{" "}
+                {routine?.category && routine.category.length > 0
+                  ? routine.category.map((cat) => cat.name).join(", ")
+                  : "Sin categoría"}
+              </h3>
               <h3 className="text-xl font-semibold mb-2">
                 Precio: ${routine?.price}
               </h3>
@@ -158,58 +165,28 @@ const Routine = ({ params }: IRoutineProps) => {
             {routine?.exercise?.map((ejercicio) => (
               <li
                 key={ejercicio.id}
-                className="mb-2 border-2 border-[--titulo]"
+                className="mx-40 my-5 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg"
               >
-                <div className="flex gap-3 align-middle">
-                  <div className="m-2 text-center">
-                    <h4 className="font-bold m-1">{ejercicio.titulo}</h4>
-                    <div className="relative object-contain w-40 h-40 rounded-t-lg">
+                <div className="flex gap-3 align-middle m-3">
+                  <div className="text-center">
+                    <h4 className="font-bold text-3xl m-2">
+                      {ejercicio.titulo}
+                    </h4>
+                    <div className="relative object-contain w-40 h-40">
                       <Image
                         src={getImageSrc(ejercicio.imgUrl)}
                         alt={ejercicio.titulo}
                         fill={true}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         priority={true}
-                        className="rounded-t-lg"
+                        className="rounded-lg"
                       />
                     </div>
-                    {isPurchased ? (
-                      <button
-                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                        onClick={() => setSelectedEjercicio(ejercicio)}
-                      >
-                        Ver Video
-                      </button>
-                    ) : (
-                      <button
-                        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                        onClick={() => alert("Debes comprar la rutina")}
-                      >
-                        Ver Video
-                      </button>
-                    )}
                   </div>
-                  <div className=" text-center m-3 mt-10">
-                    <p>{ejercicio.descripcion}</p>
-                  </div>
-                  {isPurchased ? (
-                    <button
-                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                      onClick={() => setSelectedEjercicio(ejercicio)}
-                    >
-                      Ver Video
-                    </button>
-                  ) : (
-                    <button
-                      className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                      onClick={() => alert("Debes comprar la rutina")}
-                    >
-                      Ver Video
-                    </button>
-                  )}
-                </div>
-                <div className=" text-center m-3 mt-10">
-                  <p>{ejercicio.descripcion}</p>
+                  <p className="flex items-center ml-24 text-2xl">
+                    Para ver el Detalle del ejercicio debes realizar la compra
+                    de la rutina: {routine?.name}
+                  </p>
                 </div>
               </li>
             ))}
@@ -220,6 +197,11 @@ const Routine = ({ params }: IRoutineProps) => {
               onClose={() => setSelectedEjercicio(null)}
             />
           )}
+        </div>
+        <div className="mx-80 my-10 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg">
+          <h3 className="text-4xl font-semibold mb-2">Opiniones destacadas</h3>
+
+          <ComentariosCard />
         </div>
       </div>
     </div>

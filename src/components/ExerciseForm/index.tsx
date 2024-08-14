@@ -4,17 +4,20 @@ import styles from "./exerciseform.module.css";
 import { useRouter } from "next/navigation";
 import { uploaFile } from "@/server/fetchFile";
 import { createExercise } from "../../server/fetchRoutines";
-import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ExerciseForm() {
   const router = useRouter();
   const [ejercicio, setEjercicio] = useState({
     titulo: "",
     descripcion: "",
-    imgUrl: [""], // Ahora es un string que almacenará la URL del archivo
+    imgUrl: [""],
+    videoUrl: "",
   });
 
-  const [files, setFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -25,8 +28,13 @@ export default function ExerciseForm() {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
+    const { id, files } = e.target;
+    if (files && files.length > 0) {
+      if (id === "imageFile") {
+        setImageFile(files[0]);
+      } else if (id === "videoFile") {
+        setVideoFile(files[0]);
+      }
     }
   };
 
@@ -36,46 +44,98 @@ export default function ExerciseForm() {
     const { titulo, descripcion } = ejercicio;
 
     if (!titulo) {
-      alert("Por favor ingresa un título.");
+      toast.error("Por favor ingresa un título.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
     if (!descripcion) {
-      alert("Por favor ingresa una descripción.");
+      toast.error("Por favor ingresa una descripción.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
-    if (!files) {
-      alert("Por favor selecciona un archivo primero.");
+    if (!imageFile) {
+      toast.error("Por favor selecciona una imagen primero.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       return;
     }
-    console.log(files);
 
     try {
-      // Primero, sube el archivo para obtener una URL
-      const fileUrl: string[] = await uploaFile(files);
+      let videoUrl = "";
+      if (videoFile) {
+        // Primero, sube el video para obtener una URL
+        const videoUrls = await uploaFile(videoFile);
+        videoUrl = videoUrls[0];
+      }
+
+      // Luego, sube la imagen para obtener una URL
+      const imageUrls = await uploaFile(imageFile);
+      const imgUrl = imageUrls[0];
 
       const ejercicioData = {
         titulo,
         descripcion,
-        imgUrl: fileUrl,
+        imgUrl: [imgUrl],
+        videoUrl,
       };
-
-      console.log(ejercicioData);
 
       // Luego, crea el ejercicio con la URL del archivo
       await createExercise(ejercicioData);
-      router.push("/dashboard");
+
+      toast.success("Ejercicio creado exitosamente", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      setTimeout(() => {
+        router.push("/dashboard/create");
+      }, 3500);
     } catch (error) {
-      return "error al subir el archivo";
+      toast.error("Error al subir el archivo", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      console.error("Error al subir el archivo", error);
     }
   };
 
   return (
     <div>
-      <Link href="/dashboard">
-        <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
-          Volver
-        </button>
-      </Link>
       <div className={styles.container}>
         <form className={styles.form} onSubmit={handleSubmit}>
           <h1
@@ -84,7 +144,7 @@ export default function ExerciseForm() {
           >
             Crear Ejercicio
           </h1>
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
+          <label id="login-lable" className="text-[#97D6DF] " htmlFor="titulo">
             Título:
           </label>
           <input
@@ -94,7 +154,11 @@ export default function ExerciseForm() {
             value={ejercicio.titulo}
             onChange={handleChange}
           />
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
+          <label
+            id="login-lable"
+            className="text-[#97D6DF] "
+            htmlFor="descripcion"
+          >
             Descripción:
           </label>
           <input
@@ -104,13 +168,30 @@ export default function ExerciseForm() {
             value={ejercicio.descripcion}
             onChange={handleChange}
           />
-          <label id="login-lable" className="text-[#97D6DF] " htmlFor="name">
-            Sube Tu Ejercicio Aqui:
+          <label
+            id="login-lable"
+            className="text-[#97D6DF] "
+            htmlFor="videoFile"
+          >
+            Sube Tu Video Aqui (opcional):
           </label>
           <input
             className={styles.input}
             type="file"
-            id="file"
+            id="videoFile"
+            onChange={handleFileChange}
+          />
+          <label
+            id="login-lable"
+            className="text-[#97D6DF] "
+            htmlFor="imageFile"
+          >
+            Sube Tu Imagen Aqui:
+          </label>
+          <input
+            className={styles.input}
+            type="file"
+            id="imageFile"
             onChange={handleFileChange}
           />
           <div className="flex justify-center">
@@ -120,6 +201,7 @@ export default function ExerciseForm() {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

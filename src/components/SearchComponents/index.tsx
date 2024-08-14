@@ -141,12 +141,12 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   return (
     <div className={styles.container}>
       <Link href="/home">
-        <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+        <button className="m-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
           Volver
         </button>
       </Link>
       <div className="text-center z-10 ">
-        <div className="flex justify-center space-x-4 mb-8">
+        <div className="flex justify-center items-center space-x-4 mb-8">
           <span
             className="text-5xl font-bold stroke-text text-[#FF3E1A] animate-fadeIn"
             data-text="Explora nuestros"
@@ -154,10 +154,10 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
             Explora nuestras
           </span>
           <span className="text-6xl font-bold text-[#97D6DF] animate-fadeIn">
-            Rutinas para
+            diversas opciones para
           </span>
           <span className="text-5xl font-bold text-[#FF3E1A] animate-fadeIn">
-            Dar forma a tu cuerpo
+            dar forma a tu cuerpo
           </span>
         </div>
       </div>
@@ -181,9 +181,9 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
                 <path
                   d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
                   stroke="currentColor"
-                  stroke-width="1.333"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
               </svg>
             </button>
@@ -207,8 +207,8 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M6 18L18 6M6 6l12 12"
                 ></path>
               </svg>

@@ -1,3 +1,4 @@
+'use client'
 import { RutinaContext } from "@/context/trainingContext";
 import { useContext } from "react";
 import RutinaList from "../RoutinesList";

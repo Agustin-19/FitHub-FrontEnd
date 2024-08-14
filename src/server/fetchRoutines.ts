@@ -17,7 +17,6 @@ export const get_Rutinas = async (
   const sea = queryString?.search || "";
 
   const arg = `limit=${lim}&page=${pag}&category=${cat}&location=${loc}&difficultyLevel=${dif}&search=${sea}`;
-  // console.log(arg);
 
   try {
     const response = await fetch(`${API}/rutina?${arg}`, {
@@ -31,7 +30,6 @@ export const get_Rutinas = async (
       throw new Error("Error al obtener las rutinas");
     }
     const data = await response.json();
-    // console.log(data);
 
     return data;
   } catch (err) {
@@ -45,9 +43,8 @@ export const createExercise = async (ejercicio: IRutinaEjercicio) => {
     const response = await fetch(`${API}/ejercicio`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${
-          typeof window !== "undefined" && localStorage.getItem("token")
-        }`,
+        Authorization: `Bearer ${typeof window !== "undefined" &&
+          localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(ejercicio),
@@ -56,7 +53,7 @@ export const createExercise = async (ejercicio: IRutinaEjercicio) => {
     if (!response.ok) {
       throw new Error("Error al crear el ejercicio");
     }
-    console.log("Ejercicio creado correctamente");
+
     return response.json();
   } catch {
     console.log("Error al crear el ejercicio:");
@@ -66,10 +63,11 @@ export const createExercise = async (ejercicio: IRutinaEjercicio) => {
 
 export const get_Ejercicios = async (): Promise<IRutinaEjercicio[]> => {
   try {
-    const response = await fetch(`${API}/ejercicio`, {
+    const response = await fetch(`${API}/ejercicio/entrenador`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${(typeof window !== "undefined" && localStorage.getItem('token'))}`,
+        Authorization: `Bearer ${typeof window !== "undefined" &&
+          localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     });
@@ -79,7 +77,6 @@ export const get_Ejercicios = async (): Promise<IRutinaEjercicio[]> => {
     }
 
     const data = await response.json();
-    console.log(data);
 
     return data;
   } catch (err) {
@@ -105,8 +102,6 @@ export const create_Rutina = async (data: ICreateRutina): Promise<void> => {
     if (!response.ok) {
       throw new Error("Error al crear la rutina");
     }
-
-    // console.log('Rutina creada correctamente');
   } catch (err) {
     console.error("Error al crear la rutina:", err);
     throw err;
@@ -125,7 +120,6 @@ export const get_RutinaById = async (id: string): Promise<IRutina> => {
       throw new Error("Error al obtener la rutina");
     }
     const data = await response.json();
-    // console.log(data);
 
     return data;
   } catch (err) {
@@ -134,23 +128,20 @@ export const get_RutinaById = async (id: string): Promise<IRutina> => {
   }
 };
 
-const getUserRutinasYPlanes = async (
+export const getUserRutinasYPlanes = async (
   userId: string
 ): Promise<IGetRutYPlan | null> => {
   try {
     const token: string =
       (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
-    const response = await fetch(
-      `http://localhost:3001/users/userpyr/${userId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${API}/users/userpyr/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!response.ok) {
       const errorText = await response.text(); // Obtener el mensaje de error
@@ -181,11 +172,33 @@ export const get_EntreRyPlan = async (id: string): Promise<IGetRutYPlan> => {
       throw new Error("Error al obtener la rutina");
     }
     const data = await response.json();
-    // console.log(data);
 
     return data;
   } catch (err) {
     console.log("Error al obtener la rutina:", err);
     throw err;
+  }
+};
+
+export const delete_Rutina = async (id: string): Promise<Response> => {
+  try {
+    const token: string =
+      (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+    const response = await fetch(`${API}/rutina/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.statusText}`);
+    }
+    const data = await response.text();
+    console.log("Respuesta del servidor:", data);
+    return response;
+  } catch (error) {
+    console.error("Error en deleteRutina:", error);
+    throw new Error("Error deleting rutina");
   }
 };

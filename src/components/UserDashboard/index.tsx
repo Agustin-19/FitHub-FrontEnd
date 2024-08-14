@@ -1,70 +1,91 @@
-"use client";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "@/context/userContext";
 import Link from "next/link";
-import styles from "./UserDasboard.module.css";
-import Image from "next/image";
-import { PencilIcon } from "@heroicons/react/24/outline";
-import imagenPerfil from "../../../public/assets/imagenPerfil.webp";
+import { IPlan } from "@/interface/plan.interface";
 
 interface Routine {
   id: string;
   name: string;
   progress: number;
+  price: number;
 }
 
-interface Plan {
+interface Subscription {
+  endDate: string;
   id: string;
-  name: string;
-  price: number;
+  isActive: boolean;
+  plan: IPlan;
+  startDate: string;
+  state: boolean;
 }
 
 const UserDashboard = () => {
   const userContext = useContext(UserContext);
-  const { user, getUserRutinasYPlanes } = userContext;
+  const { user, getUserRutinasYPlanes, isLogged } = userContext;
   const [avatar, setAvatar] = useState<string | null>(null);
   const [purchasedRoutines, setPurchasedRoutines] = useState<Routine[]>([]);
-  const [purchasedPlans, setPurchasedPlans] = useState<Plan[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [purchasedPlans, setPurchasedPlans] = useState<IPlan[]>([]);
+  const [errorPlan, setErrorPlan] = useState<string | null>(null);
+  const [errorRutina, setErrorRutina] = useState<string | null>(null);
+  const [hasFetchedData, setHasFetchedData] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user?.sub) {
+    if (user?.sub && !hasFetchedData) {
       getUserRutinasYPlanes(user.sub)
         .then((data) => {
           if (data) {
-            const mappedRoutines = Array.isArray(data.rutinas)
-              ? data.rutinas.map((rutina) => ({
-                  id: rutina.id || "",
-                  name: rutina.name,
-                  progress: 0,
+            const mappedRoutines = Array.isArray(data.routine)
+              ? data.routine.map((routine: any) => ({
+                  name: routine.name,
+                  price: routine.price,
+                  id: routine.id,
+                  progress: routine.progress,
                 }))
               : [];
 
-            const mappedPlans = Array.isArray(data.plan)
-              ? data.plan.map((plan) => ({
-                  id: plan.id,
-                  name: plan.name,
-                  price: plan.price,
+            // Mapeo de suscripciones
+            const mappedPlans = Array.isArray(data.subsciption)
+              ? data.subsciption.map((subscription: any) => ({
+                  id: subscription.plan.id,
+                  name: subscription.plan.name,
+                  description: subscription.plan.description,
+                  isActive: subscription.isActive,
+                  price: subscription.plan.price,
+                  imgUrl: subscription.plan.imgUrl,
+                  location: subscription.plan.location || "Unknown location",
+                  latitude: subscription.plan.latitude || 0,
+                  longitude: subscription.plan.longitude || 0,
+                  category: subscription.plan.category || [],
+                  difficultyLevel:
+                    subscription.plan.difficultyLevel || "Medium",
+                  admin: subscription.plan.admin || "Not assigned",
+                  check: subscription.plan.check || false,
+                  date: subscription.plan.date || new Date().toISOString(),
                 }))
               : [];
 
             setPurchasedRoutines(mappedRoutines);
             setPurchasedPlans(mappedPlans);
-            setError(null); // Limpiar el error si todo está bien
+            setErrorPlan(null);
           } else {
             setPurchasedRoutines([]);
             setPurchasedPlans([]);
-            setError("No se encontraron rutinas ni planes.");
+            setErrorPlan("Aun no has adquirido ninguno de nuestros planes.");
+            setErrorRutina("Aun no has adquirido ninguna de nuestras rutinas.");
           }
+          setHasFetchedData(true);
         })
         .catch((error) => {
           console.error("Error fetching routines and plans:", error);
           setPurchasedRoutines([]);
           setPurchasedPlans([]);
-          setError("Error al obtener rutinas y planes.");
+          setErrorRutina("Aun no has adquirido ninguna de nuestras rutinas.");
+          setHasFetchedData(true);
         });
     }
-  }, [user, getUserRutinasYPlanes]);
+  }, [user, getUserRutinasYPlanes, hasFetchedData]);
+
+  if (!isLogged) return <p>Debes estar logueado para acceder al dashboard.</p>;
 
   if (!user) return <p>Loading...</p>;
 
@@ -80,81 +101,105 @@ const UserDashboard = () => {
   };
 
   return (
-    <div>
-      <Link href="/home">
-        <button className="mt-4 relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
-          Volver
-        </button>
-      </Link>
-      <div className="flex border border-1 m-5">
-        <div
-          className={
-            styles.dashboard +
-            " flex-col items-center justify-center border-r border-1 w-[400px] "
-          }
-        >
-          <Image
-            src={avatar || imagenPerfil}
-            alt="Avatar"
-            width={500}
-            height={80}
-            className="rounded-full object-cover"
-          />
-          <label
-            htmlFor="file-input"
-            className="pencil-icon cursor-pointer mt-4"
-          >
-            <PencilIcon className="w-6 h-6 text-white bg-[#FF3E1A] rounded-full p-1" />
-          </label>
-
-          <input
-            id="file-input"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="hidden"
-          />
-
-          <h3 className="mt-4 text-lg font-bold">{user.name}</h3>
-          <p>nombre: {user.name}</p>
-          <p>Email: {user.role}</p>
-        </div>
-        <div className="flex justify-evenly items-center text-[#97D6DF]">
-          <div className="flex flex-col items-center">
-            <h3 className="m-5 text-lg text-center">Rutinas Compradas</h3>
-            <ul>
-              {error ? (
-                <p>{error}</p>
-              ) : purchasedRoutines.length > 0 ? (
-                purchasedRoutines.map((routine) => (
-                  <li key={routine.id}>
-                    <Link href={`/routines/${routine.id}`}>{routine.name}</Link>
-                    <p>Progreso: {routine.progress || 0}%</p>
-                  </li>
-                ))
-              ) : (
-                <p>No has comprado ninguna rutina.</p>
-              )}
-            </ul>
-          </div>
-          <div className="flex flex-col items-center">
-            <h3 className="m-5 text-lg text-center">Planes Comprados</h3>
-            <ul>
-              {error ? (
-                <p>{error}</p>
-              ) : purchasedPlans.length > 0 ? (
-                purchasedPlans.map((plan) => (
-                  <li key={plan.id}>
-                    <Link href={`/plans/${plan.id}`}>{plan.name}</Link>
-                    <p>Precio: ${plan.price}</p>
-                  </li>
-                ))
-              ) : (
-                <p>No has comprado ningún plan.</p>
-              )}
-            </ul>
-          </div>
-        </div>
+    <div className="flex flex-col items-center gap-5 text-[#97D6DF] flex-grow mb-5">
+      <div className="flex flex-col items-center w-full max-w-4xl">
+        <h3 className="m-5 text-2xl font-bold text-center">
+          Rutinas Compradas
+        </h3>
+        {errorRutina ? (
+          <p className="text-red-500">{errorRutina}</p>
+        ) : purchasedRoutines.length > 0 ? (
+          <table className="w-full bg-transparent border-collapse">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Rutina
+                </th>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Precio
+                </th>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Más
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {purchasedRoutines.map((routine) => (
+                <tr key={routine.id} className="bg-[#97D6DF]/10">
+                  <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    {routine.name}
+                  </td>
+                  <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    ${routine.price}
+                  </td>
+                  <td className="p-4 text-lg text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    <Link href={`/rutinaComprada/${routine.id}`}>
+                      <button className="relative z-[2] px-6 py-2 m-4 font-bold text-white uppercase transition duration-150 ease-in-out rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+                        Ver rutina
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-red-500">
+            Aun no has comprado ninguna de nuestras Rutinas.
+          </p>
+        )}
+      </div>
+      <br />
+      <div className="flex flex-col items-center w-full max-w-4xl">
+        <h3 className="m-5 text-2xl font-bold text-center">Planes Comprados</h3>
+        {errorPlan ? (
+          <p className="text-red-500">{errorPlan}</p>
+        ) : purchasedPlans.length > 0 ? (
+          <table className="w-full bg-transparent border-collapse">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Plan
+                </th>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Precio
+                </th>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Estado
+                </th>
+                <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
+                  Más
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {purchasedPlans.map((plan) => (
+                <tr key={plan.id} className="bg-[#97D6DF]/10">
+                  <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    {plan.name}
+                  </td>
+                  <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    ${plan.price}
+                  </td>
+                  <td className="p-4 text-xl text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    {plan.isActive ? "Activo" : "Inactivo"}
+                  </td>
+                  <td className="p-4 text-lg text-center align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                    <Link href={`/PlanComprad/${plan.id}`}>
+                      <button className="relative z-[2] px-6 py-2 m-4 font-bold text-white uppercase transition duration-150 ease-in-out rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]">
+                        Ver Plan
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-red-500">
+            Aun no has comprado ninguno de nuestros Planes.
+          </p>
+        )}
       </div>
     </div>
   );

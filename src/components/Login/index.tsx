@@ -12,6 +12,8 @@ import mujer from "../../../public/assets/loginyregister/mujerderecha.png";
 import hombre from "../../../public/assets/loginyregister/hombreizquierda.png";
 import { motion } from "framer-motion";
 import LoginLogout from "../Login-Logout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function LoginComponet({ token, setToken }: any) {
   const { signIn, setUser } = useContext(UserContext);
@@ -41,13 +43,37 @@ export function LoginComponet({ token, setToken }: any) {
 
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Submitted credentials:", userDate);
-    const success = await signIn(userDate);
-    if (success) {
-      console.log("Login successful");
-      router.push("/home");
-    } else {
-      console.log("Invalid login");
+    try {
+      console.log("Submitted credentials:", userDate);
+      const success = await signIn(userDate);
+      if (success) {
+        toast.success("Inicio de sesión exitoso", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          router.push("/home");
+        }, 3500);
+      } else {
+        throw new Error("Credenciales inválidas.");
+      }
+    } catch (error) {
+      toast.error(`Error en el inicio de sesión !! ${error}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -59,7 +85,7 @@ export function LoginComponet({ token, setToken }: any) {
       }
     >
       <div className={style.left} data-aos="fade-right">
-        <Image src={hombre} alt="Woman on the right" width={700} height={700} />
+        <Image src={hombre} alt="Man on the left" width={700} height={700} />
       </div>
       <form onSubmit={handleSubmit} className={style.form}>
         <h1 className="text-[#97D6DF] text-3xl font-bold mb-5 text-center uppercase ">
@@ -79,11 +105,7 @@ export function LoginComponet({ token, setToken }: any) {
             placeholder="Email"
             onChange={handleInputChange}
           />
-          {errors.email && (
-            <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-              {errors.email}
-            </p>
-          )}
+          {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
 
         {/* Entrada de contraseña */}
@@ -100,9 +122,7 @@ export function LoginComponet({ token, setToken }: any) {
             onChange={handleInputChange}
           />
           {errors.password && (
-            <p style={{ color: "red", fontSize: "10px", marginTop: "0px" }}>
-              {errors.password}
-            </p>
+            <p className="error-message">{errors.password}</p>
           )}
         </div>
         {/* Botón de enviar */}
@@ -133,6 +153,7 @@ export function LoginComponet({ token, setToken }: any) {
           height={700}
         />
       </div>
+      <ToastContainer />
     </section>
   );
 }

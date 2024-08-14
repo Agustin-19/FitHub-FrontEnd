@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { IRutina, IUser } from "./interface";
+import { IRutina, IRutinaEjercicio, IUser } from "./interface";
 
 enum Dificultad {
   INICIAL = "inicial",
@@ -10,24 +10,30 @@ enum Dificultad {
 
 interface ICreatePlan {
   name: string;
-  category: ICategory[];
+  category: string[];
   description: string;
   location: string;
-  difficultyLevel: Dificultad;
+  latitude: number;
+  longitude: number;
+  difficultyLevel: string;
+  imgUrl: string;
+  price: number;
 }
 
 interface IPlan {
+  id: string;
   name: string;
   description: string;
   location: string;
-  difficultyLevel: string;
-  admin: IUser;
+  latitude: number;
+  longitude: number;
+  difficultyLevel?: string;
+  admin?: string;
   category: ICategory[];
-  id: string;
-  check: boolean;
-  date: string;
+  check?: boolean;
+  date?: string;
   isActive: boolean;
-  price: number;
+  price: string;
   imgUrl: string;
 }
 
@@ -38,8 +44,15 @@ interface ICategory {
 
 interface IGetRutYPlan {
   id: string;
-  rutinas: IRutina[];
-  plan: IPlan[];
+  routine: IRutina[];
+  subsciption: IPlan[];
+}
+
+interface IGetCouchRutYPlan {
+  id: string;
+  routineAdmin: IRutina[];
+  planAdmin: IPlan[];
+  exercise: IRutinaEjercicio[];
 }
 
 interface IRutinaContextProps {
@@ -60,7 +73,7 @@ interface IPlanContextProps {
 
 interface ISearch {
   limit?: string;
-  page: string;
+  page?: string;
   category?: string;
   location?: string;
   difficultyLevel?: string;
@@ -68,6 +81,7 @@ interface ISearch {
 }
 
 export type {
+  IGetCouchRutYPlan,
   IGetRutYPlan,
   ICreatePlan,
   IPlan,

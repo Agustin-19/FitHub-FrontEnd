@@ -36,7 +36,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <EnvelopeIcon className="w-6 h-6 text-[#FF3E1A]" /> Email:
-                fithub@gmail.com
+                fithub.entrenadorpersonalizado@gmail.com
               </li>
             </ul>
           </div>

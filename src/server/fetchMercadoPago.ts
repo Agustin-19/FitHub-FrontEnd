@@ -7,10 +7,12 @@ export const createRutineOrder = async (routineData: {
   quantity: number;
   unit_price: number | undefined;
 }) => {
+  const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
   try {
     const response = await fetch(`${API}/rutina/create-order`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(routineData),
@@ -33,12 +35,14 @@ export const createPlanOrder = async (planData: {
   planId: string;
   title: string | undefined;
   quantity: number;
-  unit_price: number;
+  unit_price: number | undefined;
 }) => {
+  const token: string = (typeof window !== "undefined" && localStorage.getItem("token")) || "";
   try {
     const response = await fetch(`${API}/plan/create-order`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(planData),

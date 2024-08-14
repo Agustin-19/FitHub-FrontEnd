@@ -1,6 +1,7 @@
 import {
   Dificultad,
   ICategory,
+  IGetCouchRutYPlan,
   IGetRutYPlan,
 } from "@/interface/plan.interface";
 // Users:
@@ -18,8 +19,9 @@ interface IUser {
   role?: string;
   password: string;
   rutinas?: IRutina[];
+  solicitud: string;
   actividades?: number[];
-  id: number;
+  id: string;
   borradologico: boolean;
 }
 
@@ -58,6 +60,7 @@ interface IloginUserRegister {
   role: string;
   user: Partial<IUser> | null;
   sub: string;
+  email ?: string;
 }
 
 interface IUserConext {
@@ -75,13 +78,15 @@ interface IUserConext {
   setIsLogged: (isLogged: boolean) => void;
   rutinas: IRutina[];
   actividades: ICreateActividadDpto[];
+  ejercicios: IRutinaEjercicio[];
   getUserRutinasYPlanes: (userId: string) => Promise<IGetRutYPlan | null>;
+  getCouchRutinasYPlanes: (userId: string) => Promise<IGetCouchRutYPlan | null>;
 }
 
 // Rutinas
 
 interface IRutina {
-  id?: string;
+  id: string;
   name: string;
   description: string;
   price?: number;
@@ -96,7 +101,7 @@ export interface ICreateRutina {
   name: string;
   description: string;
   precio?: number;
-  imgUrl?: string;
+  imgUrl?: string[];
   category: string[];
   difficultyLevel: Dificultad;
   exercise: string[];
@@ -106,7 +111,7 @@ export interface ICreateRutina {
   name: string;
   description: string;
   precio?: number;
-  imgUrl?: string;
+  imgUrl?: string[];
   category: string[];
   difficultyLevel: Dificultad;
   exercise: string[];
@@ -116,6 +121,7 @@ interface IRutinaEjercicio {
   titulo: string;
   descripcion: string;
   imgUrl: string[] | null;
+  videoUrl: string | null;
 }
 
 interface ICreateRutinaDpto {
@@ -182,7 +188,35 @@ interface IErrorsRegister {
   delete?: boolean;
 }
 
+//Comentarios
+
+interface IAllComentarios {
+  description: string;
+  score: number;
+  routine: string;
+  id: string;
+  isActive: boolean;
+  date: string;
+}
+
+interface IComentarioRutina {
+  routine: string;
+  description: string;
+  score: number;
+  isActive: boolean;
+}
+
+interface IComentarioPlan {
+  planId: string;
+  description: string;
+  score: number;
+  isActive: boolean;
+}
+
 export type {
+  IAllComentarios,
+  IComentarioPlan,
+  IComentarioRutina,
   IUser,
   ILogin,
   IloginUserRegister,
@@ -200,5 +234,5 @@ export type {
   IErrorsRegister,
   IRutinaListProps,
   IFilters,
-  IRegister3ros
+  IRegister3ros,
 };

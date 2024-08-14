@@ -10,6 +10,9 @@
   --titulos: #97D6DF;
   --subTitulos: #447988;
 }
+::-webkit-scrollbar {
+  display: none;
+}
 
 * {
 
@@ -32,6 +35,7 @@ body {
   color: #447988;
   overflow-x: hidden;
   position: relative;
+
   /* Asegúrate de que el body tenga posición relativa */
 }
 
@@ -43,7 +47,7 @@ body::before {
   right: 0;
   bottom: 0;
   background: rgba(26, 29, 26, 0.765);
-  z-index: 1;
+  z-index: 0;
   /* Asegúrate de que este z-index sea menor */
 }
 
@@ -69,4 +73,55 @@ ul {
 
 .boton {
   @apply rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19];
+}
+
+.boton-aprobar{
+  @apply rounded-full border-2 border-[#112d31] bg-[#1fa741] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#22ffe2] focus:bg-[#1af0ff] focus:outline-none focus:ring-0 active:bg-[#37e231];
+}
+
+.boton-corregir{
+  @apply rounded-full border-2 border-[#112d31] bg-[#a8ce21] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#f1ff2a] focus:bg-[#ffc21a] focus:outline-none focus:ring-0 active:bg-[#caff39];
+}
+
+.boton-denegar{
+  @apply rounded-full border-2 border-[#112d31] bg-[#a73a1f] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#ff2d2d] focus:bg-[#ff3c1a] focus:outline-none focus:ring-0 active:bg-[#ff2121];
+}
+
+
+.navbar {
+  @apply fixed top-36 mx-0 left-0 right-0 z-50 bg-[--fondo] border-2 border-[#97D6DF];
+}
+
+.navbar-boton {
+  @apply mx-1 p-2;
+}
+
+.navbar-boton:hover {
+  @apply bg-gray-500 text-white;
+}
+
+.count.red {
+  color: red; /* Color cuando el número es mayor a cero */
+}
+
+.count.hidden {
+  display: none; /* Oculta el número cuando es cero */
+}
+
+.count {
+  color: #000; /* Color por defecto */
+}
+
+.active {
+  @apply bg-gray-400 text-[--titulos];
+}
+
+.sticky {
+  @apply top-0 left-0 right-0;
+  position: fixed;
+}
+
+/* Aumentar el tamaño de los mensajes de error */
+p.error-message {
+  font-size: 14px;
 }
