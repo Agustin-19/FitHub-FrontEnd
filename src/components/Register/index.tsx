@@ -85,9 +85,6 @@ export function RegisterComponet({ token, setToken }: any) {
 
     if (userData.password !== userData.passwordConfirm) {
       alert("Las contraseñas no coinciden");
-      // } else
-      // if (Object.keys(errors).length) {
-      //   alert("Todos los campos son obligatorios ");
     } else {
       const userDataToSubmit = {
         name: userData.name,

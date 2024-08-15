@@ -29,7 +29,7 @@ const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
         )}
         <div className="ml-3 ">
           <h2 className="text-xl font-semibold text-[#FF3E1A]">{user.name}</h2>
-          <p className="text-[#97D6DF] text-sm">Email: {user.email}</p>
+          <p className="text-[#97D6DF] text-sm  ">Email: {user.email}</p>
           <p className="text-[#97D6DF] text-sm">Address: {user.address}</p>
           <p className="text-[#97D6DF] text-sm">City: {user.city}</p>
           <p className="text-[#97D6DF] text-sm">Phone: {user.phone}</p>
