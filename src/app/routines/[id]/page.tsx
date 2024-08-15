@@ -9,7 +9,7 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import { get_RutinaById } from "@/server/fetchRoutines";
 import { createRutineOrder } from "@/server/fetchMercadoPago";
 import Link from "next/link";
-import ComentariosCard from "@/components/ComentariosCard";
+import { API } from "@/helpers/helper";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
 declare global {
@@ -25,13 +25,13 @@ interface IRoutineProps {
 }
 
 const Routine = ({ params }: IRoutineProps) => {
+  const { isLogged, user } = useContext(UserContext);
+  const id = params.id;
   const [
     selectedEjercicio,
     setSelectedEjercicio,
   ] = useState<IRutinaEjercicio | null>(null);
-  const { isLogged, user } = useContext(UserContext);
 
-  const id = params.id;
   const [routine, setRutina] = useState<IRutina | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,11 +42,20 @@ const Routine = ({ params }: IRoutineProps) => {
   useEffect(() => {
     const fetchRutinaID = async () => {
       try {
-        const routine: IRutina = await get_RutinaById(id);
+        const response = await fetch(`${API}/rutina/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Error al obtener la rutina");
+        }
+        const data = await response.json();
 
-        setRutina(routine);
+        setRutina(data);
       } catch (err) {
-        setError("Error al obtener las rutinas");
+        setError("Error al obtener la rutina");
       } finally {
         setLoading(false);
       }
@@ -197,11 +206,6 @@ const Routine = ({ params }: IRoutineProps) => {
               onClose={() => setSelectedEjercicio(null)}
             />
           )}
-        </div>
-        <div className="mx-80 my-10 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg">
-          <h3 className="text-4xl font-semibold mb-2">Opiniones destacadas</h3>
-
-          <ComentariosCard />
         </div>
       </div>
     </div>

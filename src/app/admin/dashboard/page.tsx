@@ -1,12 +1,10 @@
 "use client";
-
-import CrearCategoria from "@/components/Admin/CreateCategoria";
+import CrearCategoria from "@/components/Admin/AdminForms/CreateCategoria";
 export default function AdminDashboard() {
 
 
   return (
     <div className=" top-32">
-      <h1></h1>
       <CrearCategoria/>
     </div>
   );
