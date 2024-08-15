@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { MercadoPagoSuccessRutina } from "@/components/MercadoPago/indexSuccessRutina";
 import Link from "next/link";
 
@@ -10,7 +11,9 @@ export default function Dashboard() {
         </button>
       </Link>
       <div>
-        <MercadoPagoSuccessRutina />
+        <Suspense fallback={<div>Loading...</div>}>
+          <MercadoPagoSuccessRutina />
+        </Suspense>
       </div>
     </div>
   );
