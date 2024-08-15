@@ -55,10 +55,10 @@ export default function HomeUser() {
           </div>
 
           {/* Imagen principal */}
-          <div className="w-full max-w-[700px] h-auto mb-8 lg:mb-0">
+          <div className="w-full max-w-[700px] h-auto mb-6 lg:mb-0">
             <Image
               src={currentImage}
-              width={700}
+              width={720}
               height={500}
               alt="Escogiendo"
               className={`${styles.escogiendo}  hidden lg:block`}

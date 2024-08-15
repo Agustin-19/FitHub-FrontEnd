@@ -17,7 +17,7 @@ export function Footer() {
             className="fill-[#447988]"
           ></path>
         </svg>
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-10 gap-10 text-center">
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 p-10 gap-10 text-center">
           <div className="flex flex-col gap-5 p-4">
             <h2 className="text-3xl text-[#FF3E1A]">FitHub</h2>
             <p>
@@ -46,6 +46,59 @@ export function Footer() {
               <li>
                 <Link href="/registerCoach" className="hover:text-[#FF3E1A]">
                   ¿Quieres ser entrenador?
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div className="flex flex-col gap-5 p-4 ">
+            <h2 className="text-3xl text-[#FF3E1A]">Nuestros Creadores</h2>
+            <ul>
+              <li>
+                <Link
+                  href="https://www.linkedin.com/in/alexis-guastalli/"
+                  className="hover:text-[#FF3E1A]"
+                >
+                  Guastalli Alexis Dante
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.linkedin.com/in/laura-larrotta-lh/"
+                  className="hover:text-[#FF3E1A]"
+                >
+                  Larrotta Laura
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.linkedin.com/in/mat%C3%ADas-ottersttet/"
+                  className="hover:text-[#FF3E1A]"
+                >
+                  Ottersttet Matías Agustín
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.linkedin.com/in/evaristo-aguirre/"
+                  className="hover:text-[#FF3E1A]"
+                >
+                  Aguirre Evaristo
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.linkedin.com/in/pieronileonardo/"
+                  className="hover:text-[#FF3E1A]"
+                >
+                  Pieroni Leonardo
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="https://www.linkedin.com/feed/"
+                  className="hover:text-[#FF3E1A]"
+                >
+                  Sarkis Delfina
                 </Link>
               </li>
             </ul>

@@ -48,42 +48,42 @@ const CouchDashboard = () => {
           if (data) {
             const mappedRoutines = Array.isArray(data.routineAdmin)
               ? data.routineAdmin.map((routine: any) => ({
-                name: routine.name,
-                price: routine.price,
-                id: routine.id,
-                progress: routine.progress,
-                isActive: routine.isActive,
-              }))
+                  name: routine.name,
+                  price: routine.price,
+                  id: routine.id,
+                  progress: routine.progress,
+                  isActive: routine.isActive,
+                }))
               : [];
 
             // Mapeo de suscripciones
             const mappedPlans = Array.isArray(data.planAdmin)
               ? data.planAdmin.map((subscription: any) => ({
-                id: subscription.id,
-                name: subscription.name,
-                description: subscription.description,
-                isActive: subscription.isActive,
-                price: subscription.price,
-                imgUrl: subscription.imgUrl,
-                location: subscription.location || "Unknown location",
-                latitude: subscription.latitude || 0,
-                longitude: subscription.longitude || 0,
-                category: subscription.category || [],
-                difficultyLevel: subscription.difficultyLevel || "Medium",
-                admin: subscription.admin || "Not assigned",
-                check: subscription.check || false,
-                date: subscription.date || new Date().toISOString(),
-              }))
+                  id: subscription.id,
+                  name: subscription.name,
+                  description: subscription.description,
+                  isActive: subscription.isActive,
+                  price: subscription.price,
+                  imgUrl: subscription.imgUrl,
+                  location: subscription.location || "Unknown location",
+                  latitude: subscription.latitude || 0,
+                  longitude: subscription.longitude || 0,
+                  category: subscription.category || [],
+                  difficultyLevel: subscription.difficultyLevel || "Medium",
+                  admin: subscription.admin || "Not assigned",
+                  check: subscription.check || false,
+                  date: subscription.date || new Date().toISOString(),
+                }))
               : [];
 
             const mappedExercises = Array.isArray(data.exercise)
               ? data.exercise.map((exercise: any) => ({
-                id: exercise.id,
-                titulo: exercise.titulo,
-                descripcion: exercise.descripcion,
-                imgUrl: exercise.imgUrl,
-                videoUrl: exercise.videoUrl,
-              }))
+                  id: exercise.id,
+                  titulo: exercise.titulo,
+                  descripcion: exercise.descripcion,
+                  imgUrl: exercise.imgUrl,
+                  videoUrl: exercise.videoUrl,
+                }))
               : [];
 
             setPurchasedRoutines(mappedRoutines);
@@ -190,11 +190,9 @@ const CouchDashboard = () => {
     });
   };
 
-
   const handleEdit = (parans: string) => {
     router.push(`/create/${parans}`);
-  }
-
+  };
 
   return (
     <div className="flex flex-col items-center gap-5 text-[#97D6DF] flex-grow">
@@ -232,7 +230,7 @@ const CouchDashboard = () => {
             </tbody>
           </table>
         ) : (
-          <p>No hay ejercicios creados.</p>
+          <p className="text-red-500">Aun no has creado ningun ejercicio.</p>
         )}
       </div>
 
@@ -293,14 +291,16 @@ const CouchDashboard = () => {
             </tbody>
           </table>
         ) : (
-          <p className="text-red-500">Aun no has creado ningun plane.</p>
+          <p className="text-red-500">Aun no has creado ningun rutina.</p>
         )}
       </div>
 
       <br />
 
       <div className="flex flex-col items-center w-full max-w-4xl">
-        <h3 className="m-5 text-2xl font-bold text-center">Planes Creados</h3>
+        <h3 className="m-5 text-2xl font-bold text-center">
+          Actividades Creadas
+        </h3>
         {errorPlan ? (
           <p className="text-red-500">{errorPlan}</p>
         ) : purchasedPlans.length > 0 ? (
@@ -309,7 +309,7 @@ const CouchDashboard = () => {
               <thead>
                 <tr>
                   <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
-                    Plan
+                    Actividad
                   </th>
                   <th className="px-6 py-3 text-xl font-semibold text-center uppercase align-middle border border-solid border-blueGray-100 whitespace-nowrap">
                     Precio
@@ -360,10 +360,10 @@ const CouchDashboard = () => {
               </tbody>
             </table>
           ) : (
-            <p className="text-red-500">Aun no has creado ningun plane.</p>
+            <p className="text-red-500">Aun no has creado ningun actividad.</p>
           )
         ) : (
-          <p>No hay planes creados.</p>
+          <p className="text-red-500">Aun no has creado ningun actividad.</p>
         )}
       </div>
     </div>

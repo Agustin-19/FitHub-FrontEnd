@@ -11,7 +11,7 @@ const validateLogin = (values: IErrorsLogin, fieldsToValidate: string[]) => {
     fieldsToValidate.includes("email") &&
     (!values.email || !/\S+@\S+\.\S+/.test(values.email))
   ) {
-    errors.email = "* Incorrectttt email format. Example: 4oLZ9@example.com";
+    errors.email = "El formato del email de ser: ejemplo@ejemplo.com";
   }
 
   if (fieldsToValidate.includes("password") && !values.password) {
@@ -120,7 +120,7 @@ const validateRegister = (
     fieldsToValidate.includes("passwordConfirm") &&
     values.password !== values.passwordConfirm
   ) {
-    errors.passwordConfirm = "The passwords do not match.";
+    errors.passwordConfirm = "Las contraseñas no coinciden.";
   }
 
   if (fieldsToValidate.includes("phone") && !values.phone) {

@@ -8,7 +8,7 @@ import {
 } from "@/interface/plan.interface";
 
 export const get_Plan = async (queryString?: ISearch): Promise<IPlan[]> => {
-  const lim = queryString?.limit || 6;
+  const lim = queryString?.limit || 8;
   const pag = queryString?.page || 1;
   const cat = queryString?.category || "";
   const loc = queryString?.location || "";
@@ -133,7 +133,8 @@ export const delete_Plan = async (id: string): Promise<Response> => {
 export const update_Plan = async (
   id: string,
   plan: IPlanUpdate,
-  token: string) => {
+  token: string
+) => {
   try {
     const response = await fetch(`${API}/plan/${id}`, {
       method: "PUT",
@@ -147,9 +148,8 @@ export const update_Plan = async (
       throw new Error(`Error en la solicitud: ${response.statusText}`);
     }
 
-
     return response;
   } catch {
     console.error("Error en updatePlan:");
   }
-}
+};

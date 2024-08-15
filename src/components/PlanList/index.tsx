@@ -1,23 +1,16 @@
 import { IPlan } from "@/interface/plan.interface";
 import Image from "next/image";
 import Link from "next/link";
+
 interface PlanListProps {
   plans: IPlan[];
 }
 
 const PlanList: React.FC<PlanListProps> = ({ plans }) => {
+  console.log(plans);
+
   const imgDefect =
     "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
-
-  const getImageSrc = (image: string | string[] | null | undefined) => {
-    if (typeof image === "string") {
-      return image;
-    } else if (Array.isArray(image) && image.length > 0) {
-      return image[0];
-    } else {
-      return imgDefect;
-    }
-  };
 
   return (
     <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 m-4">
@@ -28,11 +21,7 @@ const PlanList: React.FC<PlanListProps> = ({ plans }) => {
         >
           <div className="relative w-full h-48">
             <Image
-              src={
-                Array.isArray(plan?.imgUrl) && plan.imgUrl.length > 0
-                  ? plan.imgUrl[0][0]
-                  : imgDefect
-              }
+              src={plan.imgUrl || imgDefect}
               alt={plan.name}
               fill={true}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
