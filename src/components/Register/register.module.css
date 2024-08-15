@@ -36,6 +36,8 @@
 
 
 
+
+
 .left {
     height: 1001px;
     width: 1000px;
@@ -51,4 +53,29 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     padding: 10px;
     width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+
+    .left,
+    .right {
+        display: none;
+    }
+}
+
+
+
+@media screen and (max-width: 390px) {
+
+    .left,
+    .right {
+        display: none;
+    }
+
+    .form {
+        width: 200px;
+        padding: 30px 40px;
+        margin-top: 25px;
+    }
+    
 }

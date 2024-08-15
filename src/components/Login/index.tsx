@@ -81,26 +81,26 @@ export function LoginComponet({ token, setToken }: any) {
     <section
       className={
         style.login +
-        "relative z-10 w-full h-full p-4 flex items-center justify-center"
+        " relative z-10 w-full h-full p-4 flex items-center justify-center"
       }
     >
-      <div className={style.left} data-aos="fade-right">
+      <div className={`${style.left} hidden md:block`} data-aos="fade-right">
         <Image src={hombre} alt="Man on the left" width={700} height={700} />
       </div>
       <form onSubmit={handleSubmit} className={style.form}>
-        <h1 className="text-[#97D6DF] text-3xl font-bold mb-5 text-center uppercase ">
+        <h1 className="text-[#97D6DF] text-3xl font-bold mb-5 text-center uppercase">
           Ingresa a FitHub
         </h1>
 
         {/* Entrada de email */}
         <div
-          className="relative mb-6  flex flex-col items-center rounded"
+          className="relative mb-6 flex flex-col items-center rounded"
           data-twe-input-wrapper-init
         >
           <input
             type="text"
             name="email"
-            className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
+            className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out text-center"
             id="email"
             placeholder="Email"
             onChange={handleInputChange}
@@ -110,13 +110,13 @@ export function LoginComponet({ token, setToken }: any) {
 
         {/* Entrada de contraseña */}
         <div
-          className="relative mb-6  flex flex-col items-center rounded"
+          className="relative mb-6 flex flex-col items-center rounded"
           data-twe-input-wrapper-init
         >
           <input
             type="password"
             name="password"
-            className="text-center relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] "
+            className="text-center relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#FF3E1A]"
             id="password"
             placeholder="Password"
             onChange={handleInputChange}
@@ -145,7 +145,7 @@ export function LoginComponet({ token, setToken }: any) {
         {/* Botones sociales */}
         <LoginLogout />
       </form>
-      <div className={style.right} data-aos="fade-left">
+      <div className={`${style.right} hidden md:block`} data-aos="fade-left">
         <motion.img
           src={mujer.src}
           alt="Woman on the right"
