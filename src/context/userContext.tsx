@@ -7,6 +7,7 @@ import {
   getUserRutinas,
   getUserActividades,
   post_LoginAuth0,
+  getUser_Id,
 } from "../server/fetchUser";
 import {
   IUserConext,
@@ -26,7 +27,7 @@ import { API } from "@/helpers/helper";
 
 export const UserContext = createContext<IUserConext>({
   user: null,
-  setUser: () => {},
+  setUser: () => { },
   isLogged: false,
   signIn: async () => false,
   loginAuth0: async () => false,
@@ -34,10 +35,10 @@ export const UserContext = createContext<IUserConext>({
   rutinas: [],
   actividades: [],
   ejercicios: [],
-  logOut: () => {},
-  getRutinas: () => {},
-  getActividades: () => {},
-  setIsLogged: () => {},
+  logOut: () => { },
+  getRutinas: () => { },
+  getActividades: () => { },
+  setIsLogged: () => { },
   getUserRutinasYPlanes: async () => null,
   getCouchRutinasYPlanes: async () => null,
 });
@@ -73,11 +74,12 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       // Guarda datos del usuario
       setUser({ ...decodedToken, token: data.token });
 
-      Cookie.set("token", data.token, { expires: 7 }); 
-      typeof window !== "undefined" &&
-        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
-      typeof window !== "undefined" &&
-        localStorage.setItem("token", data.token);
+      Cookie.set("token", data.token, { expires: 7 });
+
+      const userData = await getUser_Id(decodedToken.sub, data.token);
+
+      typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(userData));
+      typeof window !== "undefined" && localStorage.setItem("token", data.token);
 
       setIsLogged(true);
       return true;
@@ -89,25 +91,24 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signIn = async (credentials: ILogin) => {
     try {
-      const data = await postSignin(credentials); // Envía las credenciales
+      // Realiza la solicitud de inicio de sesión
+      const data = await postSignin(credentials);
 
       if (!data.token) {
         throw new Error("Invalid Token");
       }
 
-      const decodedToken: any = jwtDecode(data.token); // Decodifica el token
-      console.log("Decoded Token:", decodedToken); // Muestra el contenido del token decodificado
+      const decodedToken: any = jwtDecode(data.token);
 
-      // Guarda el rol y otros datos del usuario
-      setUser({ ...decodedToken, token: data.token });
-      Cookie.set("token", data.token, { expires: 7 }); 
+      const userData = await getUser_Id(decodedToken.sub, data.token);
 
-      typeof window !== "undefined" &&
-        localStorage.setItem("user", JSON.stringify(decodedToken)); // Guarda el usuario en localStorage
-      typeof window !== "undefined" &&
-        localStorage.setItem("token", data.token); // Almacena el token
+      typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(userData));
+      typeof window !== "undefined" && localStorage.setItem("token", data.token);
+
+      setUser({ ...userData, token: data.token });
 
       setIsLogged(true);
+
       return true;
     } catch (error) {
       console.log("SignIn failed", error);
@@ -156,6 +157,7 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await response.json();
+      console.log("esta es la data..........", data);
 
       setRutinas(data.rutinas);
       setActividades(data.subscriptcion);

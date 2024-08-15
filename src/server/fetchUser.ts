@@ -43,6 +43,20 @@ export const postSigupCoach = async (user: IRegisterUser) => {
   return data;
 };
 
+export const getUser_Id = async (id: string, token: string) =>{
+  
+  console.log(token);
+
+  const response = await fetch(`${API}/users/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+}
+
 export const postSignin = async (credentials: ILogin) => {
   try {
     const response = await fetch(`${API}/auth/signin`, {

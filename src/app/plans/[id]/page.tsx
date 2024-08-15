@@ -8,7 +8,6 @@ import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import Link from "next/link";
 import { createPlanOrder } from "@/server/fetchMercadoPago";
 import Maps from "@/components/Maps/map";
-import ComentariosCard from "@/components/ComentariosCard";
 import { API } from "@/helpers/helper";
 
 // Declarar globalmente el tipo Window para incluir checkoutButton
@@ -89,7 +88,9 @@ const PlanDetail = ({ params }: IPlanProps) => {
         quantity: 1,
         unit_price: Number(plan?.price),
       };
+
       const preference = await createPlanOrder(planData);
+
       setPreferenceId(preference.id);
     } catch (error) {
       console.log(error);
@@ -203,11 +204,6 @@ const PlanDetail = ({ params }: IPlanProps) => {
               )}
             </div>
           </div>
-        </div>
-        <div className="mb-4 border-2 border-[--titulo] bg-[#97D6DF]/5 p-4 rounded-lg shadow-lg">
-          <h3 className="text-4xl font-semibold mb-2">Opiniones destacadas</h3>
-
-          <ComentariosCard />
         </div>
       </div>
     </div>

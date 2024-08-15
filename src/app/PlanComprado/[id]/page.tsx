@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import { IPlan } from "../../../interface/plan.interface";
 import Link from "next/link";
 import Image from "next/image";
-import { postComents } from "@/server/fethComent";
 import Maps from "@/components/Maps/map";
-import { IComentarioPlan } from "@/interface/interface";
+
 import { API } from "@/helpers/helper";
+import { get_PlanById } from "@/server/fetchPlan";
 
 interface IPlanProps {
   params: {
@@ -22,9 +22,6 @@ const PlanComprado = ({ params }: IPlanProps) => {
   const { isLogged, user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [descripcion, setdescripcion] = useState("");
-  const [score, setscore] = useState<number>(0);
-  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
   const router = useRouter();
   const id = params.id;
 
@@ -37,26 +34,16 @@ const PlanComprado = ({ params }: IPlanProps) => {
   useEffect(() => {
     const fetchPlanID = async () => {
       try {
-        const response = await fetch(`${API}/plan/${id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al obtener el plan");
-        }
-        const planData = await response.json();
-        setPlan(planData);
+        const plan = await get_PlanById(id);
+        setPlan(plan);
       } catch (err) {
-        setError("Error al obtener el plan");
+        setError("Error al obtener las rutinas");
       } finally {
         setLoading(false);
       }
     };
     fetchPlanID();
-  }, [id]);
+  }, [id, isLogged]);
 
   const imgDefect =
     "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
@@ -68,37 +55,6 @@ const PlanComprado = ({ params }: IPlanProps) => {
     } else {
       return imgDefect;
     }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isLogged) {
-      setSubmitMessage("Por favor, inicia sesión para comentar.");
-      return;
-    }
-    const newCommentPlan: IComentarioPlan = {
-      description: descripcion,
-      score,
-      planId: id,
-      isActive: true,
-    };
-
-    const token = user?.token || "";
-
-    postComents(newCommentPlan)
-      .then((data) => {
-        if (data) {
-          setSubmitMessage("Comentario guardado");
-          setdescripcion("");
-          setscore(0);
-        }
-      })
-      .catch((error) => {
-        setSubmitMessage("Error al guardar los comentarios");
-      })
-      .finally(() => {
-        setSubmitMessage(null);
-      });
   };
 
   const handleMapChange = (lat: number, lng: number) => {
@@ -157,8 +113,8 @@ const PlanComprado = ({ params }: IPlanProps) => {
           </div>
           <div
             style={{
-              height: "30vh",
-              width: "30vh",
+              height: "60vh",
+              width: "60vh",
               border: "5px solid #97D6DF",
               display: "flex",
               flexDirection: "column",
@@ -176,56 +132,6 @@ const PlanComprado = ({ params }: IPlanProps) => {
                 onCameraChange={(lat, lng) => handleMapChange(lat, lng)}
               />
             )}
-          </div>
-
-          <div className="flex flex-col items-center mt-10">
-            <h3 className="text-2xl font-bold text-titulos mb-4">
-              Deja un comentario y puntuación
-            </h3>
-            <form
-              onSubmit={handleSubmit}
-              className="w-8/12 bg-[#97D6DF]/5 p-6 rounded-lg shadow-lg"
-            >
-              <div className="flex flex-col mb-4">
-                <label className="mb-2 text-lg font-semibold">
-                  Comentario:
-                </label>
-                <textarea
-                  className="p-2 border-2 border-[#97D6DF] rounded-lg text-lg"
-                  value={descripcion}
-                  onChange={(e) => setdescripcion(e.target.value)}
-                  rows={4}
-                  required
-                />
-              </div>
-              <div className="flex flex-col mb-4">
-                <label className="mb-2 text-lg font-semibold">
-                  Puntuación:
-                </label>
-                <select
-                  className="p-2 border-2 border-[#97D6DF] rounded-lg text-lg"
-                  value={score}
-                  onChange={(e) => setscore(Number(e.target.value))}
-                  required
-                >
-                  <option value={0}>Seleccionar</option>
-                  {[1, 2, 3, 4, 5].map((num) => (
-                    <option key={num} value={num}>
-                      {num}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <button
-                type="submit"
-                className="px-6 py-2 text-lg font-semibold bg-[#FF3E1A] text-white rounded-lg shadow-lg hover:bg-[#FF5722] transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-[#FF5722] focus:ring-offset-2"
-              >
-                Enviar Comentario
-              </button>
-              {submitMessage && (
-                <p className="mt-4 text-center text-red-500">{submitMessage}</p>
-              )}
-            </form>
           </div>
         </div>
       </div>

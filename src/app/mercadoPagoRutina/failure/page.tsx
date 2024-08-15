@@ -1,4 +1,7 @@
-import { MercadoPagoFaild } from "@/components/MercadoPago/indexFaild";
+// app/dashboard/page.tsx
+
+import { Suspense } from "react";
+import { MercadoPagoFaildRutina } from "@/components/MercadoPago/indexFaildRutina";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -10,7 +13,9 @@ export default function Dashboard() {
         </button>
       </Link>
       <div>
-        <MercadoPagoFaild />
+        <Suspense fallback={<div>Loading...</div>}>
+          <MercadoPagoFaildRutina />
+        </Suspense>
       </div>
     </div>
   );

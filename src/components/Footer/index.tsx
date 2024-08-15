@@ -25,22 +25,22 @@ export function Footer() {
               compromiso y creatividad.
             </p>
           </div>
-          <div className="flex flex-col items-center gap-5 p-4">
+          <div className="flex flex-col  items-center gap-5 p-4">
             <h2 className="text-3xl text-[#FF3E1A]">Contacto</h2>
             <ul className="list-none p-0">
               <li className="flex items-center gap-2 mb-4">
                 {" "}
                 {/* Ajusta el margen inferior aquí */}
-                <PhoneIcon className="w-6 h-6 text-[#25D366]" /> Whatsapp: +51
-                999 999 999
+                <PhoneIcon className="w-6 h-6 text-[#25D366] ml-[90px]" />{" "}
+                Whatsapp: +51 999 999 999
               </li>
               <li className="flex items-center gap-2">
-                <EnvelopeIcon className="w-6 h-6 text-[#FF3E1A]" /> Email:
+                <EnvelopeIcon className="w-6 h-6 text-[#FF3E1A] " /> Email:
                 fithub.entrenadorpersonalizado@gmail.com
               </li>
             </ul>
           </div>
-          <div className="flex flex-col gap-5 p-4">
+          <div className="flex flex-col gap-5 p-4 ">
             <h2 className="text-3xl text-[#FF3E1A]">Más información</h2>
             <ul>
               <li>

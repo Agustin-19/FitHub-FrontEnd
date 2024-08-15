@@ -1,12 +1,10 @@
-// components/MercadoPagoFaild.tsx
-
 "use client";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect } from "react";
 import { API } from "@/helpers/helper";
 
-export function MercadoPagoFaild() {
+export function MercadoPagoFaildRutina() {
   const searchParams = useSearchParams();
 
   const collection_id = searchParams.get("collection_id");
@@ -40,7 +38,7 @@ export function MercadoPagoFaild() {
       const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
       try {
-        const response = await fetch(`${API}/plan/webhook`, {
+        const response = await fetch(`${API}/rutina/webhook`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

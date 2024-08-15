@@ -1,16 +1,15 @@
 export function InfoLandingComponent() {
   return (
     <div className="relative z-10 m-5">
-      <h2 className="text-4xl text-[#97D6DF] font-extrabold text-center mx-36 mb-10">
+      <h2 className="text-4xl text-[#97D6DF] font-extrabold text-center mx-auto mb-10 max-w-4xl">
         En FitHub, creemos que el bienestar es una elección diaria. Te ofrecemos
         una plataforma completa para ayudarte a mantenerte activo, saludable y
         motivado. ¿Qué puedes encontrar aquí?
       </h2>
-      <br></br>
-      <div className="flex gap-4 items-center justify-center">
-        <div className="flex-1 max-w-md mx-6 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/10 rounded-lg text-white">
+      <div className="flex flex-col gap-4 items-center justify-center lg:flex-row md:gap-8">
+        <div className="flex-1 max-w-md mx-4 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/10 rounded-lg text-white">
           <h3 className="text-2xl font-bold text-center">
-            Rutinas Personalizadas:{" "}
+            Rutinas Personalizadas:
           </h3>
           <p>
             Descarga rutinas de ejercicios diseñadas por expertos. Desde
@@ -19,9 +18,9 @@ export function InfoLandingComponent() {
             ellas en cualquier momento. ¡Nunca pierdas el ritmo!
           </p>
         </div>
-        <div className="flex-1 max-w-md mx-6 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/10 rounded-lg text-white">
+        <div className="flex-1 max-w-md mx-4 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/10 rounded-lg text-white">
           <h3 className="text-2xl font-bold text-center">
-            Planes de Entrenamiento Presenciales:{" "}
+            Planes de Entrenamiento Presenciales:
           </h3>
           <p>
             Prefieres el contacto humano? Únete a nuestras clases presenciales
@@ -30,9 +29,9 @@ export function InfoLandingComponent() {
             entrenamiento funcional, tenemos algo para todos los niveles.
           </p>
         </div>
-        <div className="flex-1 max-w-md mx-6 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/10 rounded-lg text-white">
+        <div className="flex-1 max-w-md mx-4 p-4 border-4 border-[#97D6DF] bg-[#97D6DF]/10 rounded-lg text-white">
           <h3 className="text-2xl font-bold text-center">
-            Para los Entrenadores:{" "}
+            Para los Entrenadores:
           </h3>
           <p>
             Tú también puedes ser parte activa de FitHub. Diseña tus propias

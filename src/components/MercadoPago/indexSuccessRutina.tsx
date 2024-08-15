@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef } from "react";
 import { API } from "@/helpers/helper";
 
-export function MercadoPagoSuccess() {
+export function MercadoPagoSuccessRutina() {
   const searchParams = useSearchParams();
 
   const collection_id = searchParams.get("collection_id");
@@ -61,7 +61,7 @@ export function MercadoPagoSuccess() {
     const token: string =
       (typeof window !== "undefined" && localStorage.getItem("token")) || "";
     try {
-      const response = await fetch(`${API}/plan/webhook`, {
+      const response = await fetch(`${API}/rutina/webhook`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -133,7 +133,7 @@ export function MercadoPagoSuccess() {
           ></rect>
         </svg>
         <h1 className="text-2xl font-bold text-center text-white">
-          Tu pago se ha realizado con éxito. Muchas gracias por confiar en
+          Tu pago se ha realizado con éxito. Muchas gracias por confiar en
           FitHub
         </h1>
         <Link href="/dashboard">
