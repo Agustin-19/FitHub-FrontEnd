@@ -1,5 +1,7 @@
 import { createCategory } from "@/server/fetchAmin";
 import { useState } from "react"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CrearCategoria = () => {
     const [cat, setCat] = useState({ name: '' })
@@ -16,15 +18,24 @@ const CrearCategoria = () => {
         e.preventDefault();
 
         try {
-            const response = await createCategory(cat);
+            await createCategory(cat);
 
-            alert("Actividad creada correctamente");
-            setCat({ name: '' });
-            window.location.href = "/admin/dashboard";
+            toast.success("Categoria creada exitosamente", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                onClose: () => window.location.reload(),
+            });
+
         } catch (error) {
-            alert("Error al crear la actividad");
-            console.error("Error:", error);
+            toast.error("Error al crear la categoria");
         }
+
     };
     return (
         <div>
@@ -47,6 +58,7 @@ const CrearCategoria = () => {
                 />
                 <button className="m-3 boton" type="submit">Crear Categoría</button>
             </form>
+            <ToastContainer />
         </div>
     )
 }
