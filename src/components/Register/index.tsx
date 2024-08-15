@@ -161,9 +161,9 @@ export function RegisterComponet({ token, setToken }: any) {
               type="text"
               name="name"
               id="name"
-              placeholder="Ingrese su Nombre y Apellido"
+              placeholder="Nombre y Apellido"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] border-1 border-solid border-red-500 rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out text-center overflow-visible"
               style={{ width: "100%" }}
             />
             <label
@@ -173,9 +173,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              Nombre y Apellido
-            </label>
+            ></label>
             {errors.name && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.name}
@@ -192,9 +190,9 @@ export function RegisterComponet({ token, setToken }: any) {
               type="text"
               name="email"
               id="email"
-              placeholder="Ingrese su correo"
+              placeholder="Email"
               onChange={handleImputChange}
-              className="peer block rounded border-0  bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -204,9 +202,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              Correo
-            </label>
+            ></label>
             {errors.email && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.email}
@@ -223,9 +219,9 @@ export function RegisterComponet({ token, setToken }: any) {
               type="text"
               name="dni"
               id="dni"
-              placeholder="Ingrese su DNI"
+              placeholder="DNI"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -235,9 +231,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              DNI
-            </label>
+            ></label>
             {errors.dni && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.dni}
@@ -254,9 +248,9 @@ export function RegisterComponet({ token, setToken }: any) {
               type="text"
               name="address"
               id="address"
-              placeholder="Ingrese su dirección"
+              placeholder="Dirección"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -266,9 +260,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              Dirección
-            </label>
+            ></label>
             {errors.address && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.address}
@@ -285,9 +277,9 @@ export function RegisterComponet({ token, setToken }: any) {
               type="text"
               name="country"
               id="country"
-              placeholder="Ingrese su país"
+              placeholder="País"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -297,9 +289,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              País
-            </label>
+            ></label>
             {errors.country && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "0px" }}>
                 {errors.country}
@@ -313,9 +303,9 @@ export function RegisterComponet({ token, setToken }: any) {
               type="text"
               name="city"
               id="city"
-              placeholder="Ingrese su ciudad"
+              placeholder="Ciudad"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -325,9 +315,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              Ciudad
-            </label>
+            ></label>
             {errors.city && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.city}
@@ -344,9 +332,9 @@ export function RegisterComponet({ token, setToken }: any) {
               type="text"
               name="phone"
               id="phone"
-              placeholder="Ingrese su celular"
+              placeholder="Celular"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -356,9 +344,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              Celular
-            </label>
+            ></label>
             {errors.phone && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.phone}
@@ -367,17 +353,15 @@ export function RegisterComponet({ token, setToken }: any) {
           </div>
 
           {/* Entrada de contraseña */}
-          <div
-            className="relative rounded-lg mb-6 "
-            data-twe-input-wrapper-init
-          >
+          {/* Entrada de contraseña */}
+          <div className="relative rounded-lg mb-6" data-twe-input-wrapper-init>
             <input
               type="password"
               name="password"
               id="password"
-              placeholder="Ingrese su contraseña"
+              placeholder="Contraseña"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -387,9 +371,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              Contraseña
-            </label>
+            ></label>
             {errors.password && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.password}
@@ -398,17 +380,14 @@ export function RegisterComponet({ token, setToken }: any) {
           </div>
 
           {/* Confirmación de contraseña */}
-          <div
-            className="relative  rounded-lg mb-6 "
-            data-twe-input-wrapper-init
-          >
+          <div className="relative rounded-lg mb-6" data-twe-input-wrapper-init>
             <input
               type="password"
               name="passwordConfirm"
               id="passwordConfirm"
-              placeholder="Repita su contraseña"
+              placeholder="Confirme su contraseña"
               onChange={handleImputChange}
-              className="peer block rounded border-0 bg-transparent px-2 py-1 text-sm leading-tight outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-[#447988] data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:autofill:shadow-autofill dark:peer-focus:text-[#447988] [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+              className="relative block w-[300px] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out focus:outline-none] text-center  "
               style={{ width: "100%" }}
             />
             <label
@@ -418,9 +397,7 @@ export function RegisterComponet({ token, setToken }: any) {
                   ? "-translate-y-[1.15rem] scale-[0.8] text-[#447988]"
                   : "peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-[#447988]"
               } motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-[#447988]`}
-            >
-              Repita su Contraseña
-            </label>
+            ></label>
             {errors.passwordConfirm && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "10px" }}>
                 {errors.passwordConfirm}
@@ -448,6 +425,12 @@ export function RegisterComponet({ token, setToken }: any) {
         <button
           type="submit"
           className=" rounded-full w-full border-2 border-[#97D6DF] bg-[#FF3E1A] py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A] "
+          disabled={
+            !todosLosCamposCompletos() ||
+            Object.keys(errors).some(
+              (key) => errors[key as keyof IErrorsRegister]
+            )
+          }
         >
           Registrar
         </button>

@@ -113,8 +113,8 @@ const PlanComprado = ({ params }: IPlanProps) => {
           </div>
           <div
             style={{
-              height: "30vh",
-              width: "30vh",
+              height: "60vh",
+              width: "60vh",
               border: "5px solid #97D6DF",
               display: "flex",
               flexDirection: "column",

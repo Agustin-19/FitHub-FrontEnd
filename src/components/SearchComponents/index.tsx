@@ -1,7 +1,7 @@
 "use client";
 import { ICategory, ISearch } from "@/interface/plan.interface";
 import { get_Category } from "@/server/fetchPlan";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./search.module.css";
 import Link from "next/link";
 
@@ -27,31 +27,24 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     page: "1",
   });
   const [items, setItems] = useState<any[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const data = await get_Category();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
 
-    if (name === "category") {
-      setSearchParams((prev) => {
-        const currentCategories = (prev.category || "")
-          .split(",")
-          .filter(Boolean); // Ensure category is defined
-        if (checked) {
-          return {
-            ...prev,
-            category: [...currentCategories, value].join(","),
-          };
-        } else {
-          const updatedCategories = currentCategories.filter(
-            (cat) => cat !== value
-          );
-          return {
-            ...prev,
-            category: updatedCategories.join(","),
-          };
-        }
-      });
-    } else if (name === "difficultyLevel") {
+    if (name === "difficultyLevel") {
       setSearchParams((prev) => {
         const currentLevels = (prev.difficultyLevel || "")
           .split(",")
@@ -79,31 +72,17 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     }
   };
 
-  // *************** CATEGORIAS ***********************
-  const [categories, setCategories] = useState<ICategory[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const data = await get_Category();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSearchParams((prev) => ({
+      ...prev,
+      category: e.target.value,
+    }));
+  };
 
   const fetchAndSetItems = async () => {
-    const { limit, category, location, difficultyLevel, search } = searchParams;
     setLoading(true);
     try {
-      const queryString = {
-        ...searchParams,
-        page: page.toString(),
-        category: category,
-      };
-      const data = await fetchItems(queryString);
+      const data = await fetchItems(searchParams);
       setItems(data);
     } catch (err) {
       console.error(err);
@@ -128,6 +107,13 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
     e.preventDefault();
     setPage(1);
     fetchAndSetItems();
+  };
+
+  const handleClearSearch = () => {
+    setSearchParams((prev) => ({
+      ...prev,
+      search: "",
+    }));
   };
 
   if (loading) {
@@ -168,7 +154,11 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
         >
           {/* search */}
           <div className="form relative mb-3 ">
-            <button className="absolute left-2 -translate-y-1/2 top-1/2 p-1">
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="absolute left-2 -translate-y-1/2 top-1/2 p-1"
+            >
               <svg
                 width="17"
                 height="16"
@@ -176,7 +166,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
                 xmlns="http://www.w3.org/2000/svg"
                 role="img"
                 aria-labelledby="search"
-                className="w-5 h-5 text-[#97D6DF"
+                className="w-5 h-5 text-[#97D6DF]"
               >
                 <path
                   d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
@@ -197,6 +187,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
             />
             <button
               type="reset"
+              onClick={handleClearSearch}
               className="absolute right-3 -translate-y-1/2 top-1/2 p-1"
             >
               <svg
@@ -214,118 +205,95 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
               </svg>
             </button>
           </div>
-
-          {/* checkbox category */}
+          {/* select category */}
           <div className="flex border-3 flex-col p-4">
             <label className="relative text-[#97D6DF] flex cursor-pointer mb-2 gap-[1em] ">
               Categoría:
             </label>
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                className="relative text-[#447988] flex cursor-pointer items-center  gap-[1em] "
-              >
-                <input
-                  type="checkbox"
-                  name="category"
-                  value={category.id}
-                  checked={
-                    searchParams.category?.split(",").includes(category.id) ||
-                    false
-                  }
-                  onChange={handleChange}
-                />
-                <span className="ml-2">{category.name}</span>
-              </div>
-            ))}
+            <select
+              name="category"
+              value={searchParams.category || ""}
+              onChange={handleCategoryChange}
+              className="relative block w-[300px] border-1 border-solid border-[#FF3E1A] rounded bg-transparent px-3 py-2 text-[#97D6DF] focus:outline-none focus:ring-2 focus:ring-[#FF3E1A] transition duration-150 ease-in-out text-center"
+            >
+              <option value="">Selecciona una categoría</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
+
+          {/* checkbox difficulty level */}
           <div className="flex border-3 flex-col p-4 mb-9">
             <label className="relative text-[#97D6DF] flex cursor-pointer mb-2 gap-[1em]">
               Nivel de Dificultad:
             </label>
-            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[1em] ">
+            <div className="relative text-[#447988] flex cursor-pointer items-center gap-[1em]">
               <input
                 type="checkbox"
                 name="difficultyLevel"
-                value="inicial"
-                checked={
-                  searchParams.difficultyLevel
-                    ?.split(",")
-                    .includes("inicial") || false
-                }
+                value="principiante"
+                checked={searchParams.difficultyLevel
+                  ?.split(",")
+                  .includes("principiante")}
                 onChange={handleChange}
+                className="form-checkbox rounded-full text-[#97D6DF] focus:ring-0 checked:bg-[#97D6DF] w-[20px] h-[20px]  "
               />
-              <span className="relative text-[#447988] flex cursor-pointer items-center  gap-[1em] ">
-                Inicial
-              </span>
+              Principiante
             </div>
-            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[0.5em] ">
+            <div className="relative text-[#447988] flex cursor-pointer items-center gap-[1em]">
               <input
                 type="checkbox"
                 name="difficultyLevel"
                 value="intermedio"
-                checked={
-                  searchParams.difficultyLevel
-                    ?.split(",")
-                    .includes("intermedio") || false
-                }
+                checked={searchParams.difficultyLevel
+                  ?.split(",")
+                  .includes("intermedio")}
                 onChange={handleChange}
+                className="form-checkbox rounded-full text-[#97D6DF] focus:ring-0 checked:bg-[#97D6DF] w-[20px] h-[20px]  "
               />
-              <span className="ml-2">Intermedio</span>
+              Intermedio
             </div>
-            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[0.5em]  ">
+            <div className="relative text-[#447988] flex cursor-pointer items-center gap-[1em]">
               <input
                 type="checkbox"
                 name="difficultyLevel"
                 value="avanzado"
-                checked={
-                  searchParams.difficultyLevel
-                    ?.split(",")
-                    .includes("avanzado") || false
-                }
+                checked={searchParams.difficultyLevel
+                  ?.split(",")
+                  .includes("avanzado")}
                 onChange={handleChange}
+                className="form-checkbox rounded-full text-[#97D6DF] focus:ring-0 checked:bg-[#97D6DF] w-[20px] h-[20px]  "
               />
-              <span className="ml-2">Avanzado</span>
-            </div>
-            <div className="relative text-[#447988] flex cursor-pointer items-center  gap-[0.5em]">
-              <input
-                type="checkbox"
-                name="difficultyLevel"
-                value="profesional"
-                checked={
-                  searchParams.difficultyLevel
-                    ?.split(",")
-                    .includes("profesional") || false
-                }
-                onChange={handleChange}
-              />
-              <span className="ml-2">Profesional</span>
+              Avanzado
             </div>
           </div>
+
           <button
             type="submit"
-            className="p-2 border  rounded-2xl bg-[#FF3E1A] text-white"
+            className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
           >
             Buscar
           </button>
         </form>
-        <div className="ml-4 flex-grow">
-          {renderList(items)}
-          <div className="daisy-join flex justify-center">
+        <div className="flex flex-col">
+          <div>{renderList(items)}</div>
+          <div className="flex justify-center items-center space-x-4 mt-4">
             <button
-              className="daisy-join-item daisy-btn z-10"
               onClick={handlePrevious}
+              disabled={page === 1}
+              className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
             >
-              «
+              Anterior
             </button>
-            <button className="daisy-join-item daisy-btn z-10">
-              Page {page}
-            </button>
+            <span className="text-[#97D6DF]">Página {page}</span>
             <button
-              className="daisy-join-item daisy-btn z-10"
               onClick={handleNext}
+              className="relative z-[2] rounded-full border-2 border-[#97D6DF] bg-[#FF3E1A] px-6 py-2 text-sm font-bold uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-[#FF5722] focus:bg-[#FF3E1A] focus:outline-none focus:ring-0 active:bg-[#E64A19] motion-reduce:transition-none dark:text-primary-500 dark:bg-[#FF3E1A] dark:hover:bg-[#FF5722] dark:focus:bg-[#FF3E1A]"
             >
-              »
+              Siguiente
             </button>
           </div>
         </div>
