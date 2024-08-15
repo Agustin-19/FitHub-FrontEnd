@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { API } from "@/helpers/helper";
 
 export function MercadoPagoSuccess() {
@@ -19,48 +19,68 @@ export function MercadoPagoSuccess() {
   const processing_mode = searchParams.get("processing_mode");
   const merchant_account_id = searchParams.get("merchant_account_id");
 
-  const data = {
-    collection_id,
-    collection_status,
-    payment_id,
-    status,
-    external_reference,
-    payment_type,
-    merchant_order_id,
-    preference_id,
-    site_id,
-    processing_mode,
-    merchant_account_id,
-  };
+  const data = useMemo(
+    () => ({
+      collection_id,
+      collection_status,
+      payment_id,
+      status,
+      external_reference,
+      payment_type,
+      merchant_order_id,
+      preference_id,
+      site_id,
+      processing_mode,
+      merchant_account_id,
+    }),
+    [
+      collection_id,
+      collection_status,
+      payment_id,
+      status,
+      external_reference,
+      payment_type,
+      merchant_order_id,
+      preference_id,
+      site_id,
+      processing_mode,
+      merchant_account_id,
+    ]
+  );
+
+  const hasSentDataRef = useRef(false);
 
   useEffect(() => {
-    async function sendDataToBackend() {
-      const token: string =
-        (typeof window !== "undefined" && localStorage.getItem("token")) || "";
-      try {
-        const response = await fetch(`${API}/plan/webhook`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        console.log("Data sent to backend successfully:", data);
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const result = await response.json();
-        console.log("Data sent to backend successfully:", result);
-      } catch (error) {
-        console.error("Error sending data to backend:", error);
-      }
+    if (!hasSentDataRef.current) {
+      sendDataToBackend(data);
+      hasSentDataRef.current = true;
     }
-
-    sendDataToBackend();
   }, [data]);
+
+  async function sendDataToBackend(data: Record<string, any>) {
+    const token: string =
+      (typeof window !== "undefined" && localStorage.getItem("token")) || "";
+    try {
+      const response = await fetch(`${API}/plan/webhook`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      console.log("Data sent to backend successfully:", data);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("Data sent to backend successfully:", result);
+    } catch (error) {
+      console.error("Error sending data to backend:", error);
+    }
+  }
 
   return (
     <div>
@@ -113,7 +133,7 @@ export function MercadoPagoSuccess() {
           ></rect>
         </svg>
         <h1 className="text-2xl font-bold text-center text-white">
-          Tu pago se ha realizado con éxito. Muchas gracias por confiar en
+          Tu pago se ha realizado con éxito. Muchas gracias por confiar en
           FitHub
         </h1>
         <Link href="/dashboard">
