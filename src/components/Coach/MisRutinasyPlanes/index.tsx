@@ -42,9 +42,13 @@ const CouchDashboard = () => {
   const [hasFetchedData, setHasFetchedData] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user?.sub && !hasFetchedData) {
-      getCouchRutinasYPlanes(user.sub)
+    if (user?.id && !hasFetchedData) {
+      console.log("Fetching data...");
+
+      getCouchRutinasYPlanes(user.id)
         .then((data) => {
+          console.log("Data:", data);
+
           if (data) {
             const mappedRoutines = Array.isArray(data.routineAdmin)
               ? data.routineAdmin.map((routine: any) => ({
@@ -112,17 +116,6 @@ const CouchDashboard = () => {
   if (!isLogged) return <p>Debes estar logueado para acceder al dashboard.</p>;
 
   if (!user) return <p>Loading...</p>;
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleDeletePlan = (planId: string) => {
     confirmAlert({

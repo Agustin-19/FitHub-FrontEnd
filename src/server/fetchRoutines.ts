@@ -4,7 +4,11 @@ import {
   IRutinaEjercicio,
 } from "@/interface/interface";
 import { API } from "@/helpers/helper";
-import { ISearch, IGetRutYPlan } from "@/interface/plan.interface";
+import {
+  ISearch,
+  IGetRutYPlan,
+  IGetCouchRutYPlan,
+} from "@/interface/plan.interface";
 
 export const get_Rutinas = async (
   queryString?: ISearch
@@ -158,7 +162,9 @@ export const getUserRutinasYPlanes = async (
   }
 };
 
-export const get_EntreRyPlan = async (id: string): Promise<IGetRutYPlan> => {
+export const get_EntreRyPlan = async (
+  id: string
+): Promise<IGetCouchRutYPlan> => {
   const token: string =
     (typeof window !== "undefined" && localStorage.getItem("token")) || "";
   try {
@@ -206,10 +212,7 @@ export const delete_Rutina = async (id: string): Promise<Response> => {
   }
 };
 
-export const put_Rutina = async (
-  id: string,
-  routine: ICreateRutina
-) => {
+export const put_Rutina = async (id: string, routine: ICreateRutina) => {
   try {
     const token: string =
       (typeof window !== "undefined" && localStorage.getItem("token")) || "";
@@ -219,7 +222,7 @@ export const put_Rutina = async (
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(routine)
+      body: JSON.stringify(routine),
     });
     if (!response.ok) {
       throw new Error(`Error en la solicitud: ${response.statusText}`);
@@ -232,4 +235,3 @@ export const put_Rutina = async (
     throw new Error("Error update rutina");
   }
 };
-

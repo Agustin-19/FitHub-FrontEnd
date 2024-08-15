@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, createContext } from "react";
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 import {
   postSignin,
   postSigup,
@@ -24,10 +24,11 @@ import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { IGetCouchRutYPlan, IGetRutYPlan } from "@/interface/plan.interface";
 import { API } from "@/helpers/helper";
+import { get_EntreRyPlan } from "@/server/fetchRoutines";
 
 export const UserContext = createContext<IUserConext>({
   user: null,
-  setUser: () => { },
+  setUser: () => {},
   isLogged: false,
   signIn: async () => false,
   loginAuth0: async () => false,
@@ -35,10 +36,10 @@ export const UserContext = createContext<IUserConext>({
   rutinas: [],
   actividades: [],
   ejercicios: [],
-  logOut: () => { },
-  getRutinas: () => { },
-  getActividades: () => { },
-  setIsLogged: () => { },
+  logOut: () => {},
+  getRutinas: () => {},
+  getActividades: () => {},
+  setIsLogged: () => {},
   getUserRutinasYPlanes: async () => null,
   getCouchRutinasYPlanes: async () => null,
 });
@@ -78,8 +79,10 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
 
       const userData = await getUser_Id(decodedToken.sub, data.token);
 
-      typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(userData));
-      typeof window !== "undefined" && localStorage.setItem("token", data.token);
+      typeof window !== "undefined" &&
+        localStorage.setItem("user", JSON.stringify(userData));
+      typeof window !== "undefined" &&
+        localStorage.setItem("token", data.token);
 
       setIsLogged(true);
       return true;
@@ -99,13 +102,15 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const decodedToken: any = jwtDecode(data.token);
-      
+
       Cookie.set("token", data.token, { expires: 7 });
 
       const userData = await getUser_Id(decodedToken.sub, data.token);
 
-      typeof window !== "undefined" && localStorage.setItem("user", JSON.stringify(userData));
-      typeof window !== "undefined" && localStorage.setItem("token", data.token);
+      typeof window !== "undefined" &&
+        localStorage.setItem("user", JSON.stringify(userData));
+      typeof window !== "undefined" &&
+        localStorage.setItem("token", data.token);
 
       setUser({ ...userData, token: data.token });
 
@@ -172,19 +177,20 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getCouchRutinasYPlanes = async (
-    userId: string
+    id: string
   ): Promise<IGetCouchRutYPlan | null> => {
     try {
       const token: string =
         (typeof window !== "undefined" && localStorage.getItem("token")) || "";
 
-      const response = await fetch(`${API}/users/entrenadorpyr/${userId}`, {
+      const response = await fetch(`${API}/users/entrenadorpyr/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log("esta es la data..........", response);
 
       if (!response.ok) {
         throw new Error("Error al obtener las rutinas y planes");
