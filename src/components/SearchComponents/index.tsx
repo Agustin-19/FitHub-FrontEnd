@@ -19,7 +19,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useState<ISearch>({
-    limit: "8",
+    limit: "6",
     category: "",
     location: "",
     difficultyLevel: "",
@@ -97,15 +97,18 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 
   const handlePrevious = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
+    setSearchParams((prev) => ({ ...prev, page: String(page - 1) }));
   };
 
   const handleNext = () => {
     setPage((prevPage) => prevPage + 1);
+    setSearchParams((prev) => ({ ...prev, page: String(page + 1) }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPage(1);
+    setSearchParams((prev) => ({ ...prev, page: "1" }));
     fetchAndSetItems();
   };
 
