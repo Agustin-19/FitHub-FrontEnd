@@ -15,7 +15,7 @@ type Routine = {
 interface IUserConext {
   user: {
     rutinas: Routine[];
-    fotosPerfil?: string[];
+    imgUrl?: string[];
     name: string;
     email: string;
     address: string;

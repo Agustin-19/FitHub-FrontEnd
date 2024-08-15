@@ -15,7 +15,7 @@ interface IUser {
   country: string;
   city: string;
   statusMembrecia?: string;
-  fotosPerfil?: string;
+  imgUrl?: string;
   role?: string;
   password: string;
   rutinas?: IRutina[];
