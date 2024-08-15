@@ -31,7 +31,7 @@ export function Navbar() {
     });
   };
 
-  const isAdmin = user?.role === "admin";
+  const isAdmin = user?.role === "admin" || user?.role === "superadmin";
 
   return (
     <div className="relative z-10 backdrop-blur-lg border-4 border-[#97D6DF] flex flex-col lg:flex-row items-center justify-between py-2 shadow-dark-mild dark:bg-[#1A1D1A] lg:py-4 rounded-lg">
