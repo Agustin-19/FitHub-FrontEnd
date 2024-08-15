@@ -99,6 +99,8 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const decodedToken: any = jwtDecode(data.token);
+      
+      Cookie.set("token", data.token, { expires: 7 });
 
       const userData = await getUser_Id(decodedToken.sub, data.token);
 
