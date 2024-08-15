@@ -30,8 +30,8 @@ const UserDashboard = () => {
   const [hasFetchedData, setHasFetchedData] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user?.sub && !hasFetchedData) {
-      getUserRutinasYPlanes(user.sub)
+    if (user?.id && !hasFetchedData) {
+      getUserRutinasYPlanes(user.id)
         .then((data) => {
           if (data) {
             const mappedRoutines = Array.isArray(data.routine)
