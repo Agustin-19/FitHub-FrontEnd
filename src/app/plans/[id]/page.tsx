@@ -131,11 +131,7 @@ const PlanDetail = ({ params }: IPlanProps) => {
             </h2>
             <div className="relative object-contain w-40 h-40 rounded-t-lg">
               <Image
-                src={
-                  Array.isArray(plan?.imgUrl) && plan.imgUrl.length > 0
-                    ? plan.imgUrl[0][0]
-                    : imgDefect
-                }
+                src={plan?.imgUrl || imgDefect}
                 alt={plan?.name || "imagen por defecto"}
                 fill={true}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
