@@ -17,7 +17,7 @@ type Routine = {
 interface IUserConext {
   user: {
     rutinas: Routine[];
-    fotosPerfil?: string[];
+    imgUrl?: string[];
     name: string;
     email: string;
     address: string;
@@ -64,6 +64,8 @@ export default function Sidebar() {
     }
   };
 
+  const profileImage = avatar || user.imgUrl || imagenPerfil;
+
   return (
     <>
       <nav className=" text-[#FF3E1A] md:left-0 md:block m md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between  md:w-64  py-4 px-6 bg-black ">
@@ -75,7 +77,7 @@ export default function Sidebar() {
           </Link>
           {/* Brand */}
           <Image
-            src={avatar || imagenPerfil}
+            src={profileImage}
             alt="Avatar"
             width={500}
             height={80}

@@ -72,7 +72,7 @@ export default function AdminCardCoach({ coaches, selectedIds, setSelectedIds }:
                                                 <div className="daisy-mask daisy-mask-squircle h-12 w-12">
                                                     <div className="relative object-contain w-40 h-40 rounded-t-lg">
                                                         <Image
-                                                            src={coach.fotosPerfil || "https://img.daisyui.com/images/profile/demo/2@94.webp"}
+                                                            src={coach.imgUrl || "https://img.daisyui.com/images/profile/demo/2@94.webp"}
                                                             alt={coach.name || "imagen por defecto"}
                                                             fill={true}
                                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

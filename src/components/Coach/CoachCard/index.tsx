@@ -14,9 +14,9 @@ const CoachCard: React.FC<CoachCardProps> = ({ user }) => {
     >
       <div className="flex items-center">
         {/* Imagen de perfil */}
-        {user.fotosPerfil ? (
+        {user.imgUrl ? (
           <Image
-            src={user.fotosPerfil}
+            src={user.imgUrl}
             alt={`${user.name}'s profile`}
             width={80}
             height={80}
