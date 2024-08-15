@@ -236,14 +236,14 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
               <input
                 type="checkbox"
                 name="difficultyLevel"
-                value="principiante"
+                value="inicial"
                 checked={searchParams.difficultyLevel
                   ?.split(",")
-                  .includes("principiante")}
+                  .includes("inicial")}
                 onChange={handleChange}
                 className="form-checkbox rounded-full text-[#97D6DF] focus:ring-0 checked:bg-[#97D6DF] w-[20px] h-[20px]  "
               />
-              Principiante
+              Inicial
             </div>
             <div className="relative text-[#447988] flex cursor-pointer items-center gap-[1em]">
               <input
