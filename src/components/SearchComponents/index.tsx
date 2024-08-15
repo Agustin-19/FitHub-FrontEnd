@@ -19,7 +19,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useState<ISearch>({
-    limit: "",
+    limit: "6",
     category: "",
     location: "",
     difficultyLevel: "",
@@ -97,15 +97,18 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
 
   const handlePrevious = () => {
     setPage((prevPage) => Math.max(prevPage - 1, 1));
+    setSearchParams((prev) => ({ ...prev, page: String(page - 1) }));
   };
 
   const handleNext = () => {
     setPage((prevPage) => prevPage + 1);
+    setSearchParams((prev) => ({ ...prev, page: String(page + 1) }));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPage(1);
+    setSearchParams((prev) => ({ ...prev, page: "1" }));
     fetchAndSetItems();
   };
 
@@ -156,7 +159,6 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
           <div className="form relative mb-3 ">
             <button
               type="button"
-              onClick={handleClearSearch}
               className="absolute left-2 -translate-y-1/2 top-1/2 p-1"
             >
               <svg
@@ -183,7 +185,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
               placeholder="Buscar..."
               value={searchParams.search}
               onChange={handleChange}
-              className="input  rounded-full px-8 py-3 border-2 border-transparent focus:outline-none focus:border-[#FF3E1A] placeholder-[#97D6DF] transition-all duration-300 shadow-md bg-[#1A1D1A]"
+              className="input  rounded-full px-8 py-3 w-5/6 border-2 border-transparent focus:outline-none focus:border-[#FF3E1A] placeholder-[#97D6DF] transition-all duration-300 shadow-md bg-[#1A1D1A]"
             />
             <button
               type="reset"
@@ -268,6 +270,19 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
                 className="form-checkbox rounded-full text-[#97D6DF] focus:ring-0 checked:bg-[#97D6DF] w-[20px] h-[20px]  "
               />
               Avanzado
+            </div>
+            <div className="relative text-[#447988] flex cursor-pointer items-center gap-[1em]">
+              <input
+                type="checkbox"
+                name="difficultyLevel"
+                value="profesional"
+                checked={searchParams.difficultyLevel
+                  ?.split(",")
+                  .includes("profesional")}
+                onChange={handleChange}
+                className="form-checkbox rounded-full text-[#97D6DF] focus:ring-0 checked:bg-[#97D6DF] w-[20px] h-[20px]  "
+              />
+              Profesional
             </div>
           </div>
 

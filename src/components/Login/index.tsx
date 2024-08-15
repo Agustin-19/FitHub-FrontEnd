@@ -44,7 +44,7 @@ export function LoginComponet({ token, setToken }: any) {
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      console.log("Submitted credentials:", userDate);
+      // console.log("Submitted credentials:", userDate);
       const success = await signIn(userDate);
       if (success) {
         toast.success("Inicio de sesión exitoso", {

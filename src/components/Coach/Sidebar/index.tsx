@@ -17,7 +17,7 @@ type Routine = {
 interface IUserConext {
   user: {
     rutinas: Routine[];
-    fotosPerfil?: string[];
+    imgUrl?: string[];
     name: string;
     email: string;
     address: string;
@@ -36,7 +36,7 @@ export default function Sidebar() {
 
   if (user.role !== "entrenador") return null;
 
-  const handleImageChange = async(
+  const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
@@ -64,6 +64,8 @@ export default function Sidebar() {
     }
   };
 
+  const profileImage = avatar || user.imgUrl || imagenPerfil;
+
   return (
     <>
       <nav className=" text-[#FF3E1A] md:left-0 md:block m md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between  md:w-64  py-4 px-6 bg-black ">
@@ -75,7 +77,7 @@ export default function Sidebar() {
           </Link>
           {/* Brand */}
           <Image
-            src={avatar || imagenPerfil}
+            src={profileImage}
             alt="Avatar"
             width={500}
             height={80}
@@ -109,7 +111,7 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Admin Layout Pages
+              Mis actividades
             </h6>
             <ul className="md:flex-col md:min-w-full flex flex-col list-none gap-2">
               <li className="items-center">
@@ -121,7 +123,7 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link href="/dashboard">
                   <i className={"fas fa-tools mr-2 text-sm "}></i> Mis
-                  ACtividades
+                  Actividades
                 </Link>
               </li>
             </ul>

@@ -23,7 +23,7 @@ export default function SidebarUser() {
     setUser: React.Dispatch<React.SetStateAction<IloginUserRegister | null>>;
   };
 
-  console.log("______________", user);
+  // console.log("______________", user);
 
   if (!user) return <p>Loading...</p>;
 
