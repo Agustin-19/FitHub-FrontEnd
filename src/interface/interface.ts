@@ -62,6 +62,7 @@ interface IloginUserRegister {
   sub: string;
   email ?: string;
   imgUrl ?: string;
+  id ?: string;
 }
 
 interface IUserConext {
